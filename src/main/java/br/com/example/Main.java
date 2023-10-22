@@ -1,8 +1,8 @@
 package br.com.example;
 
-import br.com.example.domain.enumeration.*;
-import br.com.example.domain.model.*;
-import br.com.example.domain.service.calculator.impl.CalculatorServiceImpl;
+import br.com.example.domain.calculator.enumeration.*;
+import br.com.example.domain.calculator.model.*;
+import br.com.example.domain.calculator.service.calculator.impl.CalculatorServiceImpl;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
