@@ -9,15 +9,7 @@ import lombok.Getter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class CalculationTotalFinancedAmount implements CalculatorEngine<PaymentPlanModel> {
-
-    @Getter
-    private CalculatorEngine<PaymentPlanModel> nextEngine;
-
-    @Override
-    public void setNextEngine(CalculatorEngine<PaymentPlanModel> nextEngine) {
-        this.nextEngine = nextEngine;
-    }
+public class CalculationTotalFinancedAmount extends CalculatorEngine<PaymentPlanModel> {
 
     @Override
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
@@ -50,7 +42,6 @@ public class CalculationTotalFinancedAmount implements CalculatorEngine<PaymentP
                                 + totalTaxes)
                         .setScale(4, RoundingMode.HALF_EVEN));
 
-        if (nextEngine == null) return paymentPlanModel;
-        return nextEngine.calculate(paymentPlanModel);
+        return paymentPlanModel;
     }
 }
