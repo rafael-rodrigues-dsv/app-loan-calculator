@@ -5,6 +5,7 @@ import br.com.example.domain.calculator.model.LoanModel;
 import br.com.fluentvalidator.AbstractValidator;
 
 import java.util.List;
+import java.util.Objects;
 
 import static br.com.fluentvalidator.predicate.LogicalPredicate.not;
 import static br.com.fluentvalidator.predicate.ObjectPredicate.nullValue;
@@ -18,9 +19,6 @@ public class CalculatorValidation extends AbstractValidator<LoanModel> {
         ruleFor(LoanModel::getCalculationType)
                 .must(not(nullValue()))
                 .withMessage("Calculation type cannot be null")
-                .withFieldName("calculationType")
-                .must(ALLOWED_CALCULATION_TYPES::contains)
-                .withMessage(calculationType -> String.format("The provided calculation type '%s' is not available", calculationType.getCalculationType().name()))
                 .withFieldName("calculationType");
 
         ruleFor(LoanModel::getPricing)
@@ -34,7 +32,7 @@ public class CalculatorValidation extends AbstractValidator<LoanModel> {
                 .must(not(nullValue()))
                 .withMessage("Installment quantity cannot be null")
                 .withFieldName("installmentQuantity")
-                .must(quantity -> quantity > 0)
+                .must(quantity -> Objects.nonNull(quantity) && quantity > 0)
                 .withMessage("Installment quantity must be greater than zero")
                 .withFieldName("installmentQuantity");
 
@@ -42,7 +40,7 @@ public class CalculatorValidation extends AbstractValidator<LoanModel> {
                 .must(not(nullValue()))
                 .withMessage("Amount cannot be null")
                 .withFieldName("amount")
-                .must(amount -> amount.doubleValue() > 0)
+                .must(amount -> Objects.nonNull(amount) && amount.doubleValue() > 0)
                 .withMessage("Amount must be greater than zero")
                 .withFieldName("amount");
 
