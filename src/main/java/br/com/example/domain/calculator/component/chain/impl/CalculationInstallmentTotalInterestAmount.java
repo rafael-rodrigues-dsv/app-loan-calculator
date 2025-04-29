@@ -9,15 +9,13 @@ public class CalculationInstallmentTotalInterestAmount extends CalculatorEngine<
 
     @Override
     public InstallmentModel calculate(InstallmentModel beforeInstallment, InstallmentModel currentInstallment) {
-        BigDecimal totalInterestAmount;
+        BigDecimal interestRate = currentInstallment.getInterestRate();
 
-        if (!currentInstallment.getNumber().equals(0L)) {
-            BigDecimal interestRate = currentInstallment.getInterestRate();
-            totalInterestAmount = interestRate.multiply(beforeInstallment.getTotalBalanceAmount())
-                    .divide(BigDecimal.valueOf(100))
-                    .setScale(2, BigDecimal.ROUND_HALF_EVEN);
-            currentInstallment.setTotalInterestAmount(totalInterestAmount);
-        }
+        BigDecimal totalInterestAmount = interestRate.multiply(beforeInstallment.getTotalBalanceAmount())
+                .divide(BigDecimal.valueOf(100))
+                .setScale(2, BigDecimal.ROUND_HALF_EVEN);
+
+        currentInstallment.setTotalInterestAmount(totalInterestAmount);
 
         return currentInstallment;
     }

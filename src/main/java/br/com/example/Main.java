@@ -1,8 +1,15 @@
 package br.com.example;
 
 import br.com.example.domain.calculator.enumeration.*;
-import br.com.example.domain.calculator.model.*;
-import br.com.example.domain.calculator.service.calculator.impl.CalculatorServiceImpl;
+import br.com.example.domain.calculator.service.impl.CalculatorServiceImpl;
+import br.com.example.entrypoint.command.ServiceCommand;
+import br.com.example.entrypoint.command.calculator.CreateLoanCalculatorCommand;
+import br.com.example.entrypoint.dto.request.*;
+import br.com.example.entrypoint.dto.response.LoanCalculatorResponseDTO;
+import br.com.example.entrypoint.mapper.impl.CustomMapperImpl;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,21 +19,29 @@ import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) {
-        PaymentPlanModel paymentPlanModel = new CalculatorServiceImpl()
-                .calculate(getLoanPre());
+    private static ServiceCommand<LoanCalculatorRequestDTO, LoanCalculatorResponseDTO>
+            calculatorCommand = new CreateLoanCalculatorCommand(new CalculatorServiceImpl(), new CustomMapperImpl());
 
-        System.out.println("Payment plan calculated!");
+    private static ObjectMapper objectMapper = createObjectMapper();
+
+    public static void main(String[] args) {
+        try {
+            LoanCalculatorResponseDTO response = calculatorCommand.execute(getLoanPre());
+            String jsonResponse = objectMapper.writeValueAsString(response);
+            System.out.println("Payment plan calculated: " + jsonResponse);
+        } catch (JsonProcessingException e) {
+            System.err.println("Error converting response to JSON: " + e.getMessage());
+        }
     }
 
-    private static LoanModel getLoanPre() {
-        PricingModel pricingModel = PricingModel.builder()
+    private static LoanCalculatorRequestDTO getLoanPre() {
+        PricingRequestDTO pricingModel = PricingRequestDTO.builder()
                 .modalityType(ModalityTypeEnum.PRE_FIXADO)
                 .periodType(PeriodTypeEnum.MONTHLY)
                 .interestRate(BigDecimal.valueOf(1.75))
                 .build();
 
-        return LoanModel.builder()
+        return LoanCalculatorRequestDTO.builder()
                 .calculationType(CalculationTypeEnum.PRICE)
                 .pricing(pricingModel)
                 .installmentQuantity(5)
@@ -39,15 +54,15 @@ public class Main {
                 .build();
     }
 
-    private static LoanModel getLoanPos() {
-        PricingModel pricingModel = PricingModel.builder()
+    private static LoanCalculatorRequestDTO getLoanPos() {
+        PricingRequestDTO pricingModel = PricingRequestDTO.builder()
                 .modalityType(ModalityTypeEnum.POS_FIXADO)
                 .periodType(PeriodTypeEnum.MONTHLY)
                 .interestRate(BigDecimal.valueOf(1.75))
                 .benchmarks(getBenchmarks())
                 .build();
 
-        return LoanModel.builder()
+        return LoanCalculatorRequestDTO.builder()
                 .calculationType(CalculationTypeEnum.PRICE)
                 .pricing(pricingModel)
                 .installmentQuantity(5)
@@ -60,10 +75,10 @@ public class Main {
                 .build();
     }
 
-    private static List<BenchmarkModel> getBenchmarks() {
-        List<BenchmarkModel> benchmarks = new ArrayList<>();
+    private static List<BenchmarkRequestDTO> getBenchmarks() {
+        List<BenchmarkRequestDTO> benchmarks = new ArrayList<>();
 
-        benchmarks.add(BenchmarkModel.builder()
+        benchmarks.add(BenchmarkRequestDTO.builder()
                 .name("CDI")
                 .periodType(PeriodTypeEnum.YEARLY)
                 .interestRate(BigDecimal.valueOf(13.15))
@@ -73,10 +88,10 @@ public class Main {
         return benchmarks;
     }
 
-    private static List<FeeModel> getFees() {
-        List<FeeModel> fees = new ArrayList<>();
+    private static List<FeeRequestDTO> getFees() {
+        List<FeeRequestDTO> fees = new ArrayList<>();
 
-        fees.add(FeeModel.builder()
+        fees.add(FeeRequestDTO.builder()
                 .paymentType(PaymentTypeEnum.FINANCIADO)
                 .value(BigDecimal.valueOf(200.00))
                 .build());
@@ -84,10 +99,10 @@ public class Main {
         return fees;
     }
 
-    private static List<InsuranceModel> getInsurances() {
-        List<InsuranceModel> insurances = new ArrayList<>();
+    private static List<InsuranceRequestDTO> getInsurances() {
+        List<InsuranceRequestDTO> insurances = new ArrayList<>();
 
-        insurances.add(InsuranceModel.builder()
+        insurances.add(InsuranceRequestDTO.builder()
                 .paymentType(PaymentTypeEnum.FINANCIADO)
                 .value(BigDecimal.valueOf(800.00))
                 .build());
@@ -95,21 +110,29 @@ public class Main {
         return insurances;
     }
 
-    private static List<TaxModel> getTaxes() {
-        List<TaxModel> taxes = new ArrayList<>();
+    private static List<TaxRequestDTO> getTaxes() {
+        List<TaxRequestDTO> taxes = new ArrayList<>();
 
-        taxes.add(TaxModel.builder()
+        taxes.add(TaxRequestDTO.builder()
                 .paymentType(PaymentTypeEnum.FINANCIADO)
                 .value(BigDecimal.valueOf(0.0041))
                 .taxType(TaxTypeEnum.IOF_DIA)
                 .build());
 
-        taxes.add(TaxModel.builder()
+        taxes.add(TaxRequestDTO.builder()
                 .paymentType(PaymentTypeEnum.FINANCIADO)
                 .value(BigDecimal.valueOf(0.3800))
                 .taxType(TaxTypeEnum.IOF_ADICIONAL)
                 .build());
 
         return taxes;
+    }
+
+    private static ObjectMapper createObjectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
+        objectMapper.disable(com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        return objectMapper;
     }
 }

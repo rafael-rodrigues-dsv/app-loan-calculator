@@ -1,4 +1,4 @@
-package br.com.example.domain.calculator.service.calculator;
+package br.com.example.domain.calculator.service;
 
 import br.com.example.domain.calculator.model.LoanModel;
 import br.com.example.domain.calculator.model.PaymentPlanModel;

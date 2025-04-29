@@ -1,4 +1,4 @@
-package br.com.example.domain.calculator.service.chain;
+package br.com.example.domain.calculator.component.chain;
 
 
 import br.com.example.domain.calculator.component.chain.CalculatorEngine;

@@ -1,4 +1,4 @@
-package br.com.example.domain.calculator.service.calculator.impl;
+package br.com.example.domain.calculator.service.impl;
 
 import br.com.example.domain.calculator.component.chain.impl.CalculationInstallment;
 import br.com.example.domain.calculator.model.PaymentPlanModel;
