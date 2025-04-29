@@ -13,6 +13,7 @@ C:\GIT\component-loan-calculator\src\main\java\br\com\example\domain\calculator\
 C:\GIT\component-loan-calculator\src\main\java\br\com\example\domain\calculator\component\validation\FeeValidation.java
 C:\GIT\component-loan-calculator\src\main\java\br\com\example\domain\calculator\component\validation\InsuranceValidation.java
 C:\GIT\component-loan-calculator\src\main\java\br\com\example\domain\calculator\component\validation\PricingValidation.java
+C:\GIT\component-loan-calculator\src\main\java\br\com\example\domain\calculator\component\validation\TaxValidation.java
 C:\GIT\component-loan-calculator\src\main\java\br\com\example\domain\calculator\constant\CalculationConstant.java
 C:\GIT\component-loan-calculator\src\main\java\br\com\example\domain\calculator\enumeration\CalculationTypeEnum.java
 C:\GIT\component-loan-calculator\src\main\java\br\com\example\domain\calculator\enumeration\ModalityTypeEnum.java
@@ -43,4 +44,6 @@ C:\GIT\component-loan-calculator\src\main\java\br\com\example\entrypoint\dto\res
 C:\GIT\component-loan-calculator\src\main\java\br\com\example\entrypoint\dto\response\LoanCalculatorResponseDTO.java
 C:\GIT\component-loan-calculator\src\main\java\br\com\example\entrypoint\mapper\CustomMapper.java
 C:\GIT\component-loan-calculator\src\main\java\br\com\example\entrypoint\mapper\impl\CustomMapperImpl.java
-C:\GIT\component-loan-calculator\src\main\java\br\com\example\Main.java
+C:\GIT\component-loan-calculator\src\main\java\br\com\example\entrypoint\util\ObjectMapperUtil.java
+C:\GIT\component-loan-calculator\src\main\java\br\com\example\MainCalculatorLambda.java
+C:\GIT\component-loan-calculator\src\main\java\br\com\example\MainCalculatorLambdaTest.java

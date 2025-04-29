@@ -40,7 +40,10 @@ public class CalculationPriceInstallment extends CalculatorEngine<PaymentPlanMod
             installments.add(currentInstallment);
         });
 
-        paymentPlanModel.setInstallments(installments);
+        paymentPlanModel.setInstallments(installments
+                .stream()
+                .filter(f -> f.getNumber() != 0L)
+                .toList());
 
         return paymentPlanModel;
     }

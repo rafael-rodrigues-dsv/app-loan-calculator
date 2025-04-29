@@ -2,9 +2,11 @@ br\com\example\domain\calculator\component\factory\CalculatorFactory.class
 br\com\example\domain\calculator\component\chain\impl\CalculationPriceInstallmentTotalAmortizationAmount.class
 br\com\example\domain\calculator\model\BenchmarkModel$BenchmarkModelBuilder.class
 br\com\example\domain\calculator\component\chain\CalculatorEngineBuilder.class
+br\com\example\MainCalculatorLambdaTest$1.class
 br\com\example\domain\calculator\model\PricingModel$PricingModelBuilder.class
-br\com\example\Main.class
+br\com\example\MainCalculatorLambda.class
 br\com\example\domain\calculator\component\validation\FeeValidation.class
+br\com\example\domain\calculator\component\validation\TaxValidation.class
 br\com\example\domain\calculator\model\FeeModel$FeeModelBuilder.class
 br\com\example\domain\calculator\component\chain\impl\CalculationTotalFinancedAmount.class
 br\com\example\domain\calculator\exception\CalculatorValidationException.class
@@ -41,8 +43,10 @@ br\com\example\entrypoint\dto\request\LoanCalculatorRequestDTO$LoanCalculatorReq
 br\com\example\entrypoint\dto\request\FeeRequestDTO$FeeRequestDTOBuilder.class
 br\com\example\domain\calculator\service\impl\CalculatorPriceServiceImpl.class
 br\com\example\domain\calculator\model\LoanModel.class
+br\com\example\entrypoint\util\ObjectMapperUtil.class
 br\com\example\domain\calculator\service\impl\CalculatorServiceImpl.class
 br\com\example\domain\calculator\component\chain\impl\CalculationPriceInstallment.class
+br\com\example\MainCalculatorLambdaTest.class
 br\com\example\entrypoint\dto\response\InstallmentResponseDTO$InstallmentResponseDTOBuilder.class
 br\com\example\entrypoint\dto\request\InsuranceRequestDTO.class
 br\com\example\domain\calculator\component\chain\impl\CalculationPriceInstallmentTotalBalanceAmount.class
@@ -54,6 +58,7 @@ br\com\example\domain\calculator\model\FeeModel.class
 br\com\example\domain\calculator\model\PaymentPlanModel.class
 br\com\example\entrypoint\mapper\impl\CustomMapperImpl.class
 br\com\example\domain\calculator\enumeration\TaxTypeEnum.class
+br\com\example\MainCalculatorLambdaTest$1$1.class
 br\com\example\entrypoint\dto\request\FeeRequestDTO.class
 br\com\example\domain\calculator\component\validation\InsuranceValidation.class
 br\com\example\entrypoint\command\ServiceCommand.class

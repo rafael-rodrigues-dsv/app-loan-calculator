@@ -27,13 +27,8 @@ public class MainCalculatorLambda implements RequestHandler<LoanCalculatorReques
             context.getLogger().log("Received input: " + objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(input));
             return calculatorCommand.execute(input);
         } catch (CalculatorValidationException e) {
-            ValidationResult validationResult = e.getValidationResult();
-            try {
-                context.getLogger().log("Validation error: " + objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(validationResult));
-            } catch (JsonProcessingException ex) {
-                throw new RuntimeException(ex);
-            }
-            throw new RuntimeException(String.valueOf(validationResult));
+            context.getLogger().log("Error validation request: " + e.getMessage());
+            throw new RuntimeException(e);
         } catch (Exception e) {
             context.getLogger().log("Error processing request: " + e.getMessage());
             throw new RuntimeException("Error processing loan calculation", e);
