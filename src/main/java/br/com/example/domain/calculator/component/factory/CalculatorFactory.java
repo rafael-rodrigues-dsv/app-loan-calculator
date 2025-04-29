@@ -4,7 +4,7 @@ import br.com.example.domain.calculator.enumeration.CalculationTypeEnum;
 import br.com.example.domain.calculator.model.LoanModel;
 import br.com.example.domain.calculator.model.PaymentPlanModel;
 import br.com.example.domain.calculator.component.template.PaymentPlanGenerator;
-import br.com.example.domain.calculator.service.impl.CalculatorPrice;
+import br.com.example.domain.calculator.service.impl.CalculatorPriceServiceImpl;
 
 public class CalculatorFactory {
     public static PaymentPlanModel calculate(LoanModel loanModel) {
@@ -12,7 +12,7 @@ public class CalculatorFactory {
             PaymentPlanModel paymentPlanModel = new PaymentPlanGenerator().generate(loanModel);
 
             if (paymentPlanModel != null) {
-                return new CalculatorPrice().calculate(paymentPlanModel);
+                return new CalculatorPriceServiceImpl().calculate(paymentPlanModel);
             }
         }
 

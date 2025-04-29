@@ -6,12 +6,15 @@ import br.com.example.domain.calculator.model.InstallmentModel;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-public class CalculationInstallmentTotalInstallmentValue extends CalculatorEngine<InstallmentModel> {
+import static br.com.example.domain.calculator.constant.CalculationConstant.PERCENTAGE_DIVISOR_100;
+import static br.com.example.domain.calculator.constant.CalculationConstant.SCALE;
+
+public class CalculationPriceInstallmentTotalInstallmentValue extends CalculatorEngine<InstallmentModel> {
 
     private static BigDecimal totalFinancedAmount;
     private static Integer installmentQuantity;
 
-    public CalculationInstallmentTotalInstallmentValue(BigDecimal totalFinancedAmount, Integer installmentQuantity) {
+    public CalculationPriceInstallmentTotalInstallmentValue(BigDecimal totalFinancedAmount, Integer installmentQuantity) {
         this.totalFinancedAmount = totalFinancedAmount;
         this.installmentQuantity = installmentQuantity;
     }
@@ -59,12 +62,12 @@ public class CalculationInstallmentTotalInstallmentValue extends CalculatorEngin
             throw new IllegalArgumentException("Interest rate must be greater than zero and total periods must be positive.");
         }
 
-        BigDecimal monthlyRate = interestRate.divide(BigDecimal.valueOf(100), MathContext.DECIMAL128);
+        BigDecimal monthlyRate = interestRate.divide(PERCENTAGE_DIVISOR_100, MathContext.DECIMAL128);
         BigDecimal numerator = monthlyRate.multiply(totalFinancedAmount);
         BigDecimal denominator = BigDecimal.ONE.subtract(
                 BigDecimal.ONE.add(monthlyRate).pow(-installmentQuantity, MathContext.DECIMAL128)
         );
 
-        return numerator.divide(denominator, 2, BigDecimal.ROUND_HALF_EVEN);
+        return numerator.divide(denominator, SCALE, BigDecimal.ROUND_HALF_EVEN);
     }
 }

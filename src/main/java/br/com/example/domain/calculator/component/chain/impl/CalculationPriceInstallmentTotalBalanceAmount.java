@@ -5,11 +5,13 @@ import br.com.example.domain.calculator.model.InstallmentModel;
 
 import java.math.BigDecimal;
 
-public class CalculationInstallmentTotalBalanceAmount extends CalculatorEngine<InstallmentModel> {
+import static br.com.example.domain.calculator.constant.CalculationConstant.*;
+
+public class CalculationPriceInstallmentTotalBalanceAmount extends CalculatorEngine<InstallmentModel> {
 
     private static BigDecimal totalFinancedAmount;
 
-    public CalculationInstallmentTotalBalanceAmount(BigDecimal totalFinancedAmount) {
+    public CalculationPriceInstallmentTotalBalanceAmount(BigDecimal totalFinancedAmount) {
         this.totalFinancedAmount = totalFinancedAmount;
     }
 
@@ -17,12 +19,12 @@ public class CalculationInstallmentTotalBalanceAmount extends CalculatorEngine<I
     public InstallmentModel calculate(InstallmentModel beforeInstallment, InstallmentModel currentInstallment) {
         BigDecimal totalBalanceAmount;
 
-        if (currentInstallment.getNumber().equals(0)) {
+        if (currentInstallment.getNumber().equals(INSTALLMENT_NUMBER_INITIAL)) {
             totalBalanceAmount = totalFinancedAmount;
         } else {
             totalBalanceAmount = beforeInstallment.getTotalBalanceAmount()
                     .subtract(currentInstallment.getTotalAmortizationAmount())
-                    .setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                    .setScale(SCALE, ROUNDING_MODE);
 
             if (totalBalanceAmount.compareTo(BigDecimal.ZERO) < 0) {
                 totalBalanceAmount = BigDecimal.ZERO;

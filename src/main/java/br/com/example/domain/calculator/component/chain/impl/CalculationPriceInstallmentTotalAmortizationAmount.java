@@ -5,13 +5,16 @@ import br.com.example.domain.calculator.model.InstallmentModel;
 
 import java.math.BigDecimal;
 
-public class CalculationInstallmentTotalAmortizationAmount extends CalculatorEngine<InstallmentModel> {
+import static br.com.example.domain.calculator.constant.CalculationConstant.ROUNDING_MODE;
+import static br.com.example.domain.calculator.constant.CalculationConstant.SCALE;
+
+public class CalculationPriceInstallmentTotalAmortizationAmount extends CalculatorEngine<InstallmentModel> {
 
     @Override
     public InstallmentModel calculate(InstallmentModel beforeInstallment, InstallmentModel currentInstallment) {
         BigDecimal totalAmortizationAmount = currentInstallment.getTotalInstalmentValue()
                 .subtract(currentInstallment.getTotalInterestAmount())
-                .setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                .setScale(SCALE, ROUNDING_MODE);
 
         currentInstallment.setTotalAmortizationAmount(totalAmortizationAmount);
         return currentInstallment;

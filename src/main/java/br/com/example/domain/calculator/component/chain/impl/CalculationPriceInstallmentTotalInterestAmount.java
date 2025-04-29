@@ -5,15 +5,17 @@ import br.com.example.domain.calculator.model.InstallmentModel;
 
 import java.math.BigDecimal;
 
-public class CalculationInstallmentTotalInterestAmount extends CalculatorEngine<InstallmentModel> {
+import static br.com.example.domain.calculator.constant.CalculationConstant.*;
+
+public class CalculationPriceInstallmentTotalInterestAmount extends CalculatorEngine<InstallmentModel> {
 
     @Override
     public InstallmentModel calculate(InstallmentModel beforeInstallment, InstallmentModel currentInstallment) {
         BigDecimal interestRate = currentInstallment.getInterestRate();
 
         BigDecimal totalInterestAmount = interestRate.multiply(beforeInstallment.getTotalBalanceAmount())
-                .divide(BigDecimal.valueOf(100))
-                .setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                .divide(PERCENTAGE_DIVISOR_100)
+                .setScale(SCALE, ROUNDING_MODE);
 
         currentInstallment.setTotalInterestAmount(totalInterestAmount);
 

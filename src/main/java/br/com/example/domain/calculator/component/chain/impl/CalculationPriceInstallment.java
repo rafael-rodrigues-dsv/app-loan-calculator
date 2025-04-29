@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CalculationInstallment extends CalculatorEngine<PaymentPlanModel> {
+public class CalculationPriceInstallment extends CalculatorEngine<PaymentPlanModel> {
 
     @Override
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
@@ -20,7 +20,7 @@ public class CalculationInstallment extends CalculatorEngine<PaymentPlanModel> {
         paymentPlanModel.getInstallments().forEach(currentInstallment -> {
             if (currentInstallment.getNumber().equals(0)) {
                 CalculatorEngine<InstallmentModel> chain = new CalculatorEngineBuilder<InstallmentModel>()
-                        .add(new CalculationInstallmentTotalBalanceAmount(totalFinancedAmount))
+                        .add(new CalculationPriceInstallmentTotalBalanceAmount(totalFinancedAmount))
                         .build();
 
                 currentInstallment = chain.calculate(currentInstallment, currentInstallment);
@@ -28,10 +28,10 @@ public class CalculationInstallment extends CalculatorEngine<PaymentPlanModel> {
                 InstallmentModel beforeInstallment = installments.get(currentInstallment.getNumber() - 1);
 
                 CalculatorEngine<InstallmentModel> chain = new CalculatorEngineBuilder<InstallmentModel>()
-                        .add(new CalculationInstallmentTotalInterestAmount())
-                        .add(new CalculationInstallmentTotalInstallmentValue(totalFinancedAmount, installmentQuantity))
-                        .add(new CalculationInstallmentTotalAmortizationAmount())
-                        .add(new CalculationInstallmentTotalBalanceAmount(totalFinancedAmount))
+                        .add(new CalculationPriceInstallmentTotalInterestAmount())
+                        .add(new CalculationPriceInstallmentTotalInstallmentValue(totalFinancedAmount, installmentQuantity))
+                        .add(new CalculationPriceInstallmentTotalAmortizationAmount())
+                        .add(new CalculationPriceInstallmentTotalBalanceAmount(totalFinancedAmount))
                         .build();
 
                 currentInstallment = chain.calculate(beforeInstallment, currentInstallment);

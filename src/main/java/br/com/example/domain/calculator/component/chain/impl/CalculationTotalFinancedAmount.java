@@ -8,6 +8,9 @@ import br.com.example.domain.calculator.enumeration.TaxTypeEnum;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import static br.com.example.domain.calculator.constant.CalculationConstant.ROUNDING_MODE;
+import static br.com.example.domain.calculator.constant.CalculationConstant.SCALE;
+
 public class CalculationTotalFinancedAmount extends CalculatorEngine<PaymentPlanModel> {
 
     @Override
@@ -39,7 +42,7 @@ public class CalculationTotalFinancedAmount extends CalculatorEngine<PaymentPlan
                                 + totalFees
                                 + totalInsurances
                                 + totalTaxes)
-                        .setScale(2, RoundingMode.HALF_EVEN));
+                        .setScale(SCALE, ROUNDING_MODE));
 
         return paymentPlanModel;
     }
