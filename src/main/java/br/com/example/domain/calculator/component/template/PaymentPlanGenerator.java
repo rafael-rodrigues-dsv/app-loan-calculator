@@ -1,5 +1,6 @@
 package br.com.example.domain.calculator.component.template;
 
+import br.com.example.domain.calculator.enumeration.PeriodTypeEnum;
 import br.com.example.domain.calculator.model.InstallmentModel;
 import br.com.example.domain.calculator.model.LoanModel;
 import br.com.example.domain.calculator.model.PaymentPlanModel;
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.LongStream;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -36,6 +38,9 @@ public class PaymentPlanGenerator extends PaymentPlanGeneratorTemplate {
 
     private List<InstallmentModel> addInstallments(LoanModel loanModel) {
         BigDecimal interestRate = loanModel.getPricing().getInterestRate();
+        PeriodTypeEnum interestRateType = Objects.nonNull(loanModel.getPricing())
+                ? loanModel.getPricing().getPeriodType()
+                : PeriodTypeEnum.MONTHLY;
         LocalDate contractDate = loanModel.getContractDate();
         List<InstallmentModel> installments = new ArrayList<>();
 
@@ -47,6 +52,7 @@ public class PaymentPlanGenerator extends PaymentPlanGeneratorTemplate {
                         installments.add(InstallmentModel.builder()
                                 .number(installmentNumber)
                                 .interestRate(interestRate)
+                                .interestRateType(interestRateType)
                                 .dueDate(contractDate)
                                 .contractDays(0)
                                 .periodDays(0)
@@ -61,6 +67,7 @@ public class PaymentPlanGenerator extends PaymentPlanGeneratorTemplate {
                         installments.add(InstallmentModel.builder()
                                 .number(installmentNumber)
                                 .interestRate(interestRate)
+                                .interestRateType(interestRateType)
                                 .dueDate(dueDate)
                                 .contractDays(Math.min(
                                         (int) DAYS.between(

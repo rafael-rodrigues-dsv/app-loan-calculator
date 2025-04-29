@@ -39,7 +39,7 @@ public class CalculationTotalFinancedAmount extends CalculatorEngine<PaymentPlan
                                 + totalFees
                                 + totalInsurances
                                 + totalTaxes)
-                        .setScale(4, RoundingMode.HALF_EVEN));
+                        .setScale(2, RoundingMode.HALF_EVEN));
 
         return paymentPlanModel;
     }

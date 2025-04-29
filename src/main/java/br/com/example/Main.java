@@ -22,7 +22,7 @@ public class Main {
     private static LoanModel getLoanPre() {
         PricingModel pricingModel = PricingModel.builder()
                 .modalityType(ModalityTypeEnum.PRE_FIXADO)
-                .periodType(PeriodTypeEnum.MES)
+                .periodType(PeriodTypeEnum.MONTHLY)
                 .interestRate(BigDecimal.valueOf(1.75))
                 .build();
 
@@ -30,9 +30,9 @@ public class Main {
                 .calculationType(CalculationTypeEnum.PRICE)
                 .pricing(pricingModel)
                 .installmentQuantity(5)
-                .amount(BigDecimal.valueOf(5.000))
-                .contractDate(LocalDate.of(2023, Month.AUGUST, 21))
-                .firstInstallmentDate(LocalDate.of(2023, Month.SEPTEMBER, 21))
+                .amount(BigDecimal.valueOf(4_000))
+                .contractDate(LocalDate.of(2025, Month.APRIL, 29))
+                .firstInstallmentDate(LocalDate.of(2025, Month.MAY, 29))
                 .fees(getFees())
                 .insurances(getInsurances())
                 .taxes(getTaxes())
@@ -42,7 +42,7 @@ public class Main {
     private static LoanModel getLoanPos() {
         PricingModel pricingModel = PricingModel.builder()
                 .modalityType(ModalityTypeEnum.POS_FIXADO)
-                .periodType(PeriodTypeEnum.MES)
+                .periodType(PeriodTypeEnum.MONTHLY)
                 .interestRate(BigDecimal.valueOf(1.75))
                 .benchmarks(getBenchmarks())
                 .build();
@@ -51,9 +51,9 @@ public class Main {
                 .calculationType(CalculationTypeEnum.PRICE)
                 .pricing(pricingModel)
                 .installmentQuantity(5)
-                .amount(BigDecimal.valueOf(5.000))
-                .contractDate(LocalDate.of(2023, Month.AUGUST, 21))
-                .firstInstallmentDate(LocalDate.of(2023, Month.SEPTEMBER, 21))
+                .amount(BigDecimal.valueOf(5_000))
+                .contractDate(LocalDate.of(2025, Month.APRIL, 29))
+                .firstInstallmentDate(LocalDate.of(2025, Month.MAY, 29))
                 .fees(getFees())
                 .insurances(getInsurances())
                 .taxes(getTaxes())
@@ -65,7 +65,7 @@ public class Main {
 
         benchmarks.add(BenchmarkModel.builder()
                 .name("CDI")
-                .periodType(PeriodTypeEnum.ANO)
+                .periodType(PeriodTypeEnum.YEARLY)
                 .interestRate(BigDecimal.valueOf(13.15))
                 .interestRateTotalComposition(BigDecimal.valueOf(100.00))
                 .build());
@@ -78,7 +78,7 @@ public class Main {
 
         fees.add(FeeModel.builder()
                 .paymentType(PaymentTypeEnum.FINANCIADO)
-                .value(BigDecimal.valueOf(94.99))
+                .value(BigDecimal.valueOf(200.00))
                 .build());
 
         return fees;
@@ -89,7 +89,7 @@ public class Main {
 
         insurances.add(InsuranceModel.builder()
                 .paymentType(PaymentTypeEnum.FINANCIADO)
-                .value(BigDecimal.valueOf(37.76))
+                .value(BigDecimal.valueOf(800.00))
                 .build());
 
         return insurances;

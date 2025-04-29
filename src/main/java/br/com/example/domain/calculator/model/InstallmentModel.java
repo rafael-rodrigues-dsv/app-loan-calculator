@@ -1,5 +1,6 @@
 package br.com.example.domain.calculator.model;
 
+import br.com.example.domain.calculator.enumeration.PeriodTypeEnum;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -16,7 +17,8 @@ public class InstallmentModel {
     private Integer contractDays;
     private Integer periodDays;
     private BigDecimal interestRate;
-    private BigDecimal instalmentValue;
+    private PeriodTypeEnum interestRateType;
+    private BigDecimal totalInstalmentValue;
     private BigDecimal totalInterestAmount;
     private BigDecimal totalAmortizationAmount;
     private BigDecimal totalBalanceAmount;

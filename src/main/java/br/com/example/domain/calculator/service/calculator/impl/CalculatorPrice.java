@@ -1,5 +1,6 @@
 package br.com.example.domain.calculator.service.calculator.impl;
 
+import br.com.example.domain.calculator.component.chain.impl.CalculationInstallment;
 import br.com.example.domain.calculator.model.PaymentPlanModel;
 import br.com.example.domain.calculator.component.chain.CalculatorEngine;
 import br.com.example.domain.calculator.component.chain.CalculatorEngineBuilder;
@@ -10,6 +11,7 @@ public class CalculatorPrice {
 
         CalculatorEngine<PaymentPlanModel> chain = new CalculatorEngineBuilder<PaymentPlanModel>()
                 .add(new CalculationTotalFinancedAmount())
+                .add(new CalculationInstallment())
                 .build();
 
         return chain.calculate(paymentPlanModel);
