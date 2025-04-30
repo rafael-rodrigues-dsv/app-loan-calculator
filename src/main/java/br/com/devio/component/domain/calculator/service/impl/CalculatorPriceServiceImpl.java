@@ -1,10 +1,10 @@
 package br.com.devio.component.domain.calculator.service.impl;
 
-import br.com.devio.component.domain.calculator.component.chain.CalculatorEngine;
-import br.com.devio.component.domain.calculator.component.chain.impl.CalculationPriceInstallment;
-import br.com.devio.component.domain.calculator.component.chain.impl.CalculationTotalFinancedAmount;
-import br.com.devio.component.domain.calculator.model.PaymentPlanModel;
-import br.com.devio.component.domain.calculator.component.chain.CalculatorEngineBuilder;
+import br.com.devio.component.domain.calculator.chain.CalculatorEngine;
+import br.com.devio.component.domain.calculator.chain.impl.CalculationPriceInstallment;
+import br.com.devio.component.domain.calculator.chain.impl.CalculationTotalFinancedAmount;
+import br.com.devio.component.domain.model.PaymentPlanModel;
+import br.com.devio.component.domain.calculator.chain.CalculatorEngineBuilder;
 
 public class CalculatorPriceServiceImpl {
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {

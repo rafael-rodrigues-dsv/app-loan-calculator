@@ -1,5 +1,6 @@
 package br.com.devio.component.domain.calculator.exception;
 
+import br.com.devio.component.domain.exception.CalculatorValidationException;
 import br.com.fluentvalidator.context.ValidationResult;
 import org.junit.jupiter.api.Test;
 

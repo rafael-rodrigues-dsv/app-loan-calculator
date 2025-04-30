@@ -12,6 +12,7 @@
 
 # Maven target directory
 /target/
+/target/**
 
 # Package Files #
 *.jar

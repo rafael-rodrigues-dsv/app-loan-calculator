@@ -1,7 +1,7 @@
 package br.com.devio.component.entrypoint.dto.request;
 
-import br.com.devio.component.domain.calculator.enumeration.PaymentTypeEnum;
-import br.com.devio.component.domain.calculator.enumeration.TaxTypeEnum;
+import br.com.devio.component.domain.enumeration.PaymentTypeEnum;
+import br.com.devio.component.domain.enumeration.TaxTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

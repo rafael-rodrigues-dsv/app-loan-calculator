@@ -1,7 +1,7 @@
 package br.com.devio.component.entrypoint.dto.request;
 
-import br.com.devio.component.domain.calculator.enumeration.ModalityTypeEnum;
-import br.com.devio.component.domain.calculator.enumeration.PeriodTypeEnum;
+import br.com.devio.component.domain.enumeration.ModalityTypeEnum;
+import br.com.devio.component.domain.enumeration.PeriodTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package br.com.devio.component.entrypoint.dto.request;
 
-import br.com.devio.component.domain.calculator.enumeration.CalculationTypeEnum;
+import br.com.devio.component.domain.enumeration.CalculationTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
