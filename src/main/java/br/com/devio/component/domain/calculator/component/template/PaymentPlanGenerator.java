@@ -36,7 +36,7 @@ public class PaymentPlanGenerator extends PaymentPlanGeneratorTemplate {
                 .build();
     }
 
-    private List<InstallmentModel> addInstallments(LoanModel loanModel) {
+    protected List<InstallmentModel> addInstallments(LoanModel loanModel) {
         BigDecimal interestRate = loanModel.getPricing().getInterestRate();
         PeriodTypeEnum interestRateType = Objects.nonNull(loanModel.getPricing())
                 ? loanModel.getPricing().getPeriodType()
@@ -84,7 +84,7 @@ public class PaymentPlanGenerator extends PaymentPlanGeneratorTemplate {
         return installments;
     }
 
-    private LocalDate addLastInstallmentDate(List<InstallmentModel> installments) {
+    protected LocalDate addLastInstallmentDate(List<InstallmentModel> installments) {
         Integer installmentSize = installments.size();
 
         if (installments != null && !installments.isEmpty()) {

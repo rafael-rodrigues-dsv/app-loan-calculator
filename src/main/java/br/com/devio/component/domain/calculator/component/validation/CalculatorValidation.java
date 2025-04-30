@@ -1,19 +1,14 @@
 package br.com.devio.component.domain.calculator.component.validation;
 
-import br.com.devio.component.domain.calculator.enumeration.CalculationTypeEnum;
 import br.com.devio.component.domain.calculator.model.LoanModel;
 import br.com.fluentvalidator.AbstractValidator;
 
-import java.util.List;
 import java.util.Objects;
 
 import static br.com.fluentvalidator.predicate.LogicalPredicate.not;
 import static br.com.fluentvalidator.predicate.ObjectPredicate.nullValue;
 
 public class CalculatorValidation extends AbstractValidator<LoanModel> {
-
-    private static final List<CalculationTypeEnum> ALLOWED_CALCULATION_TYPES = List.of(CalculationTypeEnum.PRICE);
-
     @Override
     public void rules() {
         ruleFor(LoanModel::getCalculationType)
