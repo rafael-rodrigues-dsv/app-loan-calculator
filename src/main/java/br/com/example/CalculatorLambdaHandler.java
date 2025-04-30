@@ -1,5 +1,6 @@
 package br.com.example;
 
+import br.com.example.configuration.ObjectMapperConfig;
 import br.com.example.domain.calculator.exception.CalculatorValidationException;
 import br.com.example.domain.calculator.service.impl.CalculatorServiceImpl;
 import br.com.example.entrypoint.command.ServiceCommand;
@@ -7,25 +8,29 @@ import br.com.example.entrypoint.command.calculator.CreateLoanCalculatorCommand;
 import br.com.example.entrypoint.dto.request.LoanCalculatorRequestDTO;
 import br.com.example.entrypoint.dto.response.LoanCalculatorResponseDTO;
 import br.com.example.entrypoint.mapper.impl.CustomMapperImpl;
-import br.com.example.entrypoint.util.ObjectMapperUtil;
-import br.com.fluentvalidator.context.ValidationResult;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class MainCalculatorLambda implements RequestHandler<LoanCalculatorRequestDTO, LoanCalculatorResponseDTO> {
+public class CalculatorLambdaHandler implements RequestHandler<String, String> {
 
     private static final ServiceCommand<LoanCalculatorRequestDTO, LoanCalculatorResponseDTO> calculatorCommand =
             new CreateLoanCalculatorCommand(new CalculatorServiceImpl(), new CustomMapperImpl());
 
-    private static final ObjectMapper objectMapper = ObjectMapperUtil.createObjectMapper();
+    private ObjectMapper objectMapper = ObjectMapperConfig.getObjectMapper();
 
     @Override
-    public LoanCalculatorResponseDTO handleRequest(LoanCalculatorRequestDTO input, Context context) {
+    public String handleRequest(String input, Context context) {
         try {
-            context.getLogger().log("Received input: " + objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(input));
-            return calculatorCommand.execute(input);
+            context.getLogger().log("Received input: " + input);
+            LoanCalculatorRequestDTO requestDTO;
+            try {
+                requestDTO = objectMapper.readValue(input, LoanCalculatorRequestDTO.class);
+            } catch (Exception e) {
+                context.getLogger().log("Error parsing input to LoanCalculatorRequestDTO: " + e.getMessage());
+                throw new RuntimeException("Invalid input format", e);
+            }
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(calculatorCommand.execute(requestDTO));
         } catch (CalculatorValidationException e) {
             context.getLogger().log("Error validation request: " + e.getMessage());
             throw new RuntimeException(e);

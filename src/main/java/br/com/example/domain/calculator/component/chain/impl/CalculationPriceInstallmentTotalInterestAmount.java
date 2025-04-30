@@ -5,7 +5,9 @@ import br.com.example.domain.calculator.model.InstallmentModel;
 
 import java.math.BigDecimal;
 
-import static br.com.example.domain.calculator.constant.CalculationConstant.*;
+import static br.com.example.domain.calculator.constant.CalculationConstant.PERCENTAGE_DIVISOR_100;
+import static br.com.example.domain.calculator.constant.CalculationConstant.ROUNDING_MODE;
+import static br.com.example.domain.calculator.constant.CalculationConstant.SCALE;
 
 public class CalculationPriceInstallmentTotalInterestAmount extends CalculatorEngine<InstallmentModel> {
 

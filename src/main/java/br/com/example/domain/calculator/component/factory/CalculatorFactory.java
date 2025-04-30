@@ -1,9 +1,9 @@
 package br.com.example.domain.calculator.component.factory;
 
+import br.com.example.domain.calculator.component.template.PaymentPlanGenerator;
 import br.com.example.domain.calculator.enumeration.CalculationTypeEnum;
 import br.com.example.domain.calculator.model.LoanModel;
 import br.com.example.domain.calculator.model.PaymentPlanModel;
-import br.com.example.domain.calculator.component.template.PaymentPlanGenerator;
 import br.com.example.domain.calculator.service.impl.CalculatorPriceServiceImpl;
 
 public class CalculatorFactory {

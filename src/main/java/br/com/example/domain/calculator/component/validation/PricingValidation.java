@@ -1,6 +1,5 @@
 package br.com.example.domain.calculator.component.validation;
 
-import br.com.example.domain.calculator.enumeration.CalculationTypeEnum;
 import br.com.example.domain.calculator.enumeration.ModalityTypeEnum;
 import br.com.example.domain.calculator.model.PricingModel;
 import br.com.fluentvalidator.AbstractValidator;

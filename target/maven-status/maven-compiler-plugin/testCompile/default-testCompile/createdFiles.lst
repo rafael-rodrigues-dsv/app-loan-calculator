@@ -1,4 +1,7 @@
 br\com\example\domain\calculator\component\chain\CalculatorEngineTest$MockCalculator.class
+br\com\example\context\TestContext$1.class
+br\com\example\context\TestContext.class
 br\com\example\domain\calculator\component\chain\CalculatorEngineBuilderTest$MockCalculator.class
 br\com\example\domain\calculator\component\chain\CalculatorEngineBuilderTest.class
 br\com\example\domain\calculator\component\chain\CalculatorEngineTest.class
+br\com\example\MainCalculatorLambdaComponentTest.class

@@ -5,7 +5,9 @@ import br.com.example.domain.calculator.model.InstallmentModel;
 
 import java.math.BigDecimal;
 
-import static br.com.example.domain.calculator.constant.CalculationConstant.*;
+import static br.com.example.domain.calculator.constant.CalculationConstant.INSTALLMENT_NUMBER_INITIAL;
+import static br.com.example.domain.calculator.constant.CalculationConstant.ROUNDING_MODE;
+import static br.com.example.domain.calculator.constant.CalculationConstant.SCALE;
 
 public class CalculationPriceInstallmentTotalBalanceAmount extends CalculatorEngine<InstallmentModel> {
 

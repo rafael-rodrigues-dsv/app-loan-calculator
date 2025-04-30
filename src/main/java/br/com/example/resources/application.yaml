@@ -1,0 +1,2 @@
+jackson:
+  write-dates-as-timestamps: false

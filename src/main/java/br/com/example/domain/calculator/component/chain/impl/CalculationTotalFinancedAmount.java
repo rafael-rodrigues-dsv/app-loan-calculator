@@ -1,12 +1,11 @@
 package br.com.example.domain.calculator.component.chain.impl;
 
 import br.com.example.domain.calculator.component.chain.CalculatorEngine;
-import br.com.example.domain.calculator.model.PaymentPlanModel;
 import br.com.example.domain.calculator.enumeration.PaymentTypeEnum;
 import br.com.example.domain.calculator.enumeration.TaxTypeEnum;
+import br.com.example.domain.calculator.model.PaymentPlanModel;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import static br.com.example.domain.calculator.constant.CalculationConstant.ROUNDING_MODE;
 import static br.com.example.domain.calculator.constant.CalculationConstant.SCALE;
