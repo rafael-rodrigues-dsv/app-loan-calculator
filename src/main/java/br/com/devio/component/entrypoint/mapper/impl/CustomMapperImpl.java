@@ -1,8 +1,11 @@
 package br.com.devio.component.entrypoint.mapper.impl;
 
 import br.com.devio.component.entrypoint.mapper.CustomMapper;
+import jakarta.enterprise.context.ApplicationScoped;
 import org.modelmapper.ModelMapper;
 
+
+@ApplicationScoped
 public class CustomMapperImpl implements CustomMapper {
 
     private final ModelMapper mapper;

@@ -6,16 +6,15 @@ import br.com.devio.component.entrypoint.command.ServiceCommand;
 import br.com.devio.component.entrypoint.dto.request.LoanCalculatorRequestDTO;
 import br.com.devio.component.entrypoint.dto.response.LoanCalculatorResponseDTO;
 import br.com.devio.component.entrypoint.mapper.CustomMapper;
+import jakarta.enterprise.context.ApplicationScoped;
+import lombok.RequiredArgsConstructor;
 
+@ApplicationScoped
+@RequiredArgsConstructor
 public class CreateLoanCalculatorCommand implements ServiceCommand<LoanCalculatorRequestDTO, LoanCalculatorResponseDTO> {
 
     private final CalculatorService service;
     private final CustomMapper customMapper;
-
-    public CreateLoanCalculatorCommand(CalculatorService service, CustomMapper customMapper) {
-        this.service = service;
-        this.customMapper = customMapper;
-    }
 
     @Override
     public LoanCalculatorResponseDTO execute(LoanCalculatorRequestDTO loanCalculatorRequestDto) {

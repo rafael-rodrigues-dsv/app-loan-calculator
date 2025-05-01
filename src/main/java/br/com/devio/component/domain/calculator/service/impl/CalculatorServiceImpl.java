@@ -7,7 +7,10 @@ import br.com.devio.component.domain.model.LoanModel;
 import br.com.devio.component.domain.model.PaymentPlanModel;
 import br.com.devio.component.domain.calculator.service.CalculatorService;
 import br.com.fluentvalidator.context.ValidationResult;
+import jakarta.enterprise.context.ApplicationScoped;
+import lombok.RequiredArgsConstructor;
 
+@ApplicationScoped
 public class CalculatorServiceImpl implements CalculatorService {
 
     @Override
