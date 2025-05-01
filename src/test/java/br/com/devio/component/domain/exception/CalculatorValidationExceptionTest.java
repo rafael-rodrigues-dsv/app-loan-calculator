@@ -1,4 +1,4 @@
-package br.com.devio.component.domain.calculator.exception;
+package br.com.devio.component.domain.exception;
 
 import br.com.devio.component.domain.exception.CalculatorValidationException;
 import br.com.fluentvalidator.context.ValidationResult;

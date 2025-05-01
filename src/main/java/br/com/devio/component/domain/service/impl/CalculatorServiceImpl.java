@@ -1,14 +1,13 @@
-package br.com.devio.component.domain.calculator.service.impl;
+package br.com.devio.component.domain.service.impl;
 
 import br.com.devio.component.domain.calculator.factory.CalculatorFactory;
 import br.com.devio.component.domain.validation.CalculatorValidation;
 import br.com.devio.component.domain.exception.CalculatorValidationException;
 import br.com.devio.component.domain.model.LoanModel;
 import br.com.devio.component.domain.model.PaymentPlanModel;
-import br.com.devio.component.domain.calculator.service.CalculatorService;
+import br.com.devio.component.domain.service.CalculatorService;
 import br.com.fluentvalidator.context.ValidationResult;
 import jakarta.enterprise.context.ApplicationScoped;
-import lombok.RequiredArgsConstructor;
 
 @ApplicationScoped
 public class CalculatorServiceImpl implements CalculatorService {

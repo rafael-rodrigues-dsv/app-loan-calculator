@@ -1,12 +1,10 @@
-package br.com.devio.component.domain.calculator.service.impl;
+package br.com.devio.component.domain.calculator.chain.impl;
 
 import br.com.devio.component.domain.calculator.chain.CalculatorEngine;
-import br.com.devio.component.domain.calculator.chain.impl.CalculationPriceInstallment;
-import br.com.devio.component.domain.calculator.chain.impl.CalculationTotalFinancedAmount;
-import br.com.devio.component.domain.model.PaymentPlanModel;
 import br.com.devio.component.domain.calculator.chain.CalculatorEngineBuilder;
+import br.com.devio.component.domain.model.PaymentPlanModel;
 
-public class CalculatorPriceServiceImpl {
+public class CalculationPrice {
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
 
         CalculatorEngine<PaymentPlanModel> chain = new CalculatorEngineBuilder<PaymentPlanModel>()

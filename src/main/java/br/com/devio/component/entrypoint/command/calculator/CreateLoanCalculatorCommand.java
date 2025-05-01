@@ -1,6 +1,6 @@
 package br.com.devio.component.entrypoint.command.calculator;
 
-import br.com.devio.component.domain.calculator.service.CalculatorService;
+import br.com.devio.component.domain.service.CalculatorService;
 import br.com.devio.component.domain.model.LoanModel;
 import br.com.devio.component.entrypoint.command.ServiceCommand;
 import br.com.devio.component.entrypoint.dto.request.LoanCalculatorRequestDTO;

@@ -1,4 +1,4 @@
-package br.com.devio.component.domain.calculator.service;
+package br.com.devio.component.domain.service;
 
 import br.com.devio.component.domain.model.LoanModel;
 import br.com.devio.component.domain.model.PaymentPlanModel;

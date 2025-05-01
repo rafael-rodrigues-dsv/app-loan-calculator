@@ -1,7 +1,7 @@
 package br.com.devio.component.domain.calculator.factory;
 
 import br.com.devio.component.domain.calculator.strategy.CalculationStrategy;
-import br.com.devio.component.domain.calculator.strategy.impl.PriceCalculationStrategy;
+import br.com.devio.component.domain.calculator.strategy.impl.CalculationPriceStrategy;
 import br.com.devio.component.domain.enumeration.CalculationTypeEnum;
 import br.com.devio.component.domain.model.LoanModel;
 import br.com.devio.component.domain.model.PaymentPlanModel;
@@ -15,7 +15,7 @@ public class CalculatorFactory {
 
     private static CalculationStrategy getStrategy(CalculationTypeEnum calculationType) {
         if (calculationType.equals(CalculationTypeEnum.PRICE)) {
-            return new PriceCalculationStrategy();
+            return new CalculationPriceStrategy();
         }
         throw new UnsupportedOperationException("Calculation type not supported");
     }

@@ -4,9 +4,9 @@ import br.com.devio.component.domain.calculator.strategy.CalculationStrategy;
 import br.com.devio.component.domain.calculator.template.PaymentPlanGenerator;
 import br.com.devio.component.domain.model.LoanModel;
 import br.com.devio.component.domain.model.PaymentPlanModel;
-import br.com.devio.component.domain.calculator.service.impl.CalculatorPriceServiceImpl;
+import br.com.devio.component.domain.calculator.chain.impl.CalculationPrice;
 
-public class PriceCalculationStrategy implements CalculationStrategy {
+public class CalculationPriceStrategy implements CalculationStrategy {
 
     @Override
     public PaymentPlanModel calculate(LoanModel loanModel) {
@@ -14,8 +14,8 @@ public class PriceCalculationStrategy implements CalculationStrategy {
         PaymentPlanModel paymentPlanModel = paymentPlanGenerator.generate(loanModel);
 
         if (paymentPlanModel != null) {
-            CalculatorPriceServiceImpl calculatorPriceService = new CalculatorPriceServiceImpl();
-            return calculatorPriceService.calculate(paymentPlanModel);
+            CalculationPrice calculationPrice = new CalculationPrice();
+            return calculationPrice.calculate(paymentPlanModel);
         }
 
         throw new UnsupportedOperationException("Payment plan model is null");
