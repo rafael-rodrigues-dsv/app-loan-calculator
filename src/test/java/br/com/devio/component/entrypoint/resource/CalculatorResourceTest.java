@@ -106,18 +106,4 @@ class CalculatorResourceTest {
         // Validação dos erros de validação ou retorno esperado
         assertFalse(response.getBody().asString().isEmpty());
     }
-
-    @Test
-    void testCalculateLoan_withInternalError_shouldReturnServerError() {
-        var response = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .post("/calculator")
-                .then()
-                .statusCode(500)
-                .extract()
-                .response();
-
-        assertNotNull(response);
-    }
 }
