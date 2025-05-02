@@ -31,6 +31,7 @@ class InstallmentModelTest {
         assertNull(model.getPeriodDays());
         assertNull(model.getInterestRate());
         assertNull(model.getInterestRateType());
+        assertNull(model.getTotalPresentValue());
         assertNull(model.getTotalInstalmentValue());
         assertNull(model.getTotalInterestAmount());
         assertNull(model.getTotalAmortizationAmount());
@@ -47,6 +48,7 @@ class InstallmentModelTest {
                 BigDecimal.valueOf(5.0),
                 PeriodTypeEnum.MONTHLY,
                 BigDecimal.valueOf(1000.0),
+                BigDecimal.valueOf(1000.0),
                 BigDecimal.valueOf(50.0),
                 BigDecimal.valueOf(950.0),
                 BigDecimal.valueOf(5000.0)
@@ -58,6 +60,7 @@ class InstallmentModelTest {
         assertEquals(15, model.getPeriodDays());
         assertEquals(BigDecimal.valueOf(5.0), model.getInterestRate());
         assertEquals(PeriodTypeEnum.MONTHLY, model.getInterestRateType());
+        assertEquals(BigDecimal.valueOf(1000.0), model.getTotalPresentValue());
         assertEquals(BigDecimal.valueOf(1000.0), model.getTotalInstalmentValue());
         assertEquals(BigDecimal.valueOf(50.0), model.getTotalInterestAmount());
         assertEquals(BigDecimal.valueOf(950.0), model.getTotalAmortizationAmount());
@@ -73,6 +76,7 @@ class InstallmentModelTest {
                 .periodDays(30)
                 .interestRate(BigDecimal.valueOf(3.5))
                 .interestRateType(PeriodTypeEnum.DAILY)
+                .totalPresentValue(BigDecimal.valueOf(2000.0))
                 .totalInstalmentValue(BigDecimal.valueOf(2000.0))
                 .totalInterestAmount(BigDecimal.valueOf(70.0))
                 .totalAmortizationAmount(BigDecimal.valueOf(1930.0))
@@ -85,6 +89,7 @@ class InstallmentModelTest {
         assertEquals(30, model.getPeriodDays());
         assertEquals(BigDecimal.valueOf(3.5), model.getInterestRate());
         assertEquals(PeriodTypeEnum.DAILY, model.getInterestRateType());
+        assertEquals(BigDecimal.valueOf(2000.0), model.getTotalPresentValue());
         assertEquals(BigDecimal.valueOf(2000.0), model.getTotalInstalmentValue());
         assertEquals(BigDecimal.valueOf(70.0), model.getTotalInterestAmount());
         assertEquals(BigDecimal.valueOf(1930.0), model.getTotalAmortizationAmount());
@@ -99,6 +104,7 @@ class InstallmentModelTest {
         installmentModel.setPeriodDays(45);
         installmentModel.setInterestRate(BigDecimal.valueOf(4.0));
         installmentModel.setInterestRateType(PeriodTypeEnum.YEARLY);
+        installmentModel.setTotalPresentValue(BigDecimal.valueOf(1500.0));
         installmentModel.setTotalInstalmentValue(BigDecimal.valueOf(1500.0));
         installmentModel.setTotalInterestAmount(BigDecimal.valueOf(60.0));
         installmentModel.setTotalAmortizationAmount(BigDecimal.valueOf(1440.0));
@@ -110,6 +116,7 @@ class InstallmentModelTest {
         assertEquals(45, installmentModel.getPeriodDays());
         assertEquals(BigDecimal.valueOf(4.0), installmentModel.getInterestRate());
         assertEquals(PeriodTypeEnum.YEARLY, installmentModel.getInterestRateType());
+        assertEquals(BigDecimal.valueOf(1500.0), installmentModel.getTotalPresentValue());
         assertEquals(BigDecimal.valueOf(1500.0), installmentModel.getTotalInstalmentValue());
         assertEquals(BigDecimal.valueOf(60.0), installmentModel.getTotalInterestAmount());
         assertEquals(BigDecimal.valueOf(1440.0), installmentModel.getTotalAmortizationAmount());

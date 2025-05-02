@@ -22,6 +22,7 @@ public class InstallmentModel {
     private Integer periodDays;
     private BigDecimal interestRate;
     private PeriodTypeEnum interestRateType;
+    private BigDecimal totalPresentValue;
     private BigDecimal totalInstalmentValue;
     private BigDecimal totalInterestAmount;
     private BigDecimal totalAmortizationAmount;
