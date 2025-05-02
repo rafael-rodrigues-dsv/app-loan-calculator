@@ -1,22 +1,26 @@
 package br.com.devio.component.domain.calculator.factory;
 
-import br.com.devio.component.domain.calculator.strategy.CalculationStrategy;
-import br.com.devio.component.domain.calculator.strategy.impl.CalculationPriceStrategy;
+import br.com.devio.component.domain.calculator.chain.impl.CalculationPrice;
+import br.com.devio.component.domain.calculator.template.PaymentPlanGenerator;
 import br.com.devio.component.domain.enumeration.CalculationTypeEnum;
 import br.com.devio.component.domain.model.LoanModel;
 import br.com.devio.component.domain.model.PaymentPlanModel;
 
+import java.util.Objects;
+
 public class CalculatorFactory {
 
     public static PaymentPlanModel calculate(LoanModel loanModel) {
-        CalculationStrategy strategy = getStrategy(loanModel.getCalculationType());
-        return strategy.calculate(loanModel);
-    }
+        CalculationTypeEnum calculationType = loanModel.getCalculationType();
 
-    private static CalculationStrategy getStrategy(CalculationTypeEnum calculationType) {
         if (calculationType.equals(CalculationTypeEnum.PRICE)) {
-            return new CalculationPriceStrategy();
+            PaymentPlanModel paymentPlanModel = new PaymentPlanGenerator().generate(loanModel);
+
+            if (Objects.nonNull(paymentPlanModel)) {
+                return new CalculationPrice().calculate(paymentPlanModel);
+            }
         }
-        throw new UnsupportedOperationException("Calculation type not supported");
+
+        throw new UnsupportedOperationException("Invalid calculation type");
     }
 }
