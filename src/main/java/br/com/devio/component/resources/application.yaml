@@ -3,6 +3,7 @@ quarkus:
     write-dates-as-timestamps: false
     fail-on-unknown-properties: false
   lambda:
+    enabled: false  # Desliga o lambda ao rodar local
     handler: io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler
   package:
     type: native
