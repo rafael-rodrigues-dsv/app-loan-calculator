@@ -10,6 +10,7 @@ public class CalculationPrice {
         CalculatorEngine<PaymentPlanModel> chain = new CalculatorEngineBuilder<PaymentPlanModel>()
                 .add(new CalculationTotalFinancedAmount())
                 .add(new CalculationPriceInstallment())
+                .add(new CalculationTotalLoanAmount())
                 .build();
 
         return chain.calculate(paymentPlanModel);

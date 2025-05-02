@@ -28,6 +28,6 @@ public class PaymentPlanModel {
     private List<FeeModel> fees;
     private List<TaxModel> taxes;
     private BigDecimal totalFinancedAmount;
-    private BigDecimal totalAmount;
+    private BigDecimal totalLoanAmount;
     private List<InstallmentModel> installments;
 }

@@ -1,12 +1,6 @@
 package br.com.devio.component.domain.model;
 
 import br.com.devio.component.domain.enumeration.CalculationTypeEnum;
-import br.com.devio.component.domain.model.FeeModel;
-import br.com.devio.component.domain.model.InstallmentModel;
-import br.com.devio.component.domain.model.InsuranceModel;
-import br.com.devio.component.domain.model.PaymentPlanModel;
-import br.com.devio.component.domain.model.PricingModel;
-import br.com.devio.component.domain.model.TaxModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -42,7 +36,7 @@ class PaymentPlanModelTest {
         assertNull(model.getFees());
         assertNull(model.getTaxes());
         assertNull(model.getTotalFinancedAmount());
-        assertNull(model.getTotalAmount());
+        assertNull(model.getTotalLoanAmount());
         assertNull(model.getInstallments());
     }
 
@@ -84,7 +78,7 @@ class PaymentPlanModelTest {
         assertEquals(1, model.getTaxes().size());
         assertEquals(tax, model.getTaxes().get(0));
         assertEquals(BigDecimal.valueOf(12000.0), model.getTotalFinancedAmount());
-        assertEquals(BigDecimal.valueOf(15000.0), model.getTotalAmount());
+        assertEquals(BigDecimal.valueOf(15000.0), model.getTotalLoanAmount());
         assertEquals(1, model.getInstallments().size());
         assertEquals(installment, model.getInstallments().get(0));
     }
@@ -109,7 +103,7 @@ class PaymentPlanModelTest {
                 .fees(List.of(fee))
                 .taxes(List.of(tax))
                 .totalFinancedAmount(BigDecimal.valueOf(25000.0))
-                .totalAmount(BigDecimal.valueOf(30000.0))
+                .totalLoanAmount(BigDecimal.valueOf(30000.0))
                 .installments(List.of(installment))
                 .build();
 
@@ -127,7 +121,7 @@ class PaymentPlanModelTest {
         assertEquals(1, model.getTaxes().size());
         assertEquals(tax, model.getTaxes().get(0));
         assertEquals(BigDecimal.valueOf(25000.0), model.getTotalFinancedAmount());
-        assertEquals(BigDecimal.valueOf(30000.0), model.getTotalAmount());
+        assertEquals(BigDecimal.valueOf(30000.0), model.getTotalLoanAmount());
         assertEquals(1, model.getInstallments().size());
         assertEquals(installment, model.getInstallments().get(0));
     }
@@ -151,7 +145,7 @@ class PaymentPlanModelTest {
         paymentPlanModel.setFees(List.of(fee));
         paymentPlanModel.setTaxes(List.of(tax));
         paymentPlanModel.setTotalFinancedAmount(BigDecimal.valueOf(35000.0));
-        paymentPlanModel.setTotalAmount(BigDecimal.valueOf(40000.0));
+        paymentPlanModel.setTotalLoanAmount(BigDecimal.valueOf(40000.0));
         paymentPlanModel.setInstallments(List.of(installment));
 
         assertEquals(CalculationTypeEnum.PRICE, paymentPlanModel.getCalculationType());
@@ -168,7 +162,7 @@ class PaymentPlanModelTest {
         assertEquals(1, paymentPlanModel.getTaxes().size());
         assertEquals(tax, paymentPlanModel.getTaxes().get(0));
         assertEquals(BigDecimal.valueOf(35000.0), paymentPlanModel.getTotalFinancedAmount());
-        assertEquals(BigDecimal.valueOf(40000.0), paymentPlanModel.getTotalAmount());
+        assertEquals(BigDecimal.valueOf(40000.0), paymentPlanModel.getTotalLoanAmount());
         assertEquals(1, paymentPlanModel.getInstallments().size());
         assertEquals(installment, paymentPlanModel.getInstallments().get(0));
     }

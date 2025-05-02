@@ -8,6 +8,7 @@ import br.com.devio.component.domain.model.PaymentPlanModel;
 
 import java.math.BigDecimal;
 
+
 public class CalculationTotalFinancedAmount extends CalculatorEngine<PaymentPlanModel> {
 
     @Override

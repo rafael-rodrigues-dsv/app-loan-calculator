@@ -21,6 +21,6 @@ public class LoanCalculatorResponseDTO {
     private LocalDate firstInstallmentDate;
     private LocalDate lastInstallmentDate;
     private BigDecimal totalFinancedAmount;
-    private BigDecimal totalAmount;
+    private BigDecimal totalLoanAmount;
     private List<InstallmentResponseDTO> installments;
 }
