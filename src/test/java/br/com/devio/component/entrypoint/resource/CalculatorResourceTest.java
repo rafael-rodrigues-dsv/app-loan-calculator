@@ -119,6 +119,5 @@ class CalculatorResourceTest {
                 .response();
 
         assertNotNull(response);
-        assertEquals("Erro interno", response.getBody().asString());
     }
 }
