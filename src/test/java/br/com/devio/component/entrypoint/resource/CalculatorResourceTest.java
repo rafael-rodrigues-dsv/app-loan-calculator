@@ -29,8 +29,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest
 class CalculatorResourceTest {
-    ServiceCommand<LoanCalculatorRequestDTO, LoanCalculatorResponseDTO> calculatorCommand;
-
     private final ObjectMapper objectMapper = new ObjectMapper()
             .findAndRegisterModules()
             .configure(com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
@@ -40,7 +38,7 @@ class CalculatorResourceTest {
         // Usando Lombok Builder para construir o request
         LoanCalculatorRequestDTO request = LoanCalculatorRequestDTO.builder()
                 .calculationType(CalculationTypeEnum.PRICE)
-                .installmentQuantity(5)
+                .installmentQuantity(60)
                 .amount(BigDecimal.valueOf(4000.0))
                 .contractDate(LocalDate.of(2025, 4, 29))
                 .firstInstallmentDate(LocalDate.of(2025, 5, 29))

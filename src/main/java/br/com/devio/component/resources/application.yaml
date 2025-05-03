@@ -9,6 +9,10 @@ quarkus:
     type: native
   native:
     container-build: true
+  http:
+    enable-compression: true
+    limits:
+      max-body-size: 10M
   log:
     level: DEBUG
     category:

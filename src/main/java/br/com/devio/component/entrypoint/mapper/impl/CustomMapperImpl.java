@@ -1,6 +1,7 @@
 package br.com.devio.component.entrypoint.mapper.impl;
 
 import br.com.devio.component.entrypoint.mapper.CustomMapper;
+import br.com.devio.component.domain.util.ObjectMapperUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -10,10 +11,7 @@ public class CustomMapperImpl implements CustomMapper {
     private final ObjectMapper objectMapper;
 
     public CustomMapperImpl() {
-        this.objectMapper = new ObjectMapper();
-        this.objectMapper.configure(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        this.objectMapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
-        this.objectMapper.registerModule(new com.fasterxml.jackson.module.paramnames.ParameterNamesModule());
+        this.objectMapper = ObjectMapperUtil.getObjectMapper();
     }
 
     @Override

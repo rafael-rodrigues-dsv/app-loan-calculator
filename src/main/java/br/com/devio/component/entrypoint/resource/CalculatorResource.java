@@ -1,6 +1,5 @@
 package br.com.devio.component.entrypoint.resource;
 
-import br.com.devio.component.domain.exception.CalculatorValidationException;
 import br.com.devio.component.entrypoint.command.ServiceCommand;
 import br.com.devio.component.entrypoint.dto.request.LoanCalculatorRequestDTO;
 import br.com.devio.component.entrypoint.dto.response.LoanCalculatorResponseDTO;
@@ -18,21 +17,13 @@ import jakarta.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class CalculatorResource {
-
     @Inject
     ServiceCommand<LoanCalculatorRequestDTO, LoanCalculatorResponseDTO> calculatorCommand;
 
     @POST
     public Response calculateLoan(LoanCalculatorRequestDTO request) {
-        try {
-            LoanCalculatorResponseDTO result = calculatorCommand.execute(request);
-            return Response.ok(result).build();
-        } catch (CalculatorValidationException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getValidationResult().getErrors()).build();
-        } catch (Exception e) {
-            e.printStackTrace(); // Ou use um logger
-            return Response.serverError().entity(e.getMessage()).build();
-        }
+        LoanCalculatorResponseDTO result = calculatorCommand.execute(request);
+        return Response.ok(result).build();
     }
 }
 
