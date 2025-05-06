@@ -29,6 +29,9 @@ public class CalculatorValidation extends AbstractValidator<LoanModel> {
                 .withFieldName("installmentQuantity")
                 .must(quantity -> Objects.nonNull(quantity) && quantity > 0)
                 .withMessage("Installment quantity must be greater than zero")
+                .withFieldName("installmentQuantity")
+                .must(quantity -> Objects.nonNull(quantity) && quantity < 360)
+                .withMessage("Installment quantity must be less than 360")
                 .withFieldName("installmentQuantity");
 
         ruleFor(LoanModel::getAmount)
