@@ -38,7 +38,7 @@ class CalculatorResourceTest {
         // Usando Lombok Builder para construir o request
         LoanCalculatorRequestDTO request = LoanCalculatorRequestDTO.builder()
                 .calculationType(CalculationTypeEnum.PRICE)
-                .installmentQuantity(60)
+                .installmentQuantity(5)
                 .amount(BigDecimal.valueOf(4000.0))
                 .contractDate(LocalDate.of(2025, 4, 29))
                 .firstInstallmentDate(LocalDate.of(2025, 5, 29))

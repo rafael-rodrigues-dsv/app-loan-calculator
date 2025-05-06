@@ -22,8 +22,7 @@ public class CalculatorResource {
 
     @POST
     public Response calculateLoan(LoanCalculatorRequestDTO request) {
-        LoanCalculatorResponseDTO result = calculatorCommand.execute(request);
-        return Response.ok(result).build();
+        return Response.ok(calculatorCommand.execute(request)).build();
     }
 }
 
