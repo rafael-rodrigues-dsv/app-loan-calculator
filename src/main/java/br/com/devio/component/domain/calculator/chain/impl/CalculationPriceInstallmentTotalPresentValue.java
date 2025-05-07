@@ -69,6 +69,6 @@ public class CalculationPriceInstallmentTotalPresentValue extends CalculatorEngi
                 BigDecimal.ONE.add(monthlyRate).pow(-installmentQuantity, MathContext.DECIMAL128)
         );
 
-        return numerator.divide(denominator, CalculationConstant.SCALE, BigDecimal.ROUND_HALF_EVEN);
+        return numerator.divide(denominator, CalculationConstant.SCALE_2, BigDecimal.ROUND_HALF_EVEN);
     }
 }

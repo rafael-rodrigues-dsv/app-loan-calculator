@@ -14,7 +14,7 @@ public class CalculationPriceInstallmentTotalInterestAmount extends CalculatorEn
 
         BigDecimal totalInterestAmount = interestRate.multiply(beforeInstallment.getTotalBalanceAmount())
                 .divide(CalculationConstant.PERCENTAGE_DIVISOR_100)
-                .setScale(CalculationConstant.SCALE, CalculationConstant.ROUNDING_MODE);
+                .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE);
 
         currentInstallment.setTotalInterestAmount(totalInterestAmount);
 

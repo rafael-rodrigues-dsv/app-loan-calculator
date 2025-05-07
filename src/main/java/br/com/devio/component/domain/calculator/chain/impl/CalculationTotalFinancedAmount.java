@@ -40,7 +40,7 @@ public class CalculationTotalFinancedAmount extends CalculatorEngine<PaymentPlan
                                 + totalFees
                                 + totalInsurances
                                 + totalTaxes)
-                        .setScale(CalculationConstant.SCALE, CalculationConstant.ROUNDING_MODE));
+                        .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE));
 
         return paymentPlanModel;
     }

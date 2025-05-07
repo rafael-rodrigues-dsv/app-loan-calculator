@@ -21,4 +21,7 @@ public class InstallmentResponseDTO {
     private BigDecimal totalInterestAmount;
     private BigDecimal totalAmortizationAmount;
     private BigDecimal totalBalanceAmount;
+    private BigDecimal totalDailyFinancialOperationalTax;
+    private BigDecimal totalAdditionalFinancialOperationalTax;
+    private BigDecimal totalFinancialOperationalTax;
 }

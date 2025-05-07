@@ -1,7 +1,6 @@
 package br.com.devio.component.domain.model;
 
 import br.com.devio.component.domain.enumeration.PeriodTypeEnum;
-import br.com.devio.component.domain.model.InstallmentModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,7 +50,10 @@ class InstallmentModelTest {
                 BigDecimal.valueOf(1000.0),
                 BigDecimal.valueOf(50.0),
                 BigDecimal.valueOf(950.0),
-                BigDecimal.valueOf(5000.0)
+                BigDecimal.valueOf(5000.0),
+                BigDecimal.valueOf(0.000082),
+                BigDecimal.valueOf(0.0038),
+                BigDecimal.valueOf(1)
         );
 
         assertEquals(1, model.getNumber());
@@ -65,6 +67,10 @@ class InstallmentModelTest {
         assertEquals(BigDecimal.valueOf(50.0), model.getTotalInterestAmount());
         assertEquals(BigDecimal.valueOf(950.0), model.getTotalAmortizationAmount());
         assertEquals(BigDecimal.valueOf(5000.0), model.getTotalBalanceAmount());
+        assertEquals(BigDecimal.valueOf(0.000082), model.getTotalDailyFinancialOperationalTax());
+        assertEquals(BigDecimal.valueOf(0.0038), model.getTotalAdditionalFinancialOperationalTax());
+        assertEquals(BigDecimal.valueOf(1), model.getTotalFinancialOperationalTax());
+
     }
 
     @Test
@@ -81,6 +87,9 @@ class InstallmentModelTest {
                 .totalInterestAmount(BigDecimal.valueOf(70.0))
                 .totalAmortizationAmount(BigDecimal.valueOf(1930.0))
                 .totalBalanceAmount(BigDecimal.valueOf(4000.0))
+                .totalDailyFinancialOperationalTax(BigDecimal.valueOf(0.000082))
+                .totalAdditionalFinancialOperationalTax(BigDecimal.valueOf(0.0038))
+                .totalFinancialOperationalTax(BigDecimal.valueOf(1))
                 .build();
 
         assertEquals(2, model.getNumber());
@@ -94,6 +103,9 @@ class InstallmentModelTest {
         assertEquals(BigDecimal.valueOf(70.0), model.getTotalInterestAmount());
         assertEquals(BigDecimal.valueOf(1930.0), model.getTotalAmortizationAmount());
         assertEquals(BigDecimal.valueOf(4000.0), model.getTotalBalanceAmount());
+        assertEquals(BigDecimal.valueOf(0.000082), model.getTotalDailyFinancialOperationalTax());
+        assertEquals(BigDecimal.valueOf(0.0038), model.getTotalAdditionalFinancialOperationalTax());
+        assertEquals(BigDecimal.valueOf(1), model.getTotalFinancialOperationalTax());
     }
 
     @Test
@@ -109,6 +121,9 @@ class InstallmentModelTest {
         installmentModel.setTotalInterestAmount(BigDecimal.valueOf(60.0));
         installmentModel.setTotalAmortizationAmount(BigDecimal.valueOf(1440.0));
         installmentModel.setTotalBalanceAmount(BigDecimal.valueOf(3000.0));
+        installmentModel.setTotalDailyFinancialOperationalTax(BigDecimal.valueOf(0.000082));
+        installmentModel.setTotalAdditionalFinancialOperationalTax(BigDecimal.valueOf(0.0038));
+        installmentModel.setTotalFinancialOperationalTax(BigDecimal.valueOf(1));
 
         assertEquals(3, installmentModel.getNumber());
         assertEquals(LocalDate.of(2025, 6, 1), installmentModel.getDueDate());
@@ -121,5 +136,8 @@ class InstallmentModelTest {
         assertEquals(BigDecimal.valueOf(60.0), installmentModel.getTotalInterestAmount());
         assertEquals(BigDecimal.valueOf(1440.0), installmentModel.getTotalAmortizationAmount());
         assertEquals(BigDecimal.valueOf(3000.0), installmentModel.getTotalBalanceAmount());
+        assertEquals(BigDecimal.valueOf(0.000082), installmentModel.getTotalDailyFinancialOperationalTax());
+        assertEquals(BigDecimal.valueOf(0.0038), installmentModel.getTotalAdditionalFinancialOperationalTax());
+        assertEquals(BigDecimal.valueOf(1), installmentModel.getTotalFinancialOperationalTax());
     }
 }

@@ -2,8 +2,6 @@ package br.com.devio.component.domain.calculator.chain.impl;
 
 import br.com.devio.component.domain.calculator.chain.CalculatorEngine;
 import br.com.devio.component.domain.constant.CalculationConstant;
-import br.com.devio.component.domain.enumeration.PaymentTypeEnum;
-import br.com.devio.component.domain.enumeration.TaxTypeEnum;
 import br.com.devio.component.domain.model.PaymentPlanModel;
 
 import java.math.BigDecimal;
@@ -21,7 +19,7 @@ public class CalculationTotalLoanAmount extends CalculatorEngine<PaymentPlanMode
 
         paymentPlanModel.setTotalLoanAmount(
                 BigDecimal.valueOf(totalLoanAmount)
-                        .setScale(CalculationConstant.SCALE, CalculationConstant.ROUNDING_MODE));
+                        .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE));
 
         return paymentPlanModel;
     }

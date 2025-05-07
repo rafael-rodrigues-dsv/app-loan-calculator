@@ -23,7 +23,7 @@ public class CalculationPriceInstallmentTotalBalanceAmount extends CalculatorEng
         } else {
             totalBalanceAmount = beforeInstallment.getTotalBalanceAmount()
                     .subtract(currentInstallment.getTotalAmortizationAmount())
-                    .setScale(CalculationConstant.SCALE, CalculationConstant.ROUNDING_MODE);
+                    .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE);
 
             if (totalBalanceAmount.compareTo(BigDecimal.ZERO) < 0) {
                 totalBalanceAmount = BigDecimal.ZERO;
