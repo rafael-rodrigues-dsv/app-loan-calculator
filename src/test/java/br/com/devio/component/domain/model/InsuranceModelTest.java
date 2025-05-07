@@ -1,7 +1,6 @@
 package br.com.devio.component.domain.model;
 
 import br.com.devio.component.domain.enumeration.PaymentTypeEnum;
-import br.com.devio.component.domain.model.InsuranceModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,31 +30,31 @@ class InsuranceModelTest {
     @Test
     void testAllArgsConstructor() {
         InsuranceModel model = new InsuranceModel(
-                PaymentTypeEnum.FINANCIADO,
+                PaymentTypeEnum.FINANCED,
                 BigDecimal.valueOf(500.0)
         );
 
-        assertEquals(PaymentTypeEnum.FINANCIADO, model.getPaymentType());
+        assertEquals(PaymentTypeEnum.FINANCED, model.getPaymentType());
         assertEquals(BigDecimal.valueOf(500.0), model.getValue());
     }
 
     @Test
     void testBuilder() {
         InsuranceModel model = InsuranceModel.builder()
-                .paymentType(PaymentTypeEnum.FINANCIADO)
+                .paymentType(PaymentTypeEnum.FINANCED)
                 .value(BigDecimal.valueOf(1000.0))
                 .build();
 
-        assertEquals(PaymentTypeEnum.FINANCIADO, model.getPaymentType());
+        assertEquals(PaymentTypeEnum.FINANCED, model.getPaymentType());
         assertEquals(BigDecimal.valueOf(1000.0), model.getValue());
     }
 
     @Test
     void testSettersAndGetters() {
-        insuranceModel.setPaymentType(PaymentTypeEnum.FINANCIADO);
+        insuranceModel.setPaymentType(PaymentTypeEnum.FINANCED);
         insuranceModel.setValue(BigDecimal.valueOf(750.0));
 
-        assertEquals(PaymentTypeEnum.FINANCIADO, insuranceModel.getPaymentType());
+        assertEquals(PaymentTypeEnum.FINANCED, insuranceModel.getPaymentType());
         assertEquals(BigDecimal.valueOf(750.0), insuranceModel.getValue());
     }
 }

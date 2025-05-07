@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static br.com.devio.component.domain.constant.CalculationConstant.INSTALLMENT_NUMBER_INITIAL;
+
 public class CalculationPriceInstallment extends CalculatorEngine<PaymentPlanModel> {
 
     @Override
@@ -18,7 +20,7 @@ public class CalculationPriceInstallment extends CalculatorEngine<PaymentPlanMod
         final Integer installmentQuantity = paymentPlanModel.getInstallmentQuantity();
 
         paymentPlanModel.getInstallments().forEach(currentInstallment -> {
-            if (currentInstallment.getNumber().equals(0)) {
+            if (currentInstallment.getNumber().equals(INSTALLMENT_NUMBER_INITIAL)) {
                 CalculatorEngine<InstallmentModel> chain = new CalculatorEngineBuilder<InstallmentModel>()
                         .add(new CalculationPriceInstallmentTotalPresentValue(totalFinancedAmount, installmentQuantity))
                         .add(new CalculationPriceInstallmentTotalBalanceAmount(totalFinancedAmount))
@@ -44,7 +46,7 @@ public class CalculationPriceInstallment extends CalculatorEngine<PaymentPlanMod
 
         paymentPlanModel.setInstallments(installments
                 .stream()
-                .filter(f -> f.getNumber() != 0L)
+                .filter(f -> f.getNumber() != INSTALLMENT_NUMBER_INITIAL)
                 .toList());
 
         return paymentPlanModel;

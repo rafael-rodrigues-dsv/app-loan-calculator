@@ -11,7 +11,7 @@ import static br.com.fluentvalidator.predicate.ObjectPredicate.nullValue;
 
 public class PricingValidation extends AbstractValidator<PricingModel> {
 
-    private static final List<ModalityTypeEnum> ALLOWED_CALCULATION_TYPES = List.of(ModalityTypeEnum.PRE_FIXADO);
+    private static final List<ModalityTypeEnum> ALLOWED_CALCULATION_TYPES = List.of(ModalityTypeEnum.FIXED_RATE);
 
     @Override
     public void rules() {

@@ -5,7 +5,6 @@ import br.com.devio.component.domain.enumeration.ModalityTypeEnum;
 import br.com.devio.component.domain.enumeration.PaymentTypeEnum;
 import br.com.devio.component.domain.enumeration.PeriodTypeEnum;
 import br.com.devio.component.domain.enumeration.TaxTypeEnum;
-import br.com.devio.component.entrypoint.command.ServiceCommand;
 import br.com.devio.component.entrypoint.dto.request.FeeRequestDTO;
 import br.com.devio.component.entrypoint.dto.request.InsuranceRequestDTO;
 import br.com.devio.component.entrypoint.dto.request.LoanCalculatorRequestDTO;
@@ -13,7 +12,6 @@ import br.com.devio.component.entrypoint.dto.request.PricingRequestDTO;
 import br.com.devio.component.entrypoint.dto.request.TaxRequestDTO;
 import br.com.devio.component.entrypoint.dto.response.LoanCalculatorResponseDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
@@ -44,27 +42,27 @@ class CalculatorResourceTest {
                 .firstInstallmentDate(LocalDate.of(2025, 5, 29))
                 .pricing(PricingRequestDTO.builder()
                         .interestRate(BigDecimal.valueOf(1.75))
-                        .modalityType(ModalityTypeEnum.PRE_FIXADO)
+                        .modalityType(ModalityTypeEnum.FIXED_RATE)
                         .periodType(PeriodTypeEnum.MONTHLY)
                         .build())
                 .fees(List.of(FeeRequestDTO.builder()
-                        .paymentType(PaymentTypeEnum.FINANCIADO)
+                        .paymentType(PaymentTypeEnum.FINANCED)
                         .value(BigDecimal.valueOf(200.0))
                         .build()))
                 .insurances(List.of(InsuranceRequestDTO.builder()
-                        .paymentType(PaymentTypeEnum.FINANCIADO)
+                        .paymentType(PaymentTypeEnum.FINANCED)
                         .value(BigDecimal.valueOf(800.0))
                         .build()))
                 .taxes(List.of(
                         TaxRequestDTO.builder()
-                                .taxType(TaxTypeEnum.IOF_DIA)
+                                .taxType(TaxTypeEnum.DAILY_IOF)
                                 .value(BigDecimal.valueOf(0.0041))
-                                .paymentType(PaymentTypeEnum.FINANCIADO)
+                                .paymentType(PaymentTypeEnum.FINANCED)
                                 .build(),
                         TaxRequestDTO.builder()
-                                .taxType(TaxTypeEnum.IOF_ADICIONAL)
+                                .taxType(TaxTypeEnum.ADDITIONAL_IOF)
                                 .value(BigDecimal.valueOf(0.38))
-                                .paymentType(PaymentTypeEnum.FINANCIADO)
+                                .paymentType(PaymentTypeEnum.FINANCED)
                                 .build()))
                 .build();
 

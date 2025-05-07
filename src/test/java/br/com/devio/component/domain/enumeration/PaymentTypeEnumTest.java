@@ -1,6 +1,5 @@
 package br.com.devio.component.domain.enumeration;
 
-import br.com.devio.component.domain.enumeration.PaymentTypeEnum;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,14 +13,14 @@ class PaymentTypeEnumTest {
 
         // Assert
         assertEquals(2, values.length);
-        assertEquals(PaymentTypeEnum.FINANCIADO, values[0]);
-        assertEquals(PaymentTypeEnum.NO_ATO, values[1]);
+        assertEquals(PaymentTypeEnum.FINANCED, values[0]);
+        assertEquals(PaymentTypeEnum.UPFRONT, values[1]);
     }
 
     @Test
     void testEnumValueOf() {
         // Act & Assert
-        assertEquals(PaymentTypeEnum.FINANCIADO, PaymentTypeEnum.valueOf("FINANCIADO"));
-        assertEquals(PaymentTypeEnum.NO_ATO, PaymentTypeEnum.valueOf("NO_ATO"));
+        assertEquals(PaymentTypeEnum.FINANCED, PaymentTypeEnum.valueOf("FINANCED"));
+        assertEquals(PaymentTypeEnum.UPFRONT, PaymentTypeEnum.valueOf("UPFRONT"));
     }
 }

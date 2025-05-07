@@ -2,7 +2,6 @@ package br.com.devio.component.domain.model;
 
 import br.com.devio.component.domain.enumeration.PaymentTypeEnum;
 import br.com.devio.component.domain.enumeration.TaxTypeEnum;
-import br.com.devio.component.domain.model.TaxModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,37 +32,37 @@ class TaxModelTest {
     @Test
     void testAllArgsConstructor() {
         TaxModel model = new TaxModel(
-                PaymentTypeEnum.FINANCIADO,
+                PaymentTypeEnum.FINANCED,
                 BigDecimal.valueOf(100.0),
-                TaxTypeEnum.IOF_DIA
+                TaxTypeEnum.DAILY_IOF
         );
 
-        assertEquals(PaymentTypeEnum.FINANCIADO, model.getPaymentType());
+        assertEquals(PaymentTypeEnum.FINANCED, model.getPaymentType());
         assertEquals(BigDecimal.valueOf(100.0), model.getValue());
-        assertEquals(TaxTypeEnum.IOF_DIA, model.getTaxType());
+        assertEquals(TaxTypeEnum.DAILY_IOF, model.getTaxType());
     }
 
     @Test
     void testBuilder() {
         TaxModel model = TaxModel.builder()
-                .paymentType(PaymentTypeEnum.FINANCIADO)
+                .paymentType(PaymentTypeEnum.FINANCED)
                 .value(BigDecimal.valueOf(200.0))
-                .taxType(TaxTypeEnum.IOF_DIA)
+                .taxType(TaxTypeEnum.DAILY_IOF)
                 .build();
 
-        assertEquals(PaymentTypeEnum.FINANCIADO, model.getPaymentType());
+        assertEquals(PaymentTypeEnum.FINANCED, model.getPaymentType());
         assertEquals(BigDecimal.valueOf(200.0), model.getValue());
-        assertEquals(TaxTypeEnum.IOF_DIA, model.getTaxType());
+        assertEquals(TaxTypeEnum.DAILY_IOF, model.getTaxType());
     }
 
     @Test
     void testSettersAndGetters() {
-        taxModel.setPaymentType(PaymentTypeEnum.FINANCIADO);
+        taxModel.setPaymentType(PaymentTypeEnum.FINANCED);
         taxModel.setValue(BigDecimal.valueOf(300.0));
-        taxModel.setTaxType(TaxTypeEnum.IOF_DIA);
+        taxModel.setTaxType(TaxTypeEnum.DAILY_IOF);
 
-        assertEquals(PaymentTypeEnum.FINANCIADO, taxModel.getPaymentType());
+        assertEquals(PaymentTypeEnum.FINANCED, taxModel.getPaymentType());
         assertEquals(BigDecimal.valueOf(300.0), taxModel.getValue());
-        assertEquals(TaxTypeEnum.IOF_DIA, taxModel.getTaxType());
+        assertEquals(TaxTypeEnum.DAILY_IOF, taxModel.getTaxType());
     }
 }

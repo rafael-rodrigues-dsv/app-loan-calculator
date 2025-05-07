@@ -1,6 +1,5 @@
 package br.com.devio.component.domain.enumeration;
 
-import br.com.devio.component.domain.enumeration.ModalityTypeEnum;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,14 +13,14 @@ class ModalityTypeEnumTest {
 
         // Assert
         assertEquals(2, values.length);
-        assertEquals(ModalityTypeEnum.PRE_FIXADO, values[0]);
-        assertEquals(ModalityTypeEnum.POS_FIXADO, values[1]);
+        assertEquals(ModalityTypeEnum.FIXED_RATE, values[0]);
+        assertEquals(ModalityTypeEnum.FLOATING_RATE, values[1]);
     }
 
     @Test
     void testEnumValueOf() {
         // Act & Assert
-        assertEquals(ModalityTypeEnum.PRE_FIXADO, ModalityTypeEnum.valueOf("PRE_FIXADO"));
-        assertEquals(ModalityTypeEnum.POS_FIXADO, ModalityTypeEnum.valueOf("POS_FIXADO"));
+        assertEquals(ModalityTypeEnum.FIXED_RATE, ModalityTypeEnum.valueOf("FIXED_RATE"));
+        assertEquals(ModalityTypeEnum.FLOATING_RATE, ModalityTypeEnum.valueOf("FLOATING_RATE"));
     }
 }

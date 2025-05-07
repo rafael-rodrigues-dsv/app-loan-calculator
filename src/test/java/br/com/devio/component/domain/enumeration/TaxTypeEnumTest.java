@@ -1,6 +1,5 @@
 package br.com.devio.component.domain.enumeration;
 
-import br.com.devio.component.domain.enumeration.TaxTypeEnum;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,16 +13,16 @@ class TaxTypeEnumTest {
 
         // Assert
         assertEquals(3, values.length);
-        assertEquals(TaxTypeEnum.IOF_DIA, values[0]);
-        assertEquals(TaxTypeEnum.IOF_ADICIONAL, values[1]);
-        assertEquals(TaxTypeEnum.IOF_TOTAL, values[2]);
+        assertEquals(TaxTypeEnum.DAILY_IOF, values[0]);
+        assertEquals(TaxTypeEnum.ADDITIONAL_IOF, values[1]);
+        assertEquals(TaxTypeEnum.TOTAL_IOF, values[2]);
     }
 
     @Test
     void testEnumValueOf() {
         // Act & Assert
-        assertEquals(TaxTypeEnum.IOF_DIA, TaxTypeEnum.valueOf("IOF_DIA"));
-        assertEquals(TaxTypeEnum.IOF_ADICIONAL, TaxTypeEnum.valueOf("IOF_ADICIONAL"));
-        assertEquals(TaxTypeEnum.IOF_TOTAL, TaxTypeEnum.valueOf("IOF_TOTAL"));
+        assertEquals(TaxTypeEnum.DAILY_IOF, TaxTypeEnum.valueOf("DAILY_IOF"));
+        assertEquals(TaxTypeEnum.ADDITIONAL_IOF, TaxTypeEnum.valueOf("ADDITIONAL_IOF"));
+        assertEquals(TaxTypeEnum.TOTAL_IOF, TaxTypeEnum.valueOf("TOTAL_IOF"));
     }
 }

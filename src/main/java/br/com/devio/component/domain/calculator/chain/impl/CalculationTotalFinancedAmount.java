@@ -16,21 +16,21 @@ public class CalculationTotalFinancedAmount extends CalculatorEngine<PaymentPlan
 
         double totalInsurances = paymentPlanModel.getInsurances() != null && !paymentPlanModel.getInsurances().isEmpty()
                 ? paymentPlanModel.getInsurances().stream()
-                .filter(f -> f.getPaymentType().equals(PaymentTypeEnum.FINANCIADO))
+                .filter(f -> f.getPaymentType().equals(PaymentTypeEnum.FINANCED))
                 .mapToDouble(map -> map.getValue().doubleValue())
                 .sum()
                 : 0;
 
         double totalFees = paymentPlanModel.getFees() != null && !paymentPlanModel.getFees().isEmpty()
                 ? paymentPlanModel.getFees().stream()
-                .filter(f -> f.getPaymentType().equals(PaymentTypeEnum.FINANCIADO))
+                .filter(f -> f.getPaymentType().equals(PaymentTypeEnum.FINANCED))
                 .mapToDouble(map -> map.getValue().doubleValue())
                 .sum()
                 : 0;
 
         double totalTaxes = paymentPlanModel.getTaxes() != null && !paymentPlanModel.getTaxes().isEmpty()
                 ? paymentPlanModel.getTaxes().stream()
-                .filter(f -> f.getPaymentType().equals(PaymentTypeEnum.FINANCIADO) && f.getTaxType().equals(TaxTypeEnum.IOF_TOTAL))
+                .filter(f -> f.getPaymentType().equals(PaymentTypeEnum.FINANCED) && f.getTaxType().equals(TaxTypeEnum.TOTAL_IOF))
                 .mapToDouble(map -> map.getValue().doubleValue())
                 .sum()
                 : 0;

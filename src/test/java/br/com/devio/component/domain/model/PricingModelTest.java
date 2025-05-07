@@ -2,8 +2,6 @@ package br.com.devio.component.domain.model;
 
 import br.com.devio.component.domain.enumeration.ModalityTypeEnum;
 import br.com.devio.component.domain.enumeration.PeriodTypeEnum;
-import br.com.devio.component.domain.model.BenchmarkModel;
-import br.com.devio.component.domain.model.PricingModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,13 +36,13 @@ class PricingModelTest {
         BenchmarkModel benchmark = new BenchmarkModel();
 
         PricingModel model = new PricingModel(
-                ModalityTypeEnum.PRE_FIXADO,
+                ModalityTypeEnum.FIXED_RATE,
                 PeriodTypeEnum.MONTHLY,
                 BigDecimal.valueOf(5.0),
                 List.of(benchmark)
         );
 
-        assertEquals(ModalityTypeEnum.PRE_FIXADO, model.getModalityType());
+        assertEquals(ModalityTypeEnum.FIXED_RATE, model.getModalityType());
         assertEquals(PeriodTypeEnum.MONTHLY, model.getPeriodType());
         assertEquals(BigDecimal.valueOf(5.0), model.getInterestRate());
         assertEquals(1, model.getBenchmarks().size());
@@ -56,13 +54,13 @@ class PricingModelTest {
         BenchmarkModel benchmark = new BenchmarkModel();
 
         PricingModel model = PricingModel.builder()
-                .modalityType(ModalityTypeEnum.PRE_FIXADO)
+                .modalityType(ModalityTypeEnum.FIXED_RATE)
                 .periodType(PeriodTypeEnum.DAILY)
                 .interestRate(BigDecimal.valueOf(3.5))
                 .benchmarks(List.of(benchmark))
                 .build();
 
-        assertEquals(ModalityTypeEnum.PRE_FIXADO, model.getModalityType());
+        assertEquals(ModalityTypeEnum.FIXED_RATE, model.getModalityType());
         assertEquals(PeriodTypeEnum.DAILY, model.getPeriodType());
         assertEquals(BigDecimal.valueOf(3.5), model.getInterestRate());
         assertEquals(1, model.getBenchmarks().size());
@@ -73,12 +71,12 @@ class PricingModelTest {
     void testSettersAndGetters() {
         BenchmarkModel benchmark = new BenchmarkModel();
 
-        pricingModel.setModalityType(ModalityTypeEnum.PRE_FIXADO);
+        pricingModel.setModalityType(ModalityTypeEnum.FIXED_RATE);
         pricingModel.setPeriodType(PeriodTypeEnum.YEARLY);
         pricingModel.setInterestRate(BigDecimal.valueOf(4.0));
         pricingModel.setBenchmarks(List.of(benchmark));
 
-        assertEquals(ModalityTypeEnum.PRE_FIXADO, pricingModel.getModalityType());
+        assertEquals(ModalityTypeEnum.FIXED_RATE, pricingModel.getModalityType());
         assertEquals(PeriodTypeEnum.YEARLY, pricingModel.getPeriodType());
         assertEquals(BigDecimal.valueOf(4.0), pricingModel.getInterestRate());
         assertEquals(1, pricingModel.getBenchmarks().size());
