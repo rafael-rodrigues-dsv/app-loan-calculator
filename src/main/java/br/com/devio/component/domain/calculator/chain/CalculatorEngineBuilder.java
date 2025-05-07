@@ -1,5 +1,8 @@
 package br.com.devio.component.domain.calculator.chain;
 
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
 public class CalculatorEngineBuilder<T> {
     private static class Node<T> {
         CalculatorEngine<T> handler;
@@ -18,6 +21,38 @@ public class CalculatorEngineBuilder<T> {
         } else {
             tail.next = newNode;
             tail = newNode;
+        }
+        return this;
+    }
+
+    @SafeVarargs
+    public final CalculatorEngineBuilder<T> addIf(Predicate<T> condition, Supplier<CalculatorEngine<T>>... handlers) {
+        for (Supplier<CalculatorEngine<T>> handler : handlers) {
+            add(new CalculatorEngine<T>() {
+                @Override
+                public T calculate(T result) {
+                    if (condition.test(result)) {
+                        return handler.get().calculate(result);
+                    }
+                    return result;
+                }
+
+                @Override
+                public T calculate(T dataBase, T currentData) {
+                    if (condition.test(currentData)) {
+                        return handler.get().calculate(dataBase, currentData);
+                    }
+                    return currentData;
+                }
+
+                @Override
+                public T calculate(T dataBase, T beforeData, T currentData) {
+                    if (condition.test(currentData)) {
+                        return handler.get().calculate(dataBase, beforeData, currentData);
+                    }
+                    return currentData;
+                }
+            });
         }
         return this;
     }
