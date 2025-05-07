@@ -23,7 +23,7 @@ public class LoanModel {
     private BigDecimal amount;
     private LocalDate contractDate;
     private LocalDate firstInstallmentDate;
-    private List<InsuranceModel> insurances;
-    private List<FeeModel> fees;
-    private List<TaxModel> taxes;
+    private InsuranceModel insurance;
+    private FeeModel fee;
+    private FinancialOperationalTaxModel financialOperationalTax;
 }

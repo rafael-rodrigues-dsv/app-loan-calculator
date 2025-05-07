@@ -16,5 +16,5 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class InsuranceModel {
     private PaymentTypeEnum paymentType;
-    private BigDecimal value;
+    private BigDecimal totalValue;
 }

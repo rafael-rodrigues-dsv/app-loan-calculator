@@ -52,16 +52,16 @@ public class CalculatorValidation extends AbstractValidator<LoanModel> {
                 .withMessage("First installment date cannot be null")
                 .withFieldName("firstInstallmentDate");
 
-        ruleForEach(LoanModel::getFees)
+        ruleFor(LoanModel::getFee)
                 .whenever(not(nullValue()))
                 .withValidator(new FeeValidation());
 
-        ruleForEach(LoanModel::getInsurances)
+        ruleFor(LoanModel::getInsurance)
                 .whenever(not(nullValue()))
                 .withValidator(new InsuranceValidation());
 
-        ruleForEach(LoanModel::getTaxes)
+        ruleFor(LoanModel::getFinancialOperationalTax)
                 .whenever(not(nullValue()))
-                .withValidator(new TaxValidation());
+                .withValidator(new FinancialOperationalTaxValidation());
     }
 }

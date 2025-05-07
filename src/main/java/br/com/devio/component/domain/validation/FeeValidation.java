@@ -4,20 +4,26 @@ import br.com.devio.component.domain.model.FeeModel;
 import br.com.fluentvalidator.AbstractValidator;
 
 import java.math.BigDecimal;
+import java.util.Objects;
+
+import static br.com.fluentvalidator.predicate.LogicalPredicate.not;
+import static br.com.fluentvalidator.predicate.ObjectPredicate.nullValue;
 
 public class FeeValidation extends AbstractValidator<FeeModel> {
 
     @Override
     public void rules() {
         ruleFor(FeeModel::getPaymentType)
-                .must(paymentType -> paymentType != null)
-                .withMessage("Payment type must not be null");
+                .must(not(nullValue()))
+                .withMessage("Amount cannot be null")
+                .withFieldName("paymentType");
 
-        ruleFor(FeeModel::getValue)
-                .must(value -> value != null)
+        ruleFor(FeeModel::getTotalValue)
+                .must(not(nullValue()))
                 .withMessage("Value must not be null")
-                .must(value -> value.compareTo(BigDecimal.ZERO) > 0)
-                .when(value -> value != null)
-                .withMessage("Value must be greater than zero");
+                .withFieldName("value")
+                .must(value -> Objects.nonNull(value) && value.compareTo(BigDecimal.ZERO) > 0)
+                .withMessage("Value must be greater than zero")
+                .withFieldName("value");
     }
 }

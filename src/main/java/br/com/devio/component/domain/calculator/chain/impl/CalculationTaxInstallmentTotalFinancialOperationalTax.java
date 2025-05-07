@@ -10,7 +10,7 @@ import java.util.Objects;
 public class CalculationTaxInstallmentTotalFinancialOperationalTax extends CalculatorEngine<InstallmentModel> {
 
     @Override
-    public InstallmentModel calculate(InstallmentModel beforeInstallment, InstallmentModel currentInstallment) {
+    public InstallmentModel calculate(InstallmentModel currentInstallment) {
         BigDecimal totalFinancialOperationalTax = BigDecimal.ZERO;
 
         if (!currentInstallment.getNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)) {

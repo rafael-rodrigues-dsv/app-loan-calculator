@@ -1,6 +1,9 @@
 package br.com.devio.component.entrypoint.dto.request;
 
 import br.com.devio.component.domain.enumeration.CalculationTypeEnum;
+import br.com.devio.component.domain.model.FeeModel;
+import br.com.devio.component.domain.model.FinancialOperationalTaxModel;
+import br.com.devio.component.domain.model.InsuranceModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,7 +27,7 @@ public class LoanCalculatorRequestDTO {
     private LocalDate contractDate;
     private LocalDate firstInstallmentDate;
     private LocalDate lastInstallmentDate;
-    private List<InsuranceRequestDTO> insurances;
-    private List<FeeRequestDTO> fees;
-    private List<TaxRequestDTO> taxes;
+    private InsuranceRequestDTO insurance;
+    private FeeRequestDTO fee;
+    private FinancialOperationalTaxRequestDTO financialOperationalTax;
 }

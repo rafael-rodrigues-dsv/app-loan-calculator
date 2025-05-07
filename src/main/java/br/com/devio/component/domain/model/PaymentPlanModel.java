@@ -24,9 +24,9 @@ public class PaymentPlanModel {
     private LocalDate contractDate;
     private LocalDate firstInstallmentDate;
     private LocalDate lastInstallmentDate;
-    private List<InsuranceModel> insurances;
-    private List<FeeModel> fees;
-    private List<TaxModel> taxes;
+    private InsuranceModel insurance;
+    private FeeModel fee;
+    private FinancialOperationalTaxModel financialOperationalTax;
     private BigDecimal totalFinancedAmount;
     private BigDecimal totalLoanAmount;
     private List<InstallmentModel> installments;

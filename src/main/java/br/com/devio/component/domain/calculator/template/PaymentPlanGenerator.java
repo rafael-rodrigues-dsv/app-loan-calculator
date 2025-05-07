@@ -29,9 +29,9 @@ public class PaymentPlanGenerator extends PaymentPlanGeneratorTemplate {
                 .contractDate(loanModel.getContractDate())
                 .firstInstallmentDate(loanModel.getFirstInstallmentDate())
                 .lastInstallmentDate(addLastInstallmentDate(installments))
-                .fees(loanModel.getFees())
-                .insurances(loanModel.getInsurances())
-                .taxes(loanModel.getTaxes())
+                .fee(loanModel.getFee())
+                .insurance(loanModel.getInsurance())
+                .financialOperationalTax(loanModel.getFinancialOperationalTax())
                 .installments(installments)
                 .build();
     }

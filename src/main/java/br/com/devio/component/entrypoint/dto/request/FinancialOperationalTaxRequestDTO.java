@@ -14,7 +14,8 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class InsuranceRequestDTO {
+public class FinancialOperationalTaxRequestDTO {
     private PaymentTypeEnum paymentType;
-    private BigDecimal totalValue;
+    private BigDecimal dailyFinancialOperationalTax;
+    private BigDecimal additionalFinancialOperationalTax;
 }

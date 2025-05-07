@@ -6,6 +6,8 @@ import br.com.devio.component.domain.model.PaymentPlanModel;
 
 import java.math.BigDecimal;
 
+import static br.com.devio.component.domain.constant.CalculationConstant.INSTALLMENT_NUMBER_INITIAL;
+
 public class CalculationTotalLoanAmount extends CalculatorEngine<PaymentPlanModel> {
 
     @Override
@@ -13,6 +15,7 @@ public class CalculationTotalLoanAmount extends CalculatorEngine<PaymentPlanMode
 
         double totalLoanAmount = paymentPlanModel.getInstallments() != null && !paymentPlanModel.getInstallments().isEmpty()
                 ? paymentPlanModel.getInstallments().stream()
+                .filter(f -> f.getNumber() != INSTALLMENT_NUMBER_INITIAL)
                 .mapToDouble(map -> map.getTotalInstalmentValue().doubleValue())
                 .sum()
                 : 0;

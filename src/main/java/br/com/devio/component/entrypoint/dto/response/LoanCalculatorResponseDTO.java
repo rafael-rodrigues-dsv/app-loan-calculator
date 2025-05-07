@@ -1,5 +1,8 @@
 package br.com.devio.component.entrypoint.dto.response;
 
+import br.com.devio.component.domain.model.FeeModel;
+import br.com.devio.component.domain.model.FinancialOperationalTaxModel;
+import br.com.devio.component.domain.model.InsuranceModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +23,9 @@ public class LoanCalculatorResponseDTO {
     private LocalDate contractDate;
     private LocalDate firstInstallmentDate;
     private LocalDate lastInstallmentDate;
+    private InsuranceResponseDTO insurance;
+    private FeeResponseDTO fee;
+    private FinancialOperationalTaxResponseDTO financialOperationalTax;
     private BigDecimal totalFinancedAmount;
     private BigDecimal totalLoanAmount;
     private List<InstallmentResponseDTO> installments;

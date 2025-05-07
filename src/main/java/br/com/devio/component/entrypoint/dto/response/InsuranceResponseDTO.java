@@ -1,7 +1,6 @@
-package br.com.devio.component.entrypoint.dto.request;
+package br.com.devio.component.entrypoint.dto.response;
 
 import br.com.devio.component.domain.enumeration.PaymentTypeEnum;
-import br.com.devio.component.domain.enumeration.TaxTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,8 +14,7 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaxRequestDTO {
+public class InsuranceResponseDTO {
     private PaymentTypeEnum paymentType;
-    private BigDecimal value;
-    private TaxTypeEnum taxType;
+    private BigDecimal totalValue;
 }

@@ -3,12 +3,12 @@ package br.com.devio.component.domain.calculator.template;
 import br.com.devio.component.domain.enumeration.CalculationTypeEnum;
 import br.com.devio.component.domain.enumeration.PeriodTypeEnum;
 import br.com.devio.component.domain.model.FeeModel;
+import br.com.devio.component.domain.model.FinancialOperationalTaxModel;
 import br.com.devio.component.domain.model.InstallmentModel;
 import br.com.devio.component.domain.model.InsuranceModel;
 import br.com.devio.component.domain.model.LoanModel;
 import br.com.devio.component.domain.model.PaymentPlanModel;
 import br.com.devio.component.domain.model.PricingModel;
-import br.com.devio.component.domain.model.TaxModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -42,9 +42,9 @@ class PaymentPlanGeneratorTest {
                 .amount(BigDecimal.valueOf(10000.0))
                 .contractDate(LocalDate.of(2025, 1, 1))
                 .firstInstallmentDate(LocalDate.of(2025, 2, 1))
-                .fees(List.of(new FeeModel()))
-                .insurances(List.of(new InsuranceModel()))
-                .taxes(List.of(new TaxModel()))
+                .fee(new FeeModel())
+                .insurance(new InsuranceModel())
+                .financialOperationalTax(new FinancialOperationalTaxModel())
                 .build();
 
         // Act
