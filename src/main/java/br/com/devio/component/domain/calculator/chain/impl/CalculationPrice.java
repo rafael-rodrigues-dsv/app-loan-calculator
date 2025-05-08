@@ -9,6 +9,8 @@ import br.com.devio.component.domain.model.PaymentPlanModel;
 import java.util.List;
 import java.util.Objects;
 
+import static br.com.devio.component.domain.constant.CalculationConstant.INSTALLMENT_NUMBER_INITIAL;
+
 public class CalculationPrice {
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
 
@@ -24,16 +26,10 @@ public class CalculationPrice {
                 .add(new CalculationTotalLoanAmount())
                 .build();
 
-        List<InstallmentModel> installments = paymentPlanModel.getInstallments();
+        paymentPlanModel = chain.calculate(paymentPlanModel);
+        paymentPlanModel.setInstallments(filterValidInstallments(paymentPlanModel.getInstallments()));
 
-        if(Objects.nonNull(installments) && !installments.isEmpty()) {
-            paymentPlanModel.setInstallments(installments
-                    .stream()
-                    .filter(f -> f.getNumber() != 0L)
-                    .toList());
-        }
-
-        return chain.calculate(paymentPlanModel);
+        return paymentPlanModel;
     }
 
     private boolean hasFinancialOperationalTax(PaymentPlanModel model) {
@@ -41,6 +37,15 @@ public class CalculationPrice {
         return Objects.nonNull(financialOperationalTax)
                 && Objects.nonNull(financialOperationalTax.getDailyFinancialOperationalTax())
                 && Objects.nonNull(financialOperationalTax.getAdditionalFinancialOperationalTax());
+    }
+
+    private List<InstallmentModel> filterValidInstallments(List<InstallmentModel> installments) {
+        if (Objects.nonNull(installments) && !installments.isEmpty()) {
+            return installments.stream()
+                    .filter(f -> f.getNumber() != INSTALLMENT_NUMBER_INITIAL)
+                    .toList();
+        }
+        return installments;
     }
 }
 
