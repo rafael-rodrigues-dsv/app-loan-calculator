@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FinancialOperationalTaxRequestDTO {
+public class TaxRequestDTO {
     private PaymentTypeEnum paymentType;
     private BigDecimal dailyFinancialOperationalTax;
     private BigDecimal additionalFinancialOperationalTax;

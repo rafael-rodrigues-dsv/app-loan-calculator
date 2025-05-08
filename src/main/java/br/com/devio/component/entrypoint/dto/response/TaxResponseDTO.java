@@ -1,6 +1,7 @@
-package br.com.devio.component.domain.model;
+package br.com.devio.component.entrypoint.dto.response;
 
 import br.com.devio.component.domain.enumeration.PaymentTypeEnum;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,14 +10,13 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FinancialOperationalTaxModel {
+public class TaxResponseDTO {
     private PaymentTypeEnum paymentType;
-    private BigDecimal dailyFinancialOperationalTax;
-    private BigDecimal additionalFinancialOperationalTax;
-    private BigDecimal totalValue;
+    private BigDecimal totalAmount;
 }

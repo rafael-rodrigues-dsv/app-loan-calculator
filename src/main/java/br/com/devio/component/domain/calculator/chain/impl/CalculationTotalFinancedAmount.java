@@ -4,7 +4,7 @@ import br.com.devio.component.domain.calculator.chain.CalculatorEngine;
 import br.com.devio.component.domain.constant.CalculationConstant;
 import br.com.devio.component.domain.enumeration.PaymentTypeEnum;
 import br.com.devio.component.domain.model.FeeModel;
-import br.com.devio.component.domain.model.FinancialOperationalTaxModel;
+import br.com.devio.component.domain.model.TaxModel;
 import br.com.devio.component.domain.model.InsuranceModel;
 import br.com.devio.component.domain.model.PaymentPlanModel;
 
@@ -18,37 +18,37 @@ public class CalculationTotalFinancedAmount extends CalculatorEngine<PaymentPlan
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
         final InsuranceModel insurance = paymentPlanModel.getInsurance();
         final FeeModel fee = paymentPlanModel.getFee();
-        final FinancialOperationalTaxModel financialOperationalTax = paymentPlanModel.getFinancialOperationalTax();
+        final TaxModel tax = paymentPlanModel.getTax();
 
-        double totalInsurance =
+        double totalInsuranceAmount =
                 Objects.nonNull(insurance)
-                        && Objects.nonNull(insurance.getTotalValue())
+                        && Objects.nonNull(insurance.getTotalAmount())
                         && Objects.nonNull(insurance.getPaymentType())
                         && insurance.getPaymentType().equals(PaymentTypeEnum.FINANCED)
-                        ? paymentPlanModel.getInsurance().getTotalValue().doubleValue()
+                        ? paymentPlanModel.getInsurance().getTotalAmount().doubleValue()
                         : 0;
 
-        double totalFee =
+        double totalFeeAmount =
                 Objects.nonNull(fee)
-                        && Objects.nonNull(fee.getTotalValue())
+                        && Objects.nonNull(fee.getTotalAmount())
                         && Objects.nonNull(fee.getPaymentType())
                         && fee.getPaymentType().equals(PaymentTypeEnum.FINANCED)
-                        ? paymentPlanModel.getFee().getTotalValue().doubleValue()
+                        ? paymentPlanModel.getFee().getTotalAmount().doubleValue()
                         : 0;
 
-        double totalFinancialOperationalTax =
-                Objects.nonNull(financialOperationalTax)
-                        && Objects.nonNull(financialOperationalTax.getTotalValue())
-                        && Objects.nonNull(financialOperationalTax.getPaymentType())
-                        && financialOperationalTax.getPaymentType().equals(PaymentTypeEnum.FINANCED)
-                        ? paymentPlanModel.getFinancialOperationalTax().getTotalValue().doubleValue()
+        double totalTaxAmount =
+                Objects.nonNull(tax)
+                        && Objects.nonNull(tax.getTotalAmount())
+                        && Objects.nonNull(tax.getPaymentType())
+                        && tax.getPaymentType().equals(PaymentTypeEnum.FINANCED)
+                        ? paymentPlanModel.getTax().getTotalAmount().doubleValue()
                         : 0;
 
         paymentPlanModel.setTotalFinancedAmount(
-                BigDecimal.valueOf(paymentPlanModel.getAmount().doubleValue()
-                                + totalFee
-                                + totalInsurance
-                                + totalFinancialOperationalTax)
+                BigDecimal.valueOf(paymentPlanModel.getRequestedAmount().doubleValue()
+                                + totalFeeAmount
+                                + totalInsuranceAmount
+                                + totalTaxAmount)
                         .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE));
 
         return paymentPlanModel;

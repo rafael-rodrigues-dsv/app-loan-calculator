@@ -2,7 +2,7 @@ package br.com.devio.component.domain.calculator.chain.impl;
 
 import br.com.devio.component.domain.calculator.chain.CalculatorEngine;
 import br.com.devio.component.domain.calculator.chain.CalculatorEngineBuilder;
-import br.com.devio.component.domain.model.FinancialOperationalTaxModel;
+import br.com.devio.component.domain.model.TaxModel;
 import br.com.devio.component.domain.model.PaymentPlanModel;
 
 import java.util.Objects;
@@ -15,7 +15,7 @@ public class CalculationPrice {
                 .add(new CalculationPriceInstallment())
                 .addIf(this::hasFinancialOperationalTax,
                         () -> new CalculationTaxInstallment(),
-                        () -> new CalculationTotalFinancialOperationalTax(),
+                        () -> new CalculationTotalTaxAmount(),
                         () -> new CalculationTotalFinancedAmount(),
                         () -> new CalculationPriceInstallment())
                 .add(new CalculationTotalLoanAmount())
@@ -25,7 +25,7 @@ public class CalculationPrice {
     }
 
     private boolean hasFinancialOperationalTax(PaymentPlanModel model) {
-        FinancialOperationalTaxModel financialOperationalTax = model.getFinancialOperationalTax();
+        TaxModel financialOperationalTax = model.getTax();
         return Objects.nonNull(financialOperationalTax)
                 && Objects.nonNull(financialOperationalTax.getDailyFinancialOperationalTax())
                 && Objects.nonNull(financialOperationalTax.getAdditionalFinancialOperationalTax());

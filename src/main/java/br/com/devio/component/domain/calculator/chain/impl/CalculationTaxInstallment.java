@@ -2,7 +2,7 @@ package br.com.devio.component.domain.calculator.chain.impl;
 
 import br.com.devio.component.domain.calculator.chain.CalculatorEngine;
 import br.com.devio.component.domain.calculator.chain.CalculatorEngineBuilder;
-import br.com.devio.component.domain.model.FinancialOperationalTaxModel;
+import br.com.devio.component.domain.model.TaxModel;
 import br.com.devio.component.domain.model.InstallmentModel;
 import br.com.devio.component.domain.model.PaymentPlanModel;
 
@@ -19,7 +19,7 @@ public class CalculationTaxInstallment extends CalculatorEngine<PaymentPlanModel
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
         List<InstallmentModel> installments = new ArrayList<>();
         final BigDecimal totalFinancedAmount = paymentPlanModel.getTotalFinancedAmount();
-        final FinancialOperationalTaxModel financialOperationalTax =  paymentPlanModel.getFinancialOperationalTax();
+        final TaxModel financialOperationalTax =  paymentPlanModel.getTax();
         final BigDecimal dailyFinancialOperationalTax = Objects.nonNull(financialOperationalTax)
                 ? financialOperationalTax.getDailyFinancialOperationalTax()
                 : BigDecimal.ZERO;

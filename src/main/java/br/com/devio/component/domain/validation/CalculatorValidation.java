@@ -16,13 +16,6 @@ public class CalculatorValidation extends AbstractValidator<LoanModel> {
                 .withMessage("Calculation type cannot be null")
                 .withFieldName("calculationType");
 
-        ruleFor(LoanModel::getPricing)
-                .must(not(nullValue()))
-                .withMessage("Pricing model cannot be null")
-                .withFieldName("pricing")
-                .whenever(not(nullValue()))
-                .withValidator(new PricingValidation());
-
         ruleFor(LoanModel::getInstallmentQuantity)
                 .must(not(nullValue()))
                 .withMessage("Installment quantity cannot be null")
@@ -34,13 +27,13 @@ public class CalculatorValidation extends AbstractValidator<LoanModel> {
                 .withMessage("Installment quantity must be less than 360")
                 .withFieldName("installmentQuantity");
 
-        ruleFor(LoanModel::getAmount)
+        ruleFor(LoanModel::getRequestedAmount)
                 .must(not(nullValue()))
-                .withMessage("Amount cannot be null")
-                .withFieldName("amount")
+                .withMessage("Requested amount cannot be null")
+                .withFieldName("requestedAmount")
                 .must(amount -> Objects.nonNull(amount) && amount.doubleValue() > 0)
-                .withMessage("Amount must be greater than zero")
-                .withFieldName("amount");
+                .withMessage("Requested amount must be greater than zero")
+                .withFieldName("requestedAmount");
 
         ruleFor(LoanModel::getContractDate)
                 .must(not(nullValue()))
@@ -52,6 +45,14 @@ public class CalculatorValidation extends AbstractValidator<LoanModel> {
                 .withMessage("First installment date cannot be null")
                 .withFieldName("firstInstallmentDate");
 
+        ruleFor(LoanModel::getMonthlyInterestRate)
+                .must(not(nullValue()))
+                .withMessage("Monthly interest rate cannot be null")
+                .withFieldName("monthlyInterestRate")
+                .must(rate -> Objects.nonNull(rate) && rate.doubleValue() > 0)
+                .withMessage("Monthly interest rate must be greater than zero")
+                .withFieldName("monthlyInterestRate");
+
         ruleFor(LoanModel::getFee)
                 .whenever(not(nullValue()))
                 .withValidator(new FeeValidation());
@@ -60,8 +61,8 @@ public class CalculatorValidation extends AbstractValidator<LoanModel> {
                 .whenever(not(nullValue()))
                 .withValidator(new InsuranceValidation());
 
-        ruleFor(LoanModel::getFinancialOperationalTax)
+        ruleFor(LoanModel::getTax)
                 .whenever(not(nullValue()))
-                .withValidator(new FinancialOperationalTaxValidation());
+                .withValidator(new TaxValidation());
     }
 }

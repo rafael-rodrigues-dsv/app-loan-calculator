@@ -1,8 +1,6 @@
 package br.com.devio.component.entrypoint.dto.response;
 
-import br.com.devio.component.domain.model.FeeModel;
-import br.com.devio.component.domain.model.FinancialOperationalTaxModel;
-import br.com.devio.component.domain.model.InsuranceModel;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,19 +11,22 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoanCalculatorResponseDTO {
-    private BigDecimal amount;
+    private BigDecimal requestedAmount;
     private LocalDate contractDate;
     private LocalDate firstInstallmentDate;
     private LocalDate lastInstallmentDate;
+    private BigDecimal monthlyInterestRate;
+    private BigDecimal annualInterestRate;
     private InsuranceResponseDTO insurance;
     private FeeResponseDTO fee;
-    private FinancialOperationalTaxResponseDTO financialOperationalTax;
+    private TaxResponseDTO tax;
     private BigDecimal totalFinancedAmount;
     private BigDecimal totalLoanAmount;
     private List<InstallmentResponseDTO> installments;

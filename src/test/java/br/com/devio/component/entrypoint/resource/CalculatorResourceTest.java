@@ -1,14 +1,11 @@
 package br.com.devio.component.entrypoint.resource;
 
 import br.com.devio.component.domain.enumeration.CalculationTypeEnum;
-import br.com.devio.component.domain.enumeration.ModalityTypeEnum;
 import br.com.devio.component.domain.enumeration.PaymentTypeEnum;
-import br.com.devio.component.domain.enumeration.PeriodTypeEnum;
 import br.com.devio.component.entrypoint.dto.request.FeeRequestDTO;
-import br.com.devio.component.entrypoint.dto.request.FinancialOperationalTaxRequestDTO;
+import br.com.devio.component.entrypoint.dto.request.TaxRequestDTO;
 import br.com.devio.component.entrypoint.dto.request.InsuranceRequestDTO;
 import br.com.devio.component.entrypoint.dto.request.LoanCalculatorRequestDTO;
-import br.com.devio.component.entrypoint.dto.request.PricingRequestDTO;
 import br.com.devio.component.entrypoint.dto.response.LoanCalculatorResponseDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.test.junit.QuarkusTest;
@@ -35,23 +32,19 @@ class CalculatorResourceTest {
         LoanCalculatorRequestDTO request = LoanCalculatorRequestDTO.builder()
                 .calculationType(CalculationTypeEnum.PRICE)
                 .installmentQuantity(5)
-                .amount(BigDecimal.valueOf(4000.0))
+                .requestedAmount(BigDecimal.valueOf(4000.0))
                 .contractDate(LocalDate.of(2025, 4, 29))
                 .firstInstallmentDate(LocalDate.of(2025, 5, 29))
-                .pricing(PricingRequestDTO.builder()
-                        .interestRate(BigDecimal.valueOf(1.75))
-                        .modalityType(ModalityTypeEnum.FIXED_RATE)
-                        .periodType(PeriodTypeEnum.MONTHLY)
-                        .build())
+                .monthlyInterestRate(BigDecimal.valueOf(1.75))
                 .fee(FeeRequestDTO.builder()
                         .paymentType(PaymentTypeEnum.FINANCED)
-                        .totalValue(BigDecimal.valueOf(200.0))
+                        .totalAmount(BigDecimal.valueOf(200.0))
                         .build())
                 .insurance((InsuranceRequestDTO.builder()
                         .paymentType(PaymentTypeEnum.FINANCED)
-                        .totalValue(BigDecimal.valueOf(800.0))
+                        .totalAmount(BigDecimal.valueOf(800.0))
                         .build()))
-                .financialOperationalTax(FinancialOperationalTaxRequestDTO.builder()
+                .tax(TaxRequestDTO.builder()
                         .paymentType(PaymentTypeEnum.FINANCED)
                         .dailyFinancialOperationalTax(BigDecimal.valueOf(0.0082))
                         .additionalFinancialOperationalTax(BigDecimal.valueOf(0.38))

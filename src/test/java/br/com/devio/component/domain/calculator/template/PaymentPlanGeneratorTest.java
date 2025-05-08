@@ -3,12 +3,11 @@ package br.com.devio.component.domain.calculator.template;
 import br.com.devio.component.domain.enumeration.CalculationTypeEnum;
 import br.com.devio.component.domain.enumeration.PeriodTypeEnum;
 import br.com.devio.component.domain.model.FeeModel;
-import br.com.devio.component.domain.model.FinancialOperationalTaxModel;
+import br.com.devio.component.domain.model.TaxModel;
 import br.com.devio.component.domain.model.InstallmentModel;
 import br.com.devio.component.domain.model.InsuranceModel;
 import br.com.devio.component.domain.model.LoanModel;
 import br.com.devio.component.domain.model.PaymentPlanModel;
-import br.com.devio.component.domain.model.PricingModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,17 +33,14 @@ class PaymentPlanGeneratorTest {
         // Arrange
         LoanModel loanModel = LoanModel.builder()
                 .calculationType(CalculationTypeEnum.PRICE)
-                .pricing(PricingModel.builder()
-                        .interestRate(BigDecimal.valueOf(5.0))
-                        .periodType(PeriodTypeEnum.MONTHLY)
-                        .build())
+                .monthlyInterestRate(BigDecimal.valueOf(5.0))
                 .installmentQuantity(12)
-                .amount(BigDecimal.valueOf(10000.0))
+                .requestedAmount(BigDecimal.valueOf(10000.0))
                 .contractDate(LocalDate.of(2025, 1, 1))
                 .firstInstallmentDate(LocalDate.of(2025, 2, 1))
                 .fee(new FeeModel())
                 .insurance(new InsuranceModel())
-                .financialOperationalTax(new FinancialOperationalTaxModel())
+                .tax(new TaxModel())
                 .build();
 
         // Act
@@ -53,9 +49,9 @@ class PaymentPlanGeneratorTest {
         // Assert
         assertNotNull(paymentPlan);
         assertEquals(CalculationTypeEnum.PRICE, paymentPlan.getCalculationType());
-        assertEquals(loanModel.getPricing(), paymentPlan.getPricing());
+        assertEquals(loanModel.getMonthlyInterestRate(), paymentPlan.getMonthlyInterestRate());
         assertEquals(12, paymentPlan.getInstallmentQuantity());
-        assertEquals(BigDecimal.valueOf(10000.0), paymentPlan.getAmount());
+        assertEquals(BigDecimal.valueOf(10000.0), paymentPlan.getRequestedAmount());
         assertEquals(LocalDate.of(2025, 1, 1), paymentPlan.getContractDate());
         assertEquals(LocalDate.of(2025, 2, 1), paymentPlan.getFirstInstallmentDate());
         assertEquals(LocalDate.of(2026, 1, 1), paymentPlan.getLastInstallmentDate());
@@ -66,10 +62,7 @@ class PaymentPlanGeneratorTest {
     void testAddInstallments() {
         // Arrange
         LoanModel loanModel = LoanModel.builder()
-                .pricing(PricingModel.builder()
-                        .interestRate(BigDecimal.valueOf(5.0))
-                        .periodType(PeriodTypeEnum.MONTHLY)
-                        .build())
+                .monthlyInterestRate(BigDecimal.valueOf(5.0))
                 .installmentQuantity(3)
                 .contractDate(LocalDate.of(2025, 1, 1))
                 .firstInstallmentDate(LocalDate.of(2025, 2, 1))

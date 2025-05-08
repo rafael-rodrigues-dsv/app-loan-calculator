@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.LongStream;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -23,24 +22,22 @@ public class PaymentPlanGenerator extends PaymentPlanGeneratorTemplate {
 
         return PaymentPlanModel.builder()
                 .calculationType(loanModel.getCalculationType())
-                .pricing(loanModel.getPricing())
                 .installmentQuantity(loanModel.getInstallmentQuantity())
-                .amount(loanModel.getAmount())
+                .requestedAmount(loanModel.getRequestedAmount())
                 .contractDate(loanModel.getContractDate())
                 .firstInstallmentDate(loanModel.getFirstInstallmentDate())
                 .lastInstallmentDate(addLastInstallmentDate(installments))
+                .monthlyInterestRate(loanModel.getMonthlyInterestRate())
                 .fee(loanModel.getFee())
                 .insurance(loanModel.getInsurance())
-                .financialOperationalTax(loanModel.getFinancialOperationalTax())
+                .tax(loanModel.getTax())
                 .installments(installments)
                 .build();
     }
 
     protected List<InstallmentModel> addInstallments(LoanModel loanModel) {
-        BigDecimal interestRate = loanModel.getPricing().getInterestRate();
-        PeriodTypeEnum interestRateType = Objects.nonNull(loanModel.getPricing())
-                ? loanModel.getPricing().getPeriodType()
-                : PeriodTypeEnum.MONTHLY;
+        BigDecimal interestRate = loanModel.getMonthlyInterestRate();
+        PeriodTypeEnum interestRateType = PeriodTypeEnum.MONTHLY;
         LocalDate contractDate = loanModel.getContractDate();
         List<InstallmentModel> installments = new ArrayList<>();
 

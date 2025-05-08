@@ -18,7 +18,7 @@ public class FeeValidation extends AbstractValidator<FeeModel> {
                 .withMessage("Amount cannot be null")
                 .withFieldName("paymentType");
 
-        ruleFor(FeeModel::getTotalValue)
+        ruleFor(FeeModel::getTotalAmount)
                 .must(not(nullValue()))
                 .withMessage("Value must not be null")
                 .withFieldName("value")

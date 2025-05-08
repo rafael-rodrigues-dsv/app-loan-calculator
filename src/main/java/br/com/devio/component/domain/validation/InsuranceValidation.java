@@ -18,7 +18,7 @@ public class InsuranceValidation extends AbstractValidator<InsuranceModel> {
                 .withMessage("Payment type must not be null")
                 .withFieldName("paymentType");
 
-        ruleFor(InsuranceModel::getTotalValue)
+        ruleFor(InsuranceModel::getTotalAmount)
                 .must(not(nullValue()))
                 .withMessage("Value must not be null")
                 .withFieldName("value")

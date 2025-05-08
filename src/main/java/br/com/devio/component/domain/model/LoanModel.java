@@ -9,7 +9,6 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
@@ -18,12 +17,12 @@ import java.util.List;
 @NoArgsConstructor
 public class LoanModel {
     private CalculationTypeEnum calculationType;
-    private PricingModel pricing;
     private Integer installmentQuantity;
-    private BigDecimal amount;
+    private BigDecimal requestedAmount;
     private LocalDate contractDate;
     private LocalDate firstInstallmentDate;
+    private BigDecimal monthlyInterestRate;
     private InsuranceModel insurance;
     private FeeModel fee;
-    private FinancialOperationalTaxModel financialOperationalTax;
+    private TaxModel tax;
 }
