@@ -4,14 +4,14 @@ import br.com.devio.component.domain.calculator.chain.CalculatorEngine;
 import br.com.devio.component.domain.constant.CalculationConstant;
 import br.com.devio.component.domain.enumeration.PaymentTypeEnum;
 import br.com.devio.component.domain.model.FeeModel;
-import br.com.devio.component.domain.model.TaxModel;
 import br.com.devio.component.domain.model.InsuranceModel;
 import br.com.devio.component.domain.model.PaymentPlanModel;
+import br.com.devio.component.domain.model.TaxModel;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class CalculationTotalFinancedAmount extends CalculatorEngine<PaymentPlanModel> {
+public class CalculationTotalGrantedAmount extends CalculatorEngine<PaymentPlanModel> {
 
     @Override
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
@@ -23,7 +23,7 @@ public class CalculationTotalFinancedAmount extends CalculatorEngine<PaymentPlan
                 Objects.nonNull(insurance)
                         && Objects.nonNull(insurance.getTotalAmount())
                         && Objects.nonNull(insurance.getPaymentType())
-                        && insurance.getPaymentType().equals(PaymentTypeEnum.FINANCED)
+                        && insurance.getPaymentType().equals(PaymentTypeEnum.UPFRONT)
                         ? insurance.getTotalAmount().doubleValue()
                         : 0;
 
@@ -31,7 +31,7 @@ public class CalculationTotalFinancedAmount extends CalculatorEngine<PaymentPlan
                 Objects.nonNull(fee)
                         && Objects.nonNull(fee.getTotalAmount())
                         && Objects.nonNull(fee.getPaymentType())
-                        && fee.getPaymentType().equals(PaymentTypeEnum.FINANCED)
+                        && fee.getPaymentType().equals(PaymentTypeEnum.UPFRONT)
                         ? fee.getTotalAmount().doubleValue()
                         : 0;
 
@@ -39,15 +39,15 @@ public class CalculationTotalFinancedAmount extends CalculatorEngine<PaymentPlan
                 Objects.nonNull(tax)
                         && Objects.nonNull(tax.getTotalAmount())
                         && Objects.nonNull(tax.getPaymentType())
-                        && tax.getPaymentType().equals(PaymentTypeEnum.FINANCED)
+                        && tax.getPaymentType().equals(PaymentTypeEnum.UPFRONT)
                         ? tax.getTotalAmount().doubleValue()
                         : 0;
 
-        paymentPlanModel.setTotalFinancedAmount(
+        paymentPlanModel.setTotalGrantedAmount(
                 BigDecimal.valueOf(paymentPlanModel.getRequestedAmount().doubleValue()
-                                + totalFeeAmount
-                                + totalInsuranceAmount
-                                + totalTaxAmount)
+                                - totalFeeAmount
+                                - totalInsuranceAmount
+                                - totalTaxAmount)
                         .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE));
 
         return paymentPlanModel;

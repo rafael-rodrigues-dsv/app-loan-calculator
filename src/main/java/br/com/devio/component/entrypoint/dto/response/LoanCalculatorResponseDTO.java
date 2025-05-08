@@ -28,6 +28,7 @@ public class LoanCalculatorResponseDTO {
     private FeeResponseDTO fee;
     private TaxResponseDTO tax;
     private BigDecimal totalFinancedAmount;
+    private BigDecimal totalGrantedAmount;
     private BigDecimal totalLoanAmount;
     private List<InstallmentResponseDTO> installments;
 }
