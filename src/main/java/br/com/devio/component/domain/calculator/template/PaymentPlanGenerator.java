@@ -11,11 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.LongStream;
 
+import static br.com.devio.component.domain.constant.CalculationConstant.DAYS_IN_YEAR;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class PaymentPlanGenerator extends PaymentPlanGeneratorTemplate {
-    private int limitSize = 365;
-
     @Override
     public PaymentPlanModel generatePaymentPlan(LoanModel loanModel) {
         List<InstallmentModel> installments = addInstallments(loanModel);
@@ -69,11 +68,11 @@ public class PaymentPlanGenerator extends PaymentPlanGeneratorTemplate {
                                 .contractDays(Math.min(
                                         (int) DAYS.between(
                                                 contractDate, dueDate),
-                                        limitSize))
+                                        DAYS_IN_YEAR))
                                 .periodDays(Math.min(
                                         (int) DAYS.between(
                                                 beforeInstallment.getDueDate(), dueDate),
-                                        limitSize))
+                                        DAYS_IN_YEAR))
                                 .build());
                     }
                 });
