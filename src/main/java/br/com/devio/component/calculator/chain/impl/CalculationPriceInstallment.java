@@ -2,12 +2,14 @@ package br.com.devio.component.calculator.chain.impl;
 
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.component.calculator.chain.CalculatorEngineBuilder;
+import br.com.devio.domain.model.AmountModel;
 import br.com.devio.domain.model.InstallmentModel;
 import br.com.devio.domain.model.PaymentPlanModel;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static br.com.devio.domain.constant.CalculationConstant.INSTALLMENT_NUMBER_INITIAL;
 
@@ -29,7 +31,8 @@ public class CalculationPriceInstallment extends CalculatorEngine<PaymentPlanMod
     @Override
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
         List<InstallmentModel> installments = new ArrayList<>();
-        final BigDecimal totalFinancedAmount = paymentPlanModel.getTotalFinancedAmount();
+        final AmountModel totalFinancedAmount = Optional.ofNullable(paymentPlanModel.getTotalFinancedAmount())
+                .orElse(AmountModel.builder().amount(BigDecimal.ZERO).currency("BRL").build());
         final Integer installmentQuantity = paymentPlanModel.getInstallmentQuantity();
 
         paymentPlanModel.getInstallments().forEach(currentInstallment -> {

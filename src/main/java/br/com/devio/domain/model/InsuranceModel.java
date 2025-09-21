@@ -1,13 +1,7 @@
 package br.com.devio.domain.model;
 
 import br.com.devio.domain.enumeration.PaymentTypeEnum;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.math.BigDecimal;
+import lombok.*;
 
 @Getter
 @Setter
@@ -16,5 +10,5 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class InsuranceModel {
     private PaymentTypeEnum paymentType;
-    private BigDecimal totalAmount;
+    private AmountModel totalAmount;
 }

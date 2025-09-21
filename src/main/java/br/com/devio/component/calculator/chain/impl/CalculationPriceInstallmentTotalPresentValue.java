@@ -2,6 +2,7 @@ package br.com.devio.component.calculator.chain.impl;
 
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.domain.constant.CalculationConstant;
+import br.com.devio.domain.model.AmountModel;
 import br.com.devio.domain.model.InstallmentModel;
 
 import java.math.BigDecimal;
@@ -12,10 +13,10 @@ import java.math.MathContext;
  */
 public class CalculationPriceInstallmentTotalPresentValue extends CalculatorEngine<InstallmentModel> {
 
-    private static BigDecimal totalFinancedAmount;
+    private static AmountModel totalFinancedAmount;
     private static Integer installmentQuantity;
 
-    public CalculationPriceInstallmentTotalPresentValue(BigDecimal totalFinancedAmount, Integer installmentQuantity) {
+    public CalculationPriceInstallmentTotalPresentValue(AmountModel totalFinancedAmount, Integer installmentQuantity) {
         this.totalFinancedAmount = totalFinancedAmount;
         this.installmentQuantity = installmentQuantity;
     }
@@ -44,10 +45,13 @@ public class CalculationPriceInstallmentTotalPresentValue extends CalculatorEngi
             BigDecimal totalPresentValue = calculatePMT(
                     currentInstallment.getInterestRate(),
                     installmentQuantity,
-                    totalFinancedAmount
+                    totalFinancedAmount.getAmount()
             );
 
-            currentInstallment.setTotalPresentValue(totalPresentValue);
+            currentInstallment.setTotalPresentValue(AmountModel.builder()
+                    .amount(totalPresentValue)
+                    .currency("BRL")
+                    .build());
         } else {
             currentInstallment.setTotalPresentValue(beforeInstallment.getTotalPresentValue());
         }

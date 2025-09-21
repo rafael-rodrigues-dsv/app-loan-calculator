@@ -21,22 +21,37 @@ class CalculatorResourceTest {
         LoanCalculatorRequestDTO request = LoanCalculatorRequestDTO.builder()
                 .calculationType(CalculationType.PRICE)
                 .installmentQuantity(5)
-                .requestedAmount(BigDecimal.valueOf(4000.0))
+                .requestedAmount(AmountDTO.builder()
+                        .amount(BigDecimal.valueOf(4000.0))
+                        .currency("BRL")
+                        .build())
                 .contractDate(LocalDate.of(2025, 4, 29))
                 .firstInstallmentDate(LocalDate.of(2025, 5, 29))
                 .monthlyInterestRate(BigDecimal.valueOf(0.0175))
                 .fee(FeeRequestDTO.builder()
                         .paymentType(PaymentType.FINANCED)
-                        .totalAmount(BigDecimal.valueOf(200.0))
+                        .totalAmount(AmountDTO.builder()
+                                .amount(BigDecimal.valueOf(200.0))
+                                .currency("BRL")
+                                .build())
                         .build())
                 .insurance((InsuranceRequestDTO.builder()
                         .paymentType(PaymentType.FINANCED)
-                        .totalAmount(BigDecimal.valueOf(800.0))
+                        .totalAmount(AmountDTO.builder()
+                                .amount(BigDecimal.valueOf(800.0))
+                                .currency("BRL")
+                                .build())
                         .build()))
                 .tax(TaxRequestDTO.builder()
                         .paymentType(PaymentType.FINANCED)
-                        .dailyFinancialOperationalTax(BigDecimal.valueOf(0.0082))
-                        .additionalFinancialOperationalTax(BigDecimal.valueOf(0.38))
+                        .dailyFinancialOperationalTax(AmountDTO.builder()
+                                .amount(BigDecimal.valueOf(0.0082))
+                                .currency("BRL")
+                                .build())
+                        .additionalFinancialOperationalTax(AmountDTO.builder()
+                                .amount(BigDecimal.valueOf(0.38))
+                                .currency("BRL")
+                                .build())
                         .build())
                 .build();
 
@@ -51,11 +66,6 @@ class CalculatorResourceTest {
                 .extract()
                 .response();
 
-        // Validando a resposta
-        assertNotNull(response);
-        System.out.println("Response body: " + response.getBody().asString());
-        
-        // Verificar se não é "magic!"
         String responseBody = response.getBody().asString();
         LoanCalculatorResponseDTO responseDTO = ObjectMapperUtils.getObjectMapper().readValue(responseBody, LoanCalculatorResponseDTO.class);
         assertNotNull(responseDTO);

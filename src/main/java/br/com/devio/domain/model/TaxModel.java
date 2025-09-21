@@ -1,13 +1,7 @@
 package br.com.devio.domain.model;
 
 import br.com.devio.domain.enumeration.PaymentTypeEnum;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.math.BigDecimal;
+import lombok.*;
 
 @Getter
 @Setter
@@ -16,7 +10,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class TaxModel {
     private PaymentTypeEnum paymentType;
-    private BigDecimal dailyFinancialOperationalTax;
-    private BigDecimal additionalFinancialOperationalTax;
-    private BigDecimal totalAmount;
+    private AmountModel dailyFinancialOperationalTax;
+    private AmountModel additionalFinancialOperationalTax;
+    private AmountModel totalAmount;
 }

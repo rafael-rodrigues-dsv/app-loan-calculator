@@ -20,10 +20,10 @@ public class InsuranceValidations extends AbstractValidator<InsuranceModel> {
 
         ruleFor(InsuranceModel::getTotalAmount)
                 .must(not(nullValue()))
-                .withMessage("Value must not be null")
-                .withFieldName("value")
-                .must(value -> Objects.nonNull(value) && value.compareTo(BigDecimal.ZERO) > 0)
-                .withMessage("Value must be greater than zero")
-                .withFieldName("value");
+                .withMessage("Total amount must not be null")
+                .withFieldName("totalAmount")
+                .must(amountModel -> Objects.nonNull(amountModel) && Objects.nonNull(amountModel.getAmount()) && amountModel.getAmount().compareTo(BigDecimal.ZERO) > 0)
+                .withMessage("Total amount must be greater than zero")
+                .withFieldName("totalAmount");
     }
 }

@@ -2,6 +2,7 @@ package br.com.devio.component.calculator.chain.impl;
 
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.domain.constant.CalculationConstant;
+import br.com.devio.domain.model.AmountModel;
 import br.com.devio.domain.model.InstallmentModel;
 
 import java.math.BigDecimal;
@@ -11,10 +12,10 @@ import java.util.Objects;
  * 📅 Calculadora de IOF diário
  */
 public class CalculationTaxInstallmentTotalDailyFinancialOperationalTax extends CalculatorEngine<InstallmentModel> {
-    private BigDecimal dailyFinancialOperationalTax;
-    private BigDecimal totalFinancedAmount;
+    private AmountModel dailyFinancialOperationalTax;
+    private AmountModel totalFinancedAmount;
 
-    public CalculationTaxInstallmentTotalDailyFinancialOperationalTax(BigDecimal dailyFinancialOperationalTax, BigDecimal totalFinancedAmount) {
+    public CalculationTaxInstallmentTotalDailyFinancialOperationalTax(AmountModel dailyFinancialOperationalTax, AmountModel totalFinancedAmount) {
         this.dailyFinancialOperationalTax = dailyFinancialOperationalTax;
         this.totalFinancedAmount = totalFinancedAmount;
     }
@@ -43,14 +44,17 @@ public class CalculationTaxInstallmentTotalDailyFinancialOperationalTax extends 
 
         if (!currentInstallment.getInstallmentNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)
                 && Objects.nonNull(dailyFinancialOperationalTax)) {
-            totalDailyFinancialOperationalTax = totalFinancedAmount
-                    .multiply(dailyFinancialOperationalTax)
+            totalDailyFinancialOperationalTax = totalFinancedAmount.getAmount()
+                    .multiply(dailyFinancialOperationalTax.getAmount())
                     .multiply(BigDecimal.valueOf(currentInstallment.getContractDays()))
                     .divide(CalculationConstant.PERCENTAGE_DIVISOR_100)
                     .setScale(CalculationConstant.SCALE_4, CalculationConstant.ROUNDING_MODE);
         }
 
-        currentInstallment.setTotalDailyFinancialOperationalTax(totalDailyFinancialOperationalTax);
+        currentInstallment.setTotalDailyFinancialOperationalTax(AmountModel.builder()
+                .amount(totalDailyFinancialOperationalTax)
+                .currency("BRL")
+                .build());
 
         return currentInstallment;
     }

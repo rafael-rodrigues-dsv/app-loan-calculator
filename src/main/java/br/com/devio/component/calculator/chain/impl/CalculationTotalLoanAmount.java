@@ -2,9 +2,11 @@ package br.com.devio.component.calculator.chain.impl;
 
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.domain.constant.CalculationConstant;
+import br.com.devio.domain.model.AmountModel;
 import br.com.devio.domain.model.PaymentPlanModel;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static br.com.devio.domain.constant.CalculationConstant.INSTALLMENT_NUMBER_INITIAL;
 
@@ -37,13 +39,18 @@ public class CalculationTotalLoanAmount extends CalculatorEngine<PaymentPlanMode
         double totalLoanAmount = paymentPlanModel.getInstallments() != null && !paymentPlanModel.getInstallments().isEmpty()
                 ? paymentPlanModel.getInstallments().stream()
                 .filter(f -> f.getInstallmentNumber() != INSTALLMENT_NUMBER_INITIAL)
-                .mapToDouble(map -> map.getTotalInstalmentValue().doubleValue())
+                .mapToDouble(installment -> Optional.ofNullable(installment.getTotalInstalmentValue())
+                        .map(AmountModel::getAmount)
+                        .map(BigDecimal::doubleValue)
+                        .orElse(0.0))
                 .sum()
                 : 0;
 
-        paymentPlanModel.setTotalLoanAmount(
-                BigDecimal.valueOf(totalLoanAmount)
-                        .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE));
+        paymentPlanModel.setTotalLoanAmount(AmountModel.builder()
+                .amount(BigDecimal.valueOf(totalLoanAmount)
+                        .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE))
+                .currency("BRL")
+                .build());
 
         return paymentPlanModel;
     }

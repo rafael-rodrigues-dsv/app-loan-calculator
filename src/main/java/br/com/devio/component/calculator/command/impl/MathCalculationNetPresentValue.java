@@ -21,12 +21,12 @@ public class MathCalculationNetPresentValue implements MathCalculationCommand<Li
 
         for (InstallmentModel currentInstallment : installments) {
             Double currentInstallmentValue = currentInstallment.getTotalInstalmentValue() != null
-                    ? currentInstallment.getTotalInstalmentValue().doubleValue()
+                    ? currentInstallment.getTotalInstalmentValue().getAmount().doubleValue()
                     : 0.0;
 
             if (currentInstallment.getInstallmentNumber() == 0) {
                 currentInstallmentValue = currentInstallment.getTotalBalanceAmount() != null
-                        ? currentInstallment.getTotalBalanceAmount().negate().doubleValue()
+                        ? currentInstallment.getTotalBalanceAmount().getAmount().negate().doubleValue()
                         : 0.0;
             }
 

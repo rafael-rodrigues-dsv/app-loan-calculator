@@ -18,12 +18,12 @@ public class InstallmentModel {
     private Integer periodDays;
     private BigDecimal interestRate;
     private PeriodTypeEnum interestRateType;
-    private BigDecimal totalPresentValue;
-    private BigDecimal totalInstalmentValue;
-    private BigDecimal totalInterestAmount;
-    private BigDecimal totalAmortizationAmount;
-    private BigDecimal totalBalanceAmount;
-    private BigDecimal totalDailyFinancialOperationalTax;
-    private BigDecimal totalAdditionalFinancialOperationalTax;
-    private BigDecimal totalFinancialOperationalTax;
+    private AmountModel totalPresentValue;
+    private AmountModel totalInstalmentValue;
+    private AmountModel totalInterestAmount;
+    private AmountModel totalAmortizationAmount;
+    private AmountModel totalBalanceAmount;
+    private AmountModel totalDailyFinancialOperationalTax;
+    private AmountModel totalAdditionalFinancialOperationalTax;
+    private AmountModel totalFinancialOperationalTax;
 }

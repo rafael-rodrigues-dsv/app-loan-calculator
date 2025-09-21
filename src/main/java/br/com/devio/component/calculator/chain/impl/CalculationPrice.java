@@ -3,11 +3,11 @@ package br.com.devio.component.calculator.chain.impl;
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.component.calculator.chain.CalculatorEngineBuilder;
 import br.com.devio.domain.model.InstallmentModel;
-import br.com.devio.domain.model.TaxModel;
 import br.com.devio.domain.model.PaymentPlanModel;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static br.com.devio.domain.constant.CalculationConstant.INSTALLMENT_NUMBER_INITIAL;
 
@@ -49,10 +49,9 @@ public class CalculationPrice {
     }
 
     private boolean hasFinancialOperationalTax(PaymentPlanModel model) {
-        TaxModel financialOperationalTax = model.getTax();
-        return Objects.nonNull(financialOperationalTax)
-                && Objects.nonNull(financialOperationalTax.getDailyFinancialOperationalTax())
-                && Objects.nonNull(financialOperationalTax.getAdditionalFinancialOperationalTax());
+        return Optional.ofNullable(model.getTax())
+                .filter(tax -> Objects.nonNull(tax.getDailyFinancialOperationalTax()) && Objects.nonNull(tax.getAdditionalFinancialOperationalTax()))
+                .isPresent();
     }
 
     private List<InstallmentModel> filterValidInstallments(List<InstallmentModel> installments) {

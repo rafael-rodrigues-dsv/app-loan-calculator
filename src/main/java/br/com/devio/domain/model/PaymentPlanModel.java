@@ -1,11 +1,7 @@
 package br.com.devio.domain.model;
 
 import br.com.devio.domain.enumeration.CalculationTypeEnum;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -19,7 +15,7 @@ import java.util.List;
 public class PaymentPlanModel {
     private CalculationTypeEnum calculationType;
     private Integer installmentQuantity;
-    private BigDecimal requestedAmount;
+    private AmountModel requestedAmount;
     private LocalDate contractDate;
     private LocalDate firstInstallmentDate;
     private LocalDate lastInstallmentDate;
@@ -28,8 +24,8 @@ public class PaymentPlanModel {
     private InsuranceModel insurance;
     private FeeModel fee;
     private TaxModel tax;
-    private BigDecimal totalFinancedAmount;
-    private BigDecimal totalGrantedAmount;
-    private BigDecimal totalLoanAmount;
+    private AmountModel totalFinancedAmount;
+    private AmountModel totalGrantedAmount;
+    private AmountModel totalLoanAmount;
     private List<InstallmentModel> installments;
 }

@@ -1,7 +1,5 @@
 package br.com.devio.component.calculator.chain;
 
-import br.com.devio.component.calculator.chain.CalculatorEngine;
-import br.com.devio.component.calculator.chain.CalculatorEngineBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

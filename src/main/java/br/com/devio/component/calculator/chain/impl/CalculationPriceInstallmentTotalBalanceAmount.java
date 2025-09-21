@@ -2,6 +2,7 @@ package br.com.devio.component.calculator.chain.impl;
 
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.domain.constant.CalculationConstant;
+import br.com.devio.domain.model.AmountModel;
 import br.com.devio.domain.model.InstallmentModel;
 
 import java.math.BigDecimal;
@@ -11,9 +12,9 @@ import java.math.BigDecimal;
  */
 public class CalculationPriceInstallmentTotalBalanceAmount extends CalculatorEngine<InstallmentModel> {
 
-    private static BigDecimal totalFinancedAmount;
+    private static AmountModel totalFinancedAmount;
 
-    public CalculationPriceInstallmentTotalBalanceAmount(BigDecimal totalFinancedAmount) {
+    public CalculationPriceInstallmentTotalBalanceAmount(AmountModel totalFinancedAmount) {
         this.totalFinancedAmount = totalFinancedAmount;
     }
 
@@ -36,10 +37,10 @@ public class CalculationPriceInstallmentTotalBalanceAmount extends CalculatorEng
         BigDecimal totalBalanceAmount;
 
         if (currentInstallment.getInstallmentNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)) {
-            totalBalanceAmount = totalFinancedAmount;
+            totalBalanceAmount = totalFinancedAmount.getAmount();
         } else {
-            totalBalanceAmount = beforeInstallment.getTotalBalanceAmount()
-                    .subtract(currentInstallment.getTotalAmortizationAmount())
+            totalBalanceAmount = beforeInstallment.getTotalBalanceAmount().getAmount()
+                    .subtract(currentInstallment.getTotalAmortizationAmount().getAmount())
                     .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE);
 
             if (totalBalanceAmount.compareTo(BigDecimal.ZERO) < 0) {
@@ -47,7 +48,10 @@ public class CalculationPriceInstallmentTotalBalanceAmount extends CalculatorEng
             }
         }
 
-        currentInstallment.setTotalBalanceAmount(totalBalanceAmount);
+        currentInstallment.setTotalBalanceAmount(AmountModel.builder()
+                .amount(totalBalanceAmount)
+                .currency("BRL")
+                .build());
 
         return currentInstallment;
     }

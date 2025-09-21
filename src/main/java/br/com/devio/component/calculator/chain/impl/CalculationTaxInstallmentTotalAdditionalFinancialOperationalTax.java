@@ -2,6 +2,7 @@ package br.com.devio.component.calculator.chain.impl;
 
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.domain.constant.CalculationConstant;
+import br.com.devio.domain.model.AmountModel;
 import br.com.devio.domain.model.InstallmentModel;
 
 import java.math.BigDecimal;
@@ -11,10 +12,10 @@ import java.util.Objects;
  * 💰 Calculadora de IOF adicional
  */
 public class CalculationTaxInstallmentTotalAdditionalFinancialOperationalTax extends CalculatorEngine<InstallmentModel> {
-    private BigDecimal additionalFinancialOperationalTax;
-    private BigDecimal totalFinancedAmount;
+    private AmountModel additionalFinancialOperationalTax;
+    private AmountModel totalFinancedAmount;
 
-    public CalculationTaxInstallmentTotalAdditionalFinancialOperationalTax(BigDecimal additionalFinancialOperationalTax, BigDecimal totalFinancedAmount) {
+    public CalculationTaxInstallmentTotalAdditionalFinancialOperationalTax(AmountModel additionalFinancialOperationalTax, AmountModel totalFinancedAmount) {
         this.additionalFinancialOperationalTax = additionalFinancialOperationalTax;
         this.totalFinancedAmount = totalFinancedAmount;
     }
@@ -42,13 +43,16 @@ public class CalculationTaxInstallmentTotalAdditionalFinancialOperationalTax ext
 
         if (!currentInstallment.getInstallmentNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)
                 && Objects.nonNull(additionalFinancialOperationalTax)) {
-            totalAdditionalFinancialOperationalTax = totalFinancedAmount
-                    .multiply(additionalFinancialOperationalTax)
+            totalAdditionalFinancialOperationalTax = totalFinancedAmount.getAmount()
+                    .multiply(additionalFinancialOperationalTax.getAmount())
                     .divide(CalculationConstant.PERCENTAGE_DIVISOR_100)
                     .setScale(CalculationConstant.SCALE_4, CalculationConstant.ROUNDING_MODE);
         }
 
-        currentInstallment.setTotalAdditionalFinancialOperationalTax(totalAdditionalFinancialOperationalTax);
+        currentInstallment.setTotalAdditionalFinancialOperationalTax(AmountModel.builder()
+                .amount(totalAdditionalFinancialOperationalTax)
+                .currency("BRL")
+                .build());
 
         return currentInstallment;
     }

@@ -3,6 +3,7 @@ package br.com.devio.component.validations;
 import br.com.devio.domain.model.LoanModel;
 import br.com.fluentvalidator.AbstractValidator;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 import static br.com.fluentvalidator.predicate.LogicalPredicate.not;
@@ -31,7 +32,7 @@ public class CalculatorValidations extends AbstractValidator<LoanModel> {
                 .must(not(nullValue()))
                 .withMessage("Requested amount cannot be null")
                 .withFieldName("requestedAmount")
-                .must(amount -> Objects.nonNull(amount) && amount.doubleValue() > 0)
+                .must(amountModel -> Objects.nonNull(amountModel) && Objects.nonNull(amountModel.getAmount()) && amountModel.getAmount().compareTo(BigDecimal.ZERO) > 0)
                 .withMessage("Requested amount must be greater than zero")
                 .withFieldName("requestedAmount");
 
@@ -49,7 +50,7 @@ public class CalculatorValidations extends AbstractValidator<LoanModel> {
                 .must(not(nullValue()))
                 .withMessage("Monthly interest rate cannot be null")
                 .withFieldName("monthlyInterestRate")
-                .must(rate -> Objects.nonNull(rate) && rate.doubleValue() > 0)
+                .must(rate -> Objects.nonNull(rate) && rate.compareTo(BigDecimal.ZERO) > 0)
                 .withMessage("Monthly interest rate must be greater than zero")
                 .withFieldName("monthlyInterestRate");
 

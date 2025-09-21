@@ -1,12 +1,7 @@
 package br.com.devio.component.calculator.template;
 
 import br.com.devio.domain.enumeration.CalculationTypeEnum;
-import br.com.devio.domain.model.FeeModel;
-import br.com.devio.domain.model.TaxModel;
-import br.com.devio.domain.model.InstallmentModel;
-import br.com.devio.domain.model.InsuranceModel;
-import br.com.devio.domain.model.LoanModel;
-import br.com.devio.domain.model.PaymentPlanModel;
+import br.com.devio.domain.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,9 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PaymentPlanGeneratorTest {
 
@@ -34,7 +27,10 @@ class PaymentPlanGeneratorTest {
                 .calculationType(CalculationTypeEnum.PRICE)
                 .monthlyInterestRate(BigDecimal.valueOf(5.0))
                 .installmentQuantity(12)
-                .requestedAmount(BigDecimal.valueOf(10000.0))
+                .requestedAmount(AmountModel.builder()
+                        .amount(BigDecimal.valueOf(10000.0))
+                        .currency("BRL")
+                        .build())
                 .contractDate(LocalDate.of(2025, 1, 1))
                 .firstInstallmentDate(LocalDate.of(2025, 2, 1))
                 .fee(new FeeModel())
@@ -50,7 +46,7 @@ class PaymentPlanGeneratorTest {
         assertEquals(CalculationTypeEnum.PRICE, paymentPlan.getCalculationType());
         assertEquals(loanModel.getMonthlyInterestRate(), paymentPlan.getMonthlyInterestRate());
         assertEquals(12, paymentPlan.getInstallmentQuantity());
-        assertEquals(BigDecimal.valueOf(10000.0), paymentPlan.getRequestedAmount());
+        assertEquals(BigDecimal.valueOf(10000.0), paymentPlan.getRequestedAmount().getAmount());
         assertEquals(LocalDate.of(2025, 1, 1), paymentPlan.getContractDate());
         assertEquals(LocalDate.of(2025, 2, 1), paymentPlan.getFirstInstallmentDate());
         assertEquals(LocalDate.of(2026, 1, 1), paymentPlan.getLastInstallmentDate());

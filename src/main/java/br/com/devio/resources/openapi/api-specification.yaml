@@ -52,7 +52,9 @@ components:
       value:
         calculationType: PRICE
         installmentQuantity: 5
-        requestedAmount: 4000.0
+        requestedAmount:
+          amount: 4000.0
+          currency: "BRL"
         contractDate: "2025-04-29"
         firstInstallmentDate: "2025-05-29"
         monthlyInterestRate: 0.0175
@@ -63,20 +65,30 @@ components:
       value:
         calculationType: PRICE
         installmentQuantity: 5
-        requestedAmount: 4000.0
+        requestedAmount:
+          amount: 4000.0
+          currency: "BRL"
         contractDate: "2025-04-29"
         firstInstallmentDate: "2025-05-29"
         monthlyInterestRate: 0.0175
         fee:
           paymentType: FINANCED
-          totalAmount: 200.0
+          totalAmount:
+            amount: 200.0
+            currency: "BRL"
         insurance:
           paymentType: FINANCED
-          totalAmount: 800.0
+          totalAmount:
+            amount: 800.0
+            currency: "BRL"
         tax:
           paymentType: FINANCED
-          dailyFinancialOperationalTax: 0.0082
-          additionalFinancialOperationalTax: 0.38
+          dailyFinancialOperationalTax:
+            amount: 0.0082
+            currency: "BRL"
+          additionalFinancialOperationalTax:
+            amount: 0.38
+            currency: "BRL"
 
   schemas:
     LoanCalculatorRequestDTO:
@@ -98,11 +110,7 @@ components:
           description: Quantidade de parcelas
           example: 24
         requestedAmount:
-          type: number
-          format: decimal
-          minimum: 0.01
-          description: Valor solicitado
-          example: 50000.00
+          $ref: '#/components/schemas/AmountDTO'
         contractDate:
           type: string
           format: date
@@ -136,10 +144,7 @@ components:
       type: object
       properties:
         requestedAmount:
-          type: number
-          format: decimal
-          description: Valor solicitado
-          example: 50000.00
+          $ref: '#/components/schemas/AmountDTO'
         contractDate:
           type: string
           format: date
@@ -172,20 +177,11 @@ components:
         tax:
           $ref: '#/components/schemas/TaxResponseDTO'
         totalFinancedAmount:
-          type: number
-          format: decimal
-          description: Valor total financiado
-          example: 52000.00
+          $ref: '#/components/schemas/AmountDTO'
         totalGrantedAmount:
-          type: number
-          format: decimal
-          description: Valor total concedido
-          example: 50000.00
+          $ref: '#/components/schemas/AmountDTO'
         totalLoanAmount:
-          type: number
-          format: decimal
-          description: Valor total do empréstimo
-          example: 65432.10
+          $ref: '#/components/schemas/AmountDTO'
         installments:
           type: array
           items:
@@ -197,10 +193,7 @@ components:
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         totalAmount:
-          type: number
-          format: decimal
-          description: Valor total do seguro
-          example: 1000.00
+          $ref: '#/components/schemas/AmountDTO'
 
     InsuranceResponseDTO:
       type: object
@@ -208,10 +201,7 @@ components:
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         totalAmount:
-          type: number
-          format: decimal
-          description: Valor total do seguro
-          example: 1000.00
+          $ref: '#/components/schemas/AmountDTO'
 
     FeeRequestDTO:
       type: object
@@ -219,10 +209,7 @@ components:
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         totalAmount:
-          type: number
-          format: decimal
-          description: Valor total das tarifas
-          example: 500.00
+          $ref: '#/components/schemas/AmountDTO'
 
     FeeResponseDTO:
       type: object
@@ -230,10 +217,7 @@ components:
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         totalAmount:
-          type: number
-          format: decimal
-          description: Valor total das tarifas
-          example: 500.00
+          $ref: '#/components/schemas/AmountDTO'
 
     TaxRequestDTO:
       type: object
@@ -241,19 +225,11 @@ components:
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         dailyFinancialOperationalTax:
-          type: number
-          format: decimal
-          description: IOF diário
-          example: 0.0041
+          $ref: '#/components/schemas/AmountDTO'
         additionalFinancialOperationalTax:
-          type: number
-          format: decimal
-          description: IOF adicional
-          example: 0.38
+          $ref: '#/components/schemas/AmountDTO'
         totalAmount:
-          type: number
-          format: decimal
-          description: Valor total dos impostos
+          $ref: '#/components/schemas/AmountDTO'
 
     TaxResponseDTO:
       type: object
@@ -261,19 +237,11 @@ components:
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         dailyFinancialOperationalTax:
-          type: number
-          format: decimal
-          description: IOF diário
-          example: 0.0041
+          $ref: '#/components/schemas/AmountDTO'
         additionalFinancialOperationalTax:
-          type: number
-          format: decimal
-          description: IOF adicional
-          example: 0.38
+          $ref: '#/components/schemas/AmountDTO'
         totalAmount:
-          type: number
-          format: decimal
-          description: Valor total dos impostos
+          $ref: '#/components/schemas/AmountDTO'
 
     InstallmentResponseDTO:
       type: object
@@ -288,30 +256,15 @@ components:
           description: Data de vencimento
           example: "2024-02-15"
         totalInstalmentValue:
-          type: number
-          format: decimal
-          description: Valor da parcela
-          example: 2176.32
+          $ref: '#/components/schemas/AmountDTO'
         totalInterestAmount:
-          type: number
-          format: decimal
-          description: Valor dos juros
-          example: 1300.00
+          $ref: '#/components/schemas/AmountDTO'
         totalAmortizationAmount:
-          type: number
-          format: decimal
-          description: Valor da amortização
-          example: 876.32
+          $ref: '#/components/schemas/AmountDTO'
         totalBalanceAmount:
-          type: number
-          format: decimal
-          description: Saldo devedor
-          example: 51123.68
+          $ref: '#/components/schemas/AmountDTO'
         totalPresentValue:
-          type: number
-          format: decimal
-          description: Valor presente
-          example: 2123.24
+          $ref: '#/components/schemas/AmountDTO'
 
     CalculationType:
       type: string
@@ -325,6 +278,20 @@ components:
         - FINANCED
         - UPFRONT
       description: Tipo de pagamento
+
+    AmountDTO:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: decimal
+          description: Valor monetário
+          example: 50000.00
+        currency:
+          type: string
+          description: Código da moeda
+          default: "BRL"
+          example: "BRL"
 
     ErrorResponse:
       type: object

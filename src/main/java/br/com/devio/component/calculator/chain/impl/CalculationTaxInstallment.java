@@ -2,14 +2,15 @@ package br.com.devio.component.calculator.chain.impl;
 
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.component.calculator.chain.CalculatorEngineBuilder;
-import br.com.devio.domain.model.TaxModel;
+import br.com.devio.domain.model.AmountModel;
 import br.com.devio.domain.model.InstallmentModel;
 import br.com.devio.domain.model.PaymentPlanModel;
+import br.com.devio.domain.model.TaxModel;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 import static br.com.devio.domain.constant.CalculationConstant.INSTALLMENT_NUMBER_INITIAL;
 
@@ -32,14 +33,15 @@ public class CalculationTaxInstallment extends CalculatorEngine<PaymentPlanModel
     @Override
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
         List<InstallmentModel> installments = new ArrayList<>();
-        final BigDecimal totalFinancedAmount = paymentPlanModel.getTotalFinancedAmount();
-        final TaxModel financialOperationalTax =  paymentPlanModel.getTax();
-        final BigDecimal dailyFinancialOperationalTax = Objects.nonNull(financialOperationalTax)
-                ? financialOperationalTax.getDailyFinancialOperationalTax()
-                : BigDecimal.ZERO;
-        final BigDecimal additionalFinancialOperationalTax = Objects.nonNull(financialOperationalTax)
-                ? financialOperationalTax.getAdditionalFinancialOperationalTax()
-                : BigDecimal.ZERO;
+        final AmountModel totalFinancedAmount = Optional.ofNullable(paymentPlanModel.getTotalFinancedAmount())
+                .orElse(AmountModel.builder().amount(BigDecimal.ZERO).currency("BRL").build());
+        final TaxModel financialOperationalTax = paymentPlanModel.getTax();
+        final AmountModel dailyFinancialOperationalTax = Optional.ofNullable(financialOperationalTax)
+                .map(TaxModel::getDailyFinancialOperationalTax)
+                .orElse(AmountModel.builder().amount(BigDecimal.ZERO).currency("BRL").build());
+        final AmountModel additionalFinancialOperationalTax = Optional.ofNullable(financialOperationalTax)
+                .map(TaxModel::getAdditionalFinancialOperationalTax)
+                .orElse(AmountModel.builder().amount(BigDecimal.ZERO).currency("BRL").build());
 
         paymentPlanModel.getInstallments().forEach(currentInstallment -> {
             if (!currentInstallment.getInstallmentNumber().equals(INSTALLMENT_NUMBER_INITIAL)) {

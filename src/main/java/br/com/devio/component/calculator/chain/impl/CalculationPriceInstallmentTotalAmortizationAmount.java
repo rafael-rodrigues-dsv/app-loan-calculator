@@ -2,6 +2,7 @@ package br.com.devio.component.calculator.chain.impl;
 
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.domain.constant.CalculationConstant;
+import br.com.devio.domain.model.AmountModel;
 import br.com.devio.domain.model.InstallmentModel;
 
 import java.math.BigDecimal;
@@ -27,11 +28,14 @@ public class CalculationPriceInstallmentTotalAmortizationAmount extends Calculat
      */
     @Override
     public InstallmentModel calculate(InstallmentModel beforeInstallment, InstallmentModel currentInstallment) {
-        BigDecimal totalAmortizationAmount = currentInstallment.getTotalInstalmentValue()
-                .subtract(currentInstallment.getTotalInterestAmount())
+        BigDecimal totalAmortizationAmount = currentInstallment.getTotalInstalmentValue().getAmount()
+                .subtract(currentInstallment.getTotalInterestAmount().getAmount())
                 .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE);
 
-        currentInstallment.setTotalAmortizationAmount(totalAmortizationAmount);
+        currentInstallment.setTotalAmortizationAmount(AmountModel.builder()
+                .amount(totalAmortizationAmount)
+                .currency("BRL")
+                .build());
         return currentInstallment;
     }
 }

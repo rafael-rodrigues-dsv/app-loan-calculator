@@ -3,13 +3,10 @@ package br.com.devio.component.calculator.chain.impl;
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.domain.constant.CalculationConstant;
 import br.com.devio.domain.enumeration.PaymentTypeEnum;
-import br.com.devio.domain.model.FeeModel;
-import br.com.devio.domain.model.InsuranceModel;
-import br.com.devio.domain.model.PaymentPlanModel;
-import br.com.devio.domain.model.TaxModel;
+import br.com.devio.domain.model.*;
 
 import java.math.BigDecimal;
-import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 💳 Calculadora do valor total concedido
@@ -38,36 +35,40 @@ public class CalculationTotalGrantedAmount extends CalculatorEngine<PaymentPlanM
         final FeeModel fee = paymentPlanModel.getFee();
         final TaxModel tax = paymentPlanModel.getTax();
 
-        double totalInsuranceAmount =
-                Objects.nonNull(insurance)
-                        && Objects.nonNull(insurance.getTotalAmount())
-                        && Objects.nonNull(insurance.getPaymentType())
-                        && insurance.getPaymentType().equals(PaymentTypeEnum.UPFRONT)
-                        ? insurance.getTotalAmount().doubleValue()
-                        : 0;
+        double totalInsuranceAmount = Optional.ofNullable(insurance)
+                .filter(i -> PaymentTypeEnum.UPFRONT.equals(i.getPaymentType()))
+                .map(InsuranceModel::getTotalAmount)
+                .map(AmountModel::getAmount)
+                .map(BigDecimal::doubleValue)
+                .orElse(0.0);
 
-        double totalFeeAmount =
-                Objects.nonNull(fee)
-                        && Objects.nonNull(fee.getTotalAmount())
-                        && Objects.nonNull(fee.getPaymentType())
-                        && fee.getPaymentType().equals(PaymentTypeEnum.UPFRONT)
-                        ? fee.getTotalAmount().doubleValue()
-                        : 0;
+        double totalFeeAmount = Optional.ofNullable(fee)
+                .filter(f -> PaymentTypeEnum.UPFRONT.equals(f.getPaymentType()))
+                .map(FeeModel::getTotalAmount)
+                .map(AmountModel::getAmount)
+                .map(BigDecimal::doubleValue)
+                .orElse(0.0);
 
-        double totalTaxAmount =
-                Objects.nonNull(tax)
-                        && Objects.nonNull(tax.getTotalAmount())
-                        && Objects.nonNull(tax.getPaymentType())
-                        && tax.getPaymentType().equals(PaymentTypeEnum.UPFRONT)
-                        ? tax.getTotalAmount().doubleValue()
-                        : 0;
+        double totalTaxAmount = Optional.ofNullable(tax)
+                .filter(t -> PaymentTypeEnum.UPFRONT.equals(t.getPaymentType()))
+                .map(TaxModel::getTotalAmount)
+                .map(AmountModel::getAmount)
+                .map(BigDecimal::doubleValue)
+                .orElse(0.0);
 
-        paymentPlanModel.setTotalGrantedAmount(
-                BigDecimal.valueOf(paymentPlanModel.getRequestedAmount().doubleValue()
-                                - totalFeeAmount
-                                - totalInsuranceAmount
-                                - totalTaxAmount)
-                        .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE));
+        double requestedAmountValue = Optional.ofNullable(paymentPlanModel.getRequestedAmount())
+                .map(AmountModel::getAmount)
+                .map(BigDecimal::doubleValue)
+                .orElse(0.0);
+
+        paymentPlanModel.setTotalGrantedAmount(AmountModel.builder()
+                .amount(BigDecimal.valueOf(requestedAmountValue
+                        - totalFeeAmount
+                        - totalInsuranceAmount
+                        - totalTaxAmount)
+                        .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE))
+                .currency("BRL")
+                .build());
 
         return paymentPlanModel;
     }
