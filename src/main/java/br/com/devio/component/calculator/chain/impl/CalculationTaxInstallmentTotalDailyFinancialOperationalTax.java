@@ -7,6 +7,9 @@ import br.com.devio.domain.model.InstallmentModel;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * 📅 Calculadora de IOF diário
+ */
 public class CalculationTaxInstallmentTotalDailyFinancialOperationalTax extends CalculatorEngine<InstallmentModel> {
     private BigDecimal dailyFinancialOperationalTax;
     private BigDecimal totalFinancedAmount;
@@ -16,6 +19,24 @@ public class CalculationTaxInstallmentTotalDailyFinancialOperationalTax extends 
         this.totalFinancedAmount = totalFinancedAmount;
     }
 
+    /**
+     * ═══════════════════════════════════════════════════════════════
+     * 📊 FÓRMULA MATEMÁTICA
+     * ═══════════════════════════════════════════════════════════════
+     *                    P × t × d
+     * IOF Diário = ─────────────────    (ascii)
+     *                      100
+     * 
+     * IOF Diário = (P × t × d) ÷ 100    (algébrica)
+     * ───────────────────────────────────────────────────────────────
+     * ONDE:
+     * P = Principal (valor financiado)
+     * t = Taxa IOF diário (%)
+     * d = Dias entre contrato e vencimento
+     * ───────────────────────────────────────────────────────────────
+     * EXEMPLO: (100.000 × 0,0041 × 30) ÷ 100 = R$ 12,30
+     * ═══════════════════════════════════════════════════════════════
+     */
     @Override
     public InstallmentModel calculate(InstallmentModel currentInstallment) {
         BigDecimal totalDailyFinancialOperationalTax = BigDecimal.ZERO;

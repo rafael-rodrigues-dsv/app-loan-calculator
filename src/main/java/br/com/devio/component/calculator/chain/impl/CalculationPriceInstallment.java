@@ -11,8 +11,21 @@ import java.util.List;
 
 import static br.com.devio.domain.constant.CalculationConstant.INSTALLMENT_NUMBER_INITIAL;
 
+/**
+ * 🧮 Gerador de parcelas do sistema PRICE
+ */
 public class CalculationPriceInstallment extends CalculatorEngine<PaymentPlanModel> {
 
+    /**
+     * ═══════════════════════════════════════════════════════════════
+     * 🧮 SEQUÊNCIA DE CÁLCULOS POR PARCELA
+     * ═══════════════════════════════════════════════════════════════
+     * Parcela 0: PMT = (P × r) ÷ (1 - (1+r)^-n), S(0) = P
+     * Parcelas 1-N: J(i) = (r × S(i-1)) ÷ 100, A(i) = PMT - J(i), S(i) = S(i-1) - A(i)
+     * ───────────────────────────────────────────────────────────────
+     * EXEMPLO: 100.000, 2% a.m., 60x → PMT = 2.625,22 (fixo)
+     * ═══════════════════════════════════════════════════════════════
+     */
     @Override
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
         List<InstallmentModel> installments = new ArrayList<>();

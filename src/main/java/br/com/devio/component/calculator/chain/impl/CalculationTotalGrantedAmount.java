@@ -11,8 +11,27 @@ import br.com.devio.domain.model.TaxModel;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * 💳 Calculadora do valor total concedido
+ */
 public class CalculationTotalGrantedAmount extends CalculatorEngine<PaymentPlanModel> {
 
+    /**
+     * ═══════════════════════════════════════════════════════════════
+     * 📊 FÓRMULA MATEMÁTICA
+     * ═══════════════════════════════════════════════════════════════
+     * TC = VS - Σ(SV) - Σ(TV) - Σ(IV)    (ascii e algébrica)
+     * ───────────────────────────────────────────────────────────────
+     * ONDE:
+     * Σ(SV) = soma de todos os seguros à vista
+     * Σ(TV) = soma de todas as tarifas à vista
+     * Σ(IV) = soma de todos os impostos à vista
+     * TC = Total Concedido (líquido na conta)
+     * VS = Valor Solicitado
+     * ───────────────────────────────────────────────────────────────
+     * EXEMPLO: 50.000 - 0 - 200 - 500 = R$ 49.300
+     * ═══════════════════════════════════════════════════════════════
+     */
     @Override
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
         final InsuranceModel insurance = paymentPlanModel.getInsurance();

@@ -7,6 +7,9 @@ import br.com.devio.domain.model.InstallmentModel;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
+/**
+ * 🧮 Calculadora PMT - valor fixo das parcelas no sistema PRICE
+ */
 public class CalculationPriceInstallmentTotalPresentValue extends CalculatorEngine<InstallmentModel> {
 
     private static BigDecimal totalFinancedAmount;
@@ -17,6 +20,24 @@ public class CalculationPriceInstallmentTotalPresentValue extends CalculatorEngi
         this.installmentQuantity = installmentQuantity;
     }
 
+    /**
+     * ═══════════════════════════════════════════════════════════════
+     * 📊 FÓRMULA MATEMÁTICA
+     * ═══════════════════════════════════════════════════════════════
+     *           P × r
+     * PMT = ─────────────    (ascii)
+     *       1 - (1+r)^-n
+     * 
+     * PMT = (P × r) ÷ (1 - (1+r)^-n)    (algébrica)
+     * ───────────────────────────────────────────────────────────────
+     * ONDE:
+     * P = Principal (valor financiado)
+     * r = Taxa mensal (decimal: 2% = 0,02)
+     * n = Número de parcelas
+     * ───────────────────────────────────────────────────────────────
+     * EXEMPLO: (100.000 × 0,02) ÷ (1 - (1,02)^-60) = R$ 2.625,22
+     * ═══════════════════════════════════════════════════════════════
+     */
     @Override
     public InstallmentModel calculate(InstallmentModel beforeInstallment, InstallmentModel currentInstallment) {
         if (currentInstallment.getInstallmentNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)) {
@@ -35,24 +56,19 @@ public class CalculationPriceInstallmentTotalPresentValue extends CalculatorEngi
     }
 
     /**
-     * This method calculates the total installment value (PMT) for a loan installment.
-     * It uses the PMT formula to determine the fixed payment amount based on
-     * the principal amount, interest rate, and total number of periods.
-     * <p>
-     * The formula used is:
-     * PMT = (P * r) / (1 - (1 + r)^-n)
-     * Where:
-     * - P is the principal amount (loan amount)
-     * - r is the monthly interest rate (as a decimal, divided by 100).
-     * - n is the total number of periods (installments).
-     * <p>
-     * Parameters:
-     *
-     * @param interestRate        The annual interest rate (as a percentage).
-     * @param installmentQuantity The total number of installments for the loan.
-     * @param totalFinancedAmount The total amount financed (principal).
-     *                            <p>
-     *                            This ensures that the loan is fully amortized over the specified number of installments.
+     * 🧮 Calcula o valor da parcela (PMT) usando fórmula financeira
+     * 
+     * Fórmula matemática:
+     *           P × r
+     * PMT = ─────────────
+     *       1 - (1+r)^-n
+     * 
+     * Onde:
+     * P = Principal (valor financiado)
+     * r = Taxa mensal (decimal: 2% = 0,02)
+     * n = Número de parcelas
+     * 
+     * Garante que o empréstimo seja totalmente amortizado
      */
     private BigDecimal calculatePMT(BigDecimal interestRate, Integer installmentQuantity, BigDecimal totalFinancedAmount) {
         if (interestRate == null || installmentQuantity == null || totalFinancedAmount == null) {

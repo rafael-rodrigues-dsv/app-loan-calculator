@@ -6,6 +6,9 @@ import br.com.devio.domain.model.InstallmentModel;
 
 import java.math.BigDecimal;
 
+/**
+ * 📊 Calculadora de saldo devedor - sistema PRICE
+ */
 public class CalculationPriceInstallmentTotalBalanceAmount extends CalculatorEngine<InstallmentModel> {
 
     private static BigDecimal totalFinancedAmount;
@@ -14,6 +17,20 @@ public class CalculationPriceInstallmentTotalBalanceAmount extends CalculatorEng
         this.totalFinancedAmount = totalFinancedAmount;
     }
 
+    /**
+     * ═══════════════════════════════════════════════════════════════
+     * 📊 FÓRMULA MATEMÁTICA
+     * ═══════════════════════════════════════════════════════════════
+     * S(i) = S(i-1) - A(i)    (ascii e algébrica)
+     * ───────────────────────────────────────────────────────────────
+     * ONDE:
+     * S(i) = Saldo devedor da parcela i
+     * S(i-1) = Saldo devedor da parcela anterior
+     * A(i) = Amortização da parcela i
+     * ───────────────────────────────────────────────────────────────
+     * EXEMPLO: 100.000 - 1.325,22 = R$ 98.674,78
+     * ═══════════════════════════════════════════════════════════════
+     */
     @Override
     public InstallmentModel calculate(InstallmentModel beforeInstallment, InstallmentModel currentInstallment) {
         BigDecimal totalBalanceAmount;

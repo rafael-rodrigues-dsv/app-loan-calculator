@@ -13,8 +13,22 @@ import java.util.Objects;
 
 import static br.com.devio.domain.constant.CalculationConstant.INSTALLMENT_NUMBER_INITIAL;
 
+/**
+ * 📊 Processador de IOF nas parcelas
+ */
 public class CalculationTaxInstallment extends CalculatorEngine<PaymentPlanModel> {
 
+    /**
+     * ═══════════════════════════════════════════════════════════════
+     * 📊 SEQUÊNCIA DE CÁLCULOS DE IOF
+     * ═══════════════════════════════════════════════════════════════
+     * IOFᴅ = (P × tᴅ × d) ÷ 100    (diário)
+     * IOFᴀ = (P × tᴀ) ÷ 100    (adicional)
+     * IOF Total = IOFᴅ + IOFᴀ    (soma)
+     * ───────────────────────────────────────────────────────────────
+     * EXEMPLO: 12,30 + 380,00 = R$ 392,30
+     * ═══════════════════════════════════════════════════════════════
+     */
     @Override
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
         List<InstallmentModel> installments = new ArrayList<>();

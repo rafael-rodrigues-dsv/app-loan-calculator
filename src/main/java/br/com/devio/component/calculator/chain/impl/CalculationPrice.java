@@ -11,7 +11,23 @@ import java.util.Objects;
 
 import static br.com.devio.domain.constant.CalculationConstant.INSTALLMENT_NUMBER_INITIAL;
 
+/**
+ * 🏦 Orquestrador principal do sistema PRICE
+ */
 public class CalculationPrice {
+    
+    /**
+     * ═══════════════════════════════════════════════════════════════
+     * 🏦 FLUXO DE CÁLCULOS
+     * ═══════════════════════════════════════════════════════════════
+     * 1. TF = VS + Seguros + Tarifas + Impostos    (valor financiado)
+     * 2. PMT = (TF × r) ÷ (1 - (1+r)^-n)    (parcelas fixas)
+     * 3. IOF = (P × t × d) ÷ 100    (se configurado)
+     * 4. TE = Σ PMT(i)    (total do empréstimo)
+     * ───────────────────────────────────────────────────────────────
+     * EXEMPLO: 50.000 + 1.500 = 51.500 → 24x 2.500 = R$ 60.000
+     * ═══════════════════════════════════════════════════════════════
+     */
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
 
         CalculatorEngine<PaymentPlanModel> chain = new CalculatorEngineBuilder<PaymentPlanModel>()

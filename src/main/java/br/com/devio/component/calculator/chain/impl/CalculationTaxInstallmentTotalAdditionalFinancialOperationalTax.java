@@ -7,6 +7,9 @@ import br.com.devio.domain.model.InstallmentModel;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * 💰 Calculadora de IOF adicional
+ */
 public class CalculationTaxInstallmentTotalAdditionalFinancialOperationalTax extends CalculatorEngine<InstallmentModel> {
     private BigDecimal additionalFinancialOperationalTax;
     private BigDecimal totalFinancedAmount;
@@ -16,6 +19,23 @@ public class CalculationTaxInstallmentTotalAdditionalFinancialOperationalTax ext
         this.totalFinancedAmount = totalFinancedAmount;
     }
 
+    /**
+     * ═══════════════════════════════════════════════════════════════
+     * 📊 FÓRMULA MATEMÁTICA
+     * ═══════════════════════════════════════════════════════════════
+     *                      P × t
+     * IOF Adicional = ─────────────    (ascii)
+     *                      100
+     * 
+     * IOF Adicional = (P × t) ÷ 100    (algébrica)
+     * ───────────────────────────────────────────────────────────────
+     * ONDE:
+     * P = Principal (valor financiado)
+     * t = Taxa IOF adicional (0,38%)
+     * ───────────────────────────────────────────────────────────────
+     * EXEMPLO: (100.000 × 0,38) ÷ 100 = R$ 380,00
+     * ═══════════════════════════════════════════════════════════════
+     */
     @Override
     public InstallmentModel calculate(InstallmentModel currentInstallment) {
         BigDecimal totalAdditionalFinancialOperationalTax = BigDecimal.ZERO;

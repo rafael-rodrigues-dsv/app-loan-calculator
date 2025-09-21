@@ -10,8 +10,23 @@ import java.util.Objects;
 
 import static br.com.devio.domain.constant.CalculationConstant.INSTALLMENT_NUMBER_INITIAL;
 
+/**
+ * 📄 Consolidador do valor total de impostos
+ */
 public class CalculationTotalTaxAmount extends CalculatorEngine<PaymentPlanModel> {
 
+    /**
+     * ═══════════════════════════════════════════════════════════════
+     * 📊 FÓRMULA MATEMÁTICA
+     * ═══════════════════════════════════════════════════════════════
+     * Total Impostos = IOFTotal    (ascii e algébrica)
+     * ───────────────────────────────────────────────────────────────
+     * ONDE:
+     * IOFTotal = IOF total da última parcela calculada
+     * ───────────────────────────────────────────────────────────────
+     * EXEMPLO: Última parcela IOF = 392,30 → Total = R$ 392,30
+     * ═══════════════════════════════════════════════════════════════
+     */
     @Override
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
         TaxModel tax = paymentPlanModel.getTax();

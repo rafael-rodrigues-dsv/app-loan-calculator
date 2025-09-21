@@ -11,8 +11,27 @@ import br.com.devio.domain.model.PaymentPlanModel;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * 💵 Calculadora do valor total financiado
+ */
 public class CalculationTotalFinancedAmount extends CalculatorEngine<PaymentPlanModel> {
 
+    /**
+     * ═══════════════════════════════════════════════════════════════
+     * 📊 FÓRMULA MATEMÁTICA
+     * ═══════════════════════════════════════════════════════════════
+     * TF = VS + Σ(SF) + Σ(TF) + Σ(IF)    (ascii e algébrica)
+     * ───────────────────────────────────────────────────────────────
+     * ONDE:
+     * Σ(SF) = soma de todos os seguros financiados
+     * Σ(TF) = soma de todas as tarifas financiadas
+     * Σ(IF) = soma de todos os impostos financiados
+     * TF = Total Financiado
+     * VS = Valor Solicitado
+     * ───────────────────────────────────────────────────────────────
+     * EXEMPLO: 50.000 + 1.500 + 0 + 500 = R$ 52.000
+     * ═══════════════════════════════════════════════════════════════
+     */
     @Override
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
         final InsuranceModel insurance = paymentPlanModel.getInsurance();
