@@ -3,21 +3,7 @@ quarkus:
     write-dates-as-timestamps: false
     fail-on-unknown-properties: false
     serialization-inclusion: non_null
-  lambda:
-    enabled: false  # Desliga o lambda ao rodar local
-    handler: io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler
-  package:
-    type: native
-  native:
-    container-build: true
   http:
     enable-compression: true
     limits:
       max-body-size: 10M
-  log:
-    level: DEBUG
-    category:
-      "io.quarkus.amazon.lambda":
-        level: DEBUG
-    console:
-      json: false
