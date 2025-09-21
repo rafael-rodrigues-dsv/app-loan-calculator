@@ -180,7 +180,7 @@
                             <output>${project.build.directory}/generated-sources/openapi</output>
                             <apiPackage>br.com.devio.generated.api</apiPackage>
                             <modelPackage>br.com.devio.generated.dto</modelPackage>
-                            <templateDirectory>${project.basedir}/src/main/java/br/com/devio/resources/openapi-templates</templateDirectory>
+                            <templateDirectory>${project.basedir}/src/main/java/br/com/devio/resources/openapi/templates</templateDirectory>
                             <configOptions>
                                 <dateLibrary>java8</dateLibrary>
                                 <java8>true</java8>
