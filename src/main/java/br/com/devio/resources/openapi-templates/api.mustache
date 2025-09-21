@@ -1,0 +1,25 @@
+package {{package}};
+
+{{#imports}}import {{import}};
+{{/imports}}
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Response;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
+@Path("/calculator")
+public interface {{classname}} {
+{{#operations}}
+{{#operation}}
+
+    @{{httpMethod}}
+{{#hasConsumes}}
+    @Consumes({ {{#consumes}}"{{mediaType}}"{{^-last}}, {{/-last}}{{/consumes}} })
+{{/hasConsumes}}
+{{#hasProduces}}
+    @Produces({ {{#produces}}"{{mediaType}}"{{^-last}}, {{/-last}}{{/produces}} })
+{{/hasProduces}}
+    Response {{operationId}}({{#allParams}}{{#hasValidation}}@Valid {{/hasValidation}}{{#required}}@NotNull {{/required}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}});
+{{/operation}}
+{{/operations}}
+}

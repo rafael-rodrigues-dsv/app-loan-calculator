@@ -1,0 +1,339 @@
+openapi: 3.0.3
+info:
+  title: Calculadora de Empréstimos API
+  description: API REST para cálculo de empréstimos com sistema PRICE
+  version: 1.0.0
+  contact:
+    name: DevIO
+    email: contato@devio.com.br
+
+servers:
+  - url: http://localhost:8080
+    description: Desenvolvimento local
+
+paths:
+  /calculator:
+    post:
+      tags:
+        - Calculadora
+      summary: Calcular empréstimo
+      description: Calcula o plano de pagamento para empréstimos usando sistema PRICE
+      operationId: calculateLoan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoanCalculatorRequestDTO'
+            examples:
+              price_simples:
+                $ref: '#/components/examples/PriceSimples'
+              price_completa:
+                $ref: '#/components/examples/PriceCompleta'
+      responses:
+        '200':
+          description: Cálculo realizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanCalculatorResponseDTO'
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  examples:
+    PriceSimples:
+      summary: PRICE Simples
+      description: Financiamento básico sem componentes opcionais
+      value:
+        calculationType: PRICE
+        installmentQuantity: 5
+        requestedAmount: 4000.0
+        contractDate: "2025-04-29"
+        firstInstallmentDate: "2025-05-29"
+        monthlyInterestRate: 0.0175
+    
+    PriceCompleta:
+      summary: PRICE Completa
+      description: Financiamento com todos os componentes (seguro, tarifa e tributos)
+      value:
+        calculationType: PRICE
+        installmentQuantity: 5
+        requestedAmount: 4000.0
+        contractDate: "2025-04-29"
+        firstInstallmentDate: "2025-05-29"
+        monthlyInterestRate: 0.0175
+        fee:
+          paymentType: FINANCED
+          totalAmount: 200.0
+        insurance:
+          paymentType: FINANCED
+          totalAmount: 800.0
+        tax:
+          paymentType: FINANCED
+          dailyFinancialOperationalTax: 0.0082
+          additionalFinancialOperationalTax: 0.38
+
+  schemas:
+    LoanCalculatorRequestDTO:
+      type: object
+      required:
+        - calculationType
+        - installmentQuantity
+        - requestedAmount
+        - contractDate
+        - firstInstallmentDate
+        - monthlyInterestRate
+      properties:
+        calculationType:
+          $ref: '#/components/schemas/CalculationType'
+        installmentQuantity:
+          type: integer
+          minimum: 1
+          maximum: 360
+          description: Quantidade de parcelas
+          example: 24
+        requestedAmount:
+          type: number
+          format: decimal
+          minimum: 0.01
+          description: Valor solicitado
+          example: 50000.00
+        contractDate:
+          type: string
+          format: date
+          description: Data do contrato
+          example: "2024-01-15"
+        firstInstallmentDate:
+          type: string
+          format: date
+          description: Data da primeira parcela
+          example: "2024-02-15"
+        lastInstallmentDate:
+          type: string
+          format: date
+          description: Data da última parcela
+          example: "2026-01-15"
+        monthlyInterestRate:
+          type: number
+          format: decimal
+          minimum: 0.001
+          maximum: 1.0
+          description: Taxa de juros mensal (decimal)
+          example: 0.025
+        insurance:
+          $ref: '#/components/schemas/InsuranceRequestDTO'
+        fee:
+          $ref: '#/components/schemas/FeeRequestDTO'
+        tax:
+          $ref: '#/components/schemas/TaxRequestDTO'
+
+    LoanCalculatorResponseDTO:
+      type: object
+      properties:
+        requestedAmount:
+          type: number
+          format: decimal
+          description: Valor solicitado
+          example: 50000.00
+        contractDate:
+          type: string
+          format: date
+          description: Data do contrato
+          example: "2024-01-15"
+        firstInstallmentDate:
+          type: string
+          format: date
+          description: Data da primeira parcela
+          example: "2024-02-15"
+        lastInstallmentDate:
+          type: string
+          format: date
+          description: Data da última parcela
+          example: "2026-01-15"
+        monthlyInterestRate:
+          type: number
+          format: decimal
+          description: Taxa de juros mensal
+          example: 2.5
+        annualInterestRate:
+          type: number
+          format: decimal
+          description: Taxa de juros anual
+          example: 34.49
+        insurance:
+          $ref: '#/components/schemas/InsuranceResponseDTO'
+        fee:
+          $ref: '#/components/schemas/FeeResponseDTO'
+        tax:
+          $ref: '#/components/schemas/TaxResponseDTO'
+        totalFinancedAmount:
+          type: number
+          format: decimal
+          description: Valor total financiado
+          example: 52000.00
+        totalGrantedAmount:
+          type: number
+          format: decimal
+          description: Valor total concedido
+          example: 50000.00
+        totalLoanAmount:
+          type: number
+          format: decimal
+          description: Valor total do empréstimo
+          example: 65432.10
+        installments:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstallmentResponseDTO'
+
+    InsuranceRequestDTO:
+      type: object
+      properties:
+        paymentType:
+          $ref: '#/components/schemas/PaymentType'
+        totalAmount:
+          type: number
+          format: decimal
+          description: Valor total do seguro
+          example: 1000.00
+
+    InsuranceResponseDTO:
+      type: object
+      properties:
+        paymentType:
+          $ref: '#/components/schemas/PaymentType'
+        totalAmount:
+          type: number
+          format: decimal
+          description: Valor total do seguro
+          example: 1000.00
+
+    FeeRequestDTO:
+      type: object
+      properties:
+        paymentType:
+          $ref: '#/components/schemas/PaymentType'
+        totalAmount:
+          type: number
+          format: decimal
+          description: Valor total das tarifas
+          example: 500.00
+
+    FeeResponseDTO:
+      type: object
+      properties:
+        paymentType:
+          $ref: '#/components/schemas/PaymentType'
+        totalAmount:
+          type: number
+          format: decimal
+          description: Valor total das tarifas
+          example: 500.00
+
+    TaxRequestDTO:
+      type: object
+      properties:
+        paymentType:
+          $ref: '#/components/schemas/PaymentType'
+        dailyFinancialOperationalTax:
+          type: number
+          format: decimal
+          description: IOF diário
+          example: 0.0041
+        additionalFinancialOperationalTax:
+          type: number
+          format: decimal
+          description: IOF adicional
+          example: 0.38
+        totalAmount:
+          type: number
+          format: decimal
+          description: Valor total dos impostos
+
+    TaxResponseDTO:
+      type: object
+      properties:
+        paymentType:
+          $ref: '#/components/schemas/PaymentType'
+        dailyFinancialOperationalTax:
+          type: number
+          format: decimal
+          description: IOF diário
+          example: 0.0041
+        additionalFinancialOperationalTax:
+          type: number
+          format: decimal
+          description: IOF adicional
+          example: 0.38
+        totalAmount:
+          type: number
+          format: decimal
+          description: Valor total dos impostos
+
+    InstallmentResponseDTO:
+      type: object
+      properties:
+        installmentNumber:
+          type: integer
+          description: Número da parcela
+          example: 1
+        dueDate:
+          type: string
+          format: date
+          description: Data de vencimento
+          example: "2024-02-15"
+        installmentValue:
+          type: number
+          format: decimal
+          description: Valor da parcela
+          example: 2176.32
+        interestAmount:
+          type: number
+          format: decimal
+          description: Valor dos juros
+          example: 1300.00
+        amortizationAmount:
+          type: number
+          format: decimal
+          description: Valor da amortização
+          example: 876.32
+        balanceAmount:
+          type: number
+          format: decimal
+          description: Saldo devedor
+          example: 51123.68
+        presentValue:
+          type: number
+          format: decimal
+          description: Valor presente
+          example: 2123.24
+
+    CalculationType:
+      type: string
+      enum:
+        - PRICE
+      description: Tipo de cálculo de amortização
+
+    PaymentType:
+      type: string
+      enum:
+        - FINANCED
+        - UPFRONT
+      description: Tipo de pagamento
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Mensagem de erro
+        details:
+          type: array
+          items:
+            type: string
+          description: Detalhes do erro

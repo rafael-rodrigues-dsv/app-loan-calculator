@@ -1,0 +1,39 @@
+package {{package}};
+
+{{#models}}
+{{#model}}
+{{#isEnum}}
+public enum {{classname}} {
+{{#allowableValues}}
+{{#enumVars}}
+    {{name}}("{{value}}"){{^-last}},{{/-last}}{{#-last}};{{/-last}}
+{{/enumVars}}
+{{/allowableValues}}
+
+    private String value;
+
+    {{classname}}(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
+
+    public static {{classname}} fromValue(String value) {
+        for ({{classname}} b : {{classname}}.values()) {
+            if (b.value.equals(value)) {
+                return b;
+            }
+        }
+        throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+}
+{{/isEnum}}
+{{/model}}
+{{/models}}

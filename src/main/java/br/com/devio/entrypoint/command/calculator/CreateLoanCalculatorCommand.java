@@ -1,11 +1,11 @@
 package br.com.devio.entrypoint.command.calculator;
 
-import br.com.devio.domain.service.CalculatorService;
-import br.com.devio.domain.model.LoanModel;
-import br.com.devio.entrypoint.command.ServiceCommand;
-import br.com.devio.entrypoint.dto.request.LoanCalculatorRequestDTO;
-import br.com.devio.entrypoint.dto.response.LoanCalculatorResponseDTO;
 import br.com.devio.component.mapper.CustomMapper;
+import br.com.devio.domain.model.LoanModel;
+import br.com.devio.domain.service.CalculatorService;
+import br.com.devio.entrypoint.command.ServiceCommand;
+import br.com.devio.generated.dto.LoanCalculatorRequestDTO;
+import br.com.devio.generated.dto.LoanCalculatorResponseDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 

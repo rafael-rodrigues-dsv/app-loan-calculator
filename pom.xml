@@ -43,6 +43,21 @@
 
         <dependency>
             <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-openapi</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-validator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.quarkus</groupId>
             <artifactId>quarkus-amazon-lambda-rest</artifactId>
         </dependency>
 
@@ -83,6 +98,15 @@
             <version>1.18.38</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Swagger Annotations -->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.6.14</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -138,6 +162,73 @@
                         <maven.home>${maven.home}</maven.home>
                     </systemPropertyVariables>
                 </configuration>
+            </plugin>
+
+            <!-- OpenAPI Generator -->
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>7.2.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/java/br/com/devio/resources/openapi/api-specification.yaml</inputSpec>
+                            <generatorName>jaxrs-spec</generatorName>
+                            <output>${project.build.directory}/generated-sources/openapi</output>
+                            <apiPackage>br.com.devio.generated.api</apiPackage>
+                            <modelPackage>br.com.devio.generated.dto</modelPackage>
+                            <templateDirectory>${project.basedir}/src/main/java/br/com/devio/resources/openapi-templates</templateDirectory>
+                            <configOptions>
+                                <dateLibrary>java8</dateLibrary>
+                                <java8>true</java8>
+                                <interfaceOnly>true</interfaceOnly>
+                                <useBeanValidation>false</useBeanValidation>
+                                <performBeanValidation>false</performBeanValidation>
+                                <useJakartaEe>true</useJakartaEe>
+                                <generateApiTests>false</generateApiTests>
+                                <generateModelTests>false</generateModelTests>
+                                <generateApiDocumentation>false</generateApiDocumentation>
+                                <generateModelDocumentation>false</generateModelDocumentation>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                                <library>quarkus</library>
+                                <serializationLibrary>jackson</serializationLibrary>
+                                <withXml>false</withXml>
+                                <generateBuilders>false</generateBuilders>
+                                <generateSwaggerAnnotations>true</generateSwaggerAnnotations>
+                                <generateJacksonAnnotations>false</generateJacksonAnnotations>
+                                <skipDefaultInterface>false</skipDefaultInterface>
+                                <generateDefaultImplementation>false</generateDefaultImplementation>
+                                <generateApiInterface>true</generateApiInterface>
+                                <generateSupportingFiles>false</generateSupportingFiles>
+                                <enumUnknownDefaultCase>false</enumUnknownDefaultCase>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Build Helper para incluir sources gerados -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.4.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/openapi/src/gen/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- Cobertura de código opcional -->
