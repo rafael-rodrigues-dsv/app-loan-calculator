@@ -6,21 +6,20 @@ import br.com.devio.domain.enumeration.CalculationTypeEnum;
 import br.com.devio.domain.model.LoanModel;
 import br.com.devio.domain.model.PaymentPlanModel;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class CalculatorFactory {
 
+    private static final List<CalculationTypeEnum> VALID_CALCULATION_TYPES = List.of(CalculationTypeEnum.PRICE);
+
     public static PaymentPlanModel calculate(LoanModel loanModel) {
-        CalculationTypeEnum calculationType = loanModel.getCalculationType();
-
-        if (calculationType.equals(CalculationTypeEnum.PRICE)) {
-            PaymentPlanModel paymentPlanModel = new PaymentPlanGenerator().generate(loanModel);
-
-            if (Objects.nonNull(paymentPlanModel)) {
-                return new CalculationPrice().calculate(paymentPlanModel);
-            }
-        }
-
-        throw new UnsupportedOperationException("Invalid calculation type");
+        return Optional.of(loanModel.getCalculationType())
+            .filter(VALID_CALCULATION_TYPES::contains)
+            .map(type -> new PaymentPlanGenerator().generate(loanModel))
+            .filter(Objects::nonNull)
+            .map(paymentPlan -> new CalculationPrice().calculate(paymentPlan))
+            .orElseThrow(() -> new UnsupportedOperationException("Invalid calculation type"));
     }
 }

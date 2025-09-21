@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.LongStream;
 
 import static br.com.devio.domain.constant.CalculationConstant.DAYS_IN_YEAR;
@@ -81,12 +83,9 @@ public class PaymentPlanGenerator extends PaymentPlanGeneratorTemplate {
     }
 
     protected LocalDate addLastInstallmentDate(List<InstallmentModel> installments) {
-        Integer installmentSize = installments.size();
-
-        if (installments != null && !installments.isEmpty()) {
-            return installments.get(installmentSize - 1).getDueDate();
-        }
-
-        return null;
+        return Optional.ofNullable(installments)
+                .filter(list -> Objects.nonNull(list) && !list.isEmpty())
+                .map(list -> list.get(list.size() - 1).getDueDate())
+                .orElse(null);
     }
 }
