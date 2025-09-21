@@ -15,7 +15,7 @@ public class CalculationTotalLoanAmount extends CalculatorEngine<PaymentPlanMode
 
         double totalLoanAmount = paymentPlanModel.getInstallments() != null && !paymentPlanModel.getInstallments().isEmpty()
                 ? paymentPlanModel.getInstallments().stream()
-                .filter(f -> f.getNumber() != INSTALLMENT_NUMBER_INITIAL)
+                .filter(f -> f.getInstallmentNumber() != INSTALLMENT_NUMBER_INITIAL)
                 .mapToDouble(map -> map.getTotalInstalmentValue().doubleValue())
                 .sum()
                 : 0;

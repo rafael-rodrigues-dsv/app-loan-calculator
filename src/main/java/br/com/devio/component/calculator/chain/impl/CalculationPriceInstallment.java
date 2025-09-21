@@ -20,7 +20,7 @@ public class CalculationPriceInstallment extends CalculatorEngine<PaymentPlanMod
         final Integer installmentQuantity = paymentPlanModel.getInstallmentQuantity();
 
         paymentPlanModel.getInstallments().forEach(currentInstallment -> {
-            if (currentInstallment.getNumber().equals(INSTALLMENT_NUMBER_INITIAL)) {
+            if (currentInstallment.getInstallmentNumber().equals(INSTALLMENT_NUMBER_INITIAL)) {
                 CalculatorEngine<InstallmentModel> chain = new CalculatorEngineBuilder<InstallmentModel>()
                         .add(new CalculationPriceInstallmentTotalPresentValue(totalFinancedAmount, installmentQuantity))
                         .add(new CalculationPriceInstallmentTotalBalanceAmount(totalFinancedAmount))
@@ -28,7 +28,7 @@ public class CalculationPriceInstallment extends CalculatorEngine<PaymentPlanMod
 
                 currentInstallment = chain.calculate(currentInstallment, currentInstallment);
             } else {
-                InstallmentModel beforeInstallment = installments.get(currentInstallment.getNumber() - 1);
+                InstallmentModel beforeInstallment = installments.get(currentInstallment.getInstallmentNumber() - 1);
 
                 CalculatorEngine<InstallmentModel> chain = new CalculatorEngineBuilder<InstallmentModel>()
                         .add(new CalculationPriceInstallmentTotalPresentValue(totalFinancedAmount, installmentQuantity))

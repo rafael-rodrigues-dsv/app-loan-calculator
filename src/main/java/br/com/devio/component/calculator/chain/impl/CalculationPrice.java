@@ -42,7 +42,7 @@ public class CalculationPrice {
     private List<InstallmentModel> filterValidInstallments(List<InstallmentModel> installments) {
         if (Objects.nonNull(installments) && !installments.isEmpty()) {
             return installments.stream()
-                    .filter(f -> f.getNumber() != INSTALLMENT_NUMBER_INITIAL)
+                    .filter(f -> f.getInstallmentNumber() != INSTALLMENT_NUMBER_INITIAL)
                     .toList();
         }
         return installments;

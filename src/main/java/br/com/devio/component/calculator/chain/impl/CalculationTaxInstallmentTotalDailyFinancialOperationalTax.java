@@ -20,7 +20,7 @@ public class CalculationTaxInstallmentTotalDailyFinancialOperationalTax extends 
     public InstallmentModel calculate(InstallmentModel currentInstallment) {
         BigDecimal totalDailyFinancialOperationalTax = BigDecimal.ZERO;
 
-        if (!currentInstallment.getNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)
+        if (!currentInstallment.getInstallmentNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)
                 && Objects.nonNull(dailyFinancialOperationalTax)) {
             totalDailyFinancialOperationalTax = totalFinancedAmount
                     .multiply(dailyFinancialOperationalTax)

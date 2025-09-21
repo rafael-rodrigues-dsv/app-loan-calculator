@@ -19,7 +19,7 @@ public class CalculationTotalTaxAmount extends CalculatorEngine<PaymentPlanModel
         if (Objects.nonNull(tax)) {
             double totalFinancialOperationalTax = paymentPlanModel.getInstallments() != null && !paymentPlanModel.getInstallments().isEmpty()
                     ? paymentPlanModel.getInstallments().stream()
-                    .filter(f -> f.getNumber() != INSTALLMENT_NUMBER_INITIAL && Objects.nonNull(f.getTotalFinancialOperationalTax()))
+                    .filter(f -> f.getInstallmentNumber() != INSTALLMENT_NUMBER_INITIAL && Objects.nonNull(f.getTotalFinancialOperationalTax()))
                     .reduce((first, second) -> second) // Obtém a última parcela
                     .map(last -> last.getTotalFinancialOperationalTax().doubleValue())
                     .orElse(0.0)

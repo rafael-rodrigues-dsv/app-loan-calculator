@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InstallmentModel {
-    private Integer number;
+    private Integer installmentNumber;
     private LocalDate dueDate;
     private Integer contractDays;
     private Integer periodDays;

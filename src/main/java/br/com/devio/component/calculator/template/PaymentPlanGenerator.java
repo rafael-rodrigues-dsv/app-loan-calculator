@@ -46,7 +46,7 @@ public class PaymentPlanGenerator extends PaymentPlanGeneratorTemplate {
 
                     if (installmentNumber.equals(0)) {
                         installments.add(InstallmentModel.builder()
-                                .number(installmentNumber)
+                                .installmentNumber(installmentNumber)
                                 .interestRate(interestRate)
                                 .interestRateType(interestRateType)
                                 .dueDate(contractDate)
@@ -61,7 +61,7 @@ public class PaymentPlanGenerator extends PaymentPlanGeneratorTemplate {
                                 : beforeInstallment.getDueDate().plusMonths(1);
 
                         installments.add(InstallmentModel.builder()
-                                .number(installmentNumber)
+                                .installmentNumber(installmentNumber)
                                 .interestRate(interestRate)
                                 .interestRateType(interestRateType)
                                 .dueDate(dueDate)

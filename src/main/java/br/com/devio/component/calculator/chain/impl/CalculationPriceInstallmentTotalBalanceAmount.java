@@ -18,7 +18,7 @@ public class CalculationPriceInstallmentTotalBalanceAmount extends CalculatorEng
     public InstallmentModel calculate(InstallmentModel beforeInstallment, InstallmentModel currentInstallment) {
         BigDecimal totalBalanceAmount;
 
-        if (currentInstallment.getNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)) {
+        if (currentInstallment.getInstallmentNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)) {
             totalBalanceAmount = totalFinancedAmount;
         } else {
             totalBalanceAmount = beforeInstallment.getTotalBalanceAmount()

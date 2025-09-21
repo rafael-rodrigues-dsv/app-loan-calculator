@@ -20,7 +20,7 @@ public class CalculationTaxInstallmentTotalAdditionalFinancialOperationalTax ext
     public InstallmentModel calculate(InstallmentModel currentInstallment) {
         BigDecimal totalAdditionalFinancialOperationalTax = BigDecimal.ZERO;
 
-        if (!currentInstallment.getNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)
+        if (!currentInstallment.getInstallmentNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)
                 && Objects.nonNull(additionalFinancialOperationalTax)) {
             totalAdditionalFinancialOperationalTax = totalFinancedAmount
                     .multiply(additionalFinancialOperationalTax)

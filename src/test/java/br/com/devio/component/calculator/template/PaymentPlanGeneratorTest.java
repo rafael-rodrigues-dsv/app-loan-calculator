@@ -1,6 +1,5 @@
 package br.com.devio.component.calculator.template;
 
-import br.com.devio.component.calculator.template.PaymentPlanGenerator;
 import br.com.devio.domain.enumeration.CalculationTypeEnum;
 import br.com.devio.domain.model.FeeModel;
 import br.com.devio.domain.model.TaxModel;
@@ -74,13 +73,13 @@ class PaymentPlanGeneratorTest {
         // Assert
         assertNotNull(installments);
         assertEquals(4, installments.size()); // Includes the initial installment (0)
-        assertEquals(0, installments.get(0).getNumber());
+        assertEquals(0, installments.get(0).getInstallmentNumber());
         assertEquals(LocalDate.of(2025, 1, 1), installments.get(0).getDueDate());
-        assertEquals(1, installments.get(1).getNumber());
+        assertEquals(1, installments.get(1).getInstallmentNumber());
         assertEquals(LocalDate.of(2025, 2, 1), installments.get(1).getDueDate());
-        assertEquals(2, installments.get(2).getNumber());
+        assertEquals(2, installments.get(2).getInstallmentNumber());
         assertEquals(LocalDate.of(2025, 3, 1), installments.get(2).getDueDate());
-        assertEquals(3, installments.get(3).getNumber());
+        assertEquals(3, installments.get(3).getInstallmentNumber());
         assertEquals(LocalDate.of(2025, 4, 1), installments.get(3).getDueDate());
     }
 

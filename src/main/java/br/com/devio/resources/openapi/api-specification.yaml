@@ -287,27 +287,27 @@ components:
           format: date
           description: Data de vencimento
           example: "2024-02-15"
-        installmentValue:
+        totalInstalmentValue:
           type: number
           format: decimal
           description: Valor da parcela
           example: 2176.32
-        interestAmount:
+        totalInterestAmount:
           type: number
           format: decimal
           description: Valor dos juros
           example: 1300.00
-        amortizationAmount:
+        totalAmortizationAmount:
           type: number
           format: decimal
           description: Valor da amortização
           example: 876.32
-        balanceAmount:
+        totalBalanceAmount:
           type: number
           format: decimal
           description: Saldo devedor
           example: 51123.68
-        presentValue:
+        totalPresentValue:
           type: number
           format: decimal
           description: Valor presente

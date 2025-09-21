@@ -24,7 +24,7 @@ public class MathCalculationNetPresentValue implements MathCalculationCommand<Li
                     ? currentInstallment.getTotalInstalmentValue().doubleValue()
                     : 0.0;
 
-            if (currentInstallment.getNumber() == 0) {
+            if (currentInstallment.getInstallmentNumber() == 0) {
                 currentInstallmentValue = currentInstallment.getTotalBalanceAmount() != null
                         ? currentInstallment.getTotalBalanceAmount().negate().doubleValue()
                         : 0.0;

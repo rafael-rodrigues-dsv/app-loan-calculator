@@ -13,7 +13,7 @@ public class CalculationTaxInstallmentTotalFinancialOperationalTax extends Calcu
     public InstallmentModel calculate(InstallmentModel currentInstallment) {
         BigDecimal totalFinancialOperationalTax = BigDecimal.ZERO;
 
-        if (!currentInstallment.getNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)) {
+        if (!currentInstallment.getInstallmentNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)) {
             totalFinancialOperationalTax = Objects.nonNull(currentInstallment.getTotalDailyFinancialOperationalTax())
                     && Objects.nonNull(currentInstallment.getTotalAdditionalFinancialOperationalTax()) ?
                     currentInstallment.getTotalDailyFinancialOperationalTax()

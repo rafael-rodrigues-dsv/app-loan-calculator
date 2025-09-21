@@ -19,7 +19,7 @@ public class CalculationPriceInstallmentTotalPresentValue extends CalculatorEngi
 
     @Override
     public InstallmentModel calculate(InstallmentModel beforeInstallment, InstallmentModel currentInstallment) {
-        if (currentInstallment.getNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)) {
+        if (currentInstallment.getInstallmentNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)) {
             BigDecimal totalPresentValue = calculatePMT(
                     currentInstallment.getInterestRate(),
                     installmentQuantity,
