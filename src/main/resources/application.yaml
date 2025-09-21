@@ -1,0 +1,16 @@
+quarkus:
+  jackson:
+    write-dates-as-timestamps: false
+    fail-on-unknown-properties: false
+    serialization-inclusion: non_null
+  http:
+    enable-compression: true
+    limits:
+      max-body-size: 10M
+    root-path: /loan-calculator/v1
+    cors:
+      ~: true
+      origins: "*"
+      methods: "GET,POST,PUT,DELETE,OPTIONS"
+      headers: "*"
+      exposed-headers: "*"

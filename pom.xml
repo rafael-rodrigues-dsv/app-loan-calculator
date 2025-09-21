@@ -175,12 +175,12 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.basedir}/src/main/java/br/com/devio/resources/openapi/api-specification.yaml</inputSpec>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi/api-specification.yaml</inputSpec>
                             <generatorName>jaxrs-spec</generatorName>
                             <output>${project.build.directory}/generated-sources/openapi</output>
                             <apiPackage>br.com.devio.generated.api</apiPackage>
                             <modelPackage>br.com.devio.generated.dto</modelPackage>
-                            <templateDirectory>${project.basedir}/src/main/java/br/com/devio/resources/openapi/templates</templateDirectory>
+                            <templateDirectory>${project.basedir}/src/main/resources/openapi/templates</templateDirectory>
                             <configOptions>
                                 <dateLibrary>java8</dateLibrary>
                                 <java8>true</java8>
@@ -236,6 +236,7 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.10</version>
+
                 <executions>
                     <execution>
                         <goals>

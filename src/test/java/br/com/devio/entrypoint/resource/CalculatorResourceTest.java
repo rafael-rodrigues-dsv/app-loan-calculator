@@ -1,9 +1,9 @@
 package br.com.devio.entrypoint.resource;
 
-import br.com.devio.component.utils.ObjectMapperUtils;
 import br.com.devio.generated.dto.*;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -13,15 +13,14 @@ import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest
-class CalculatorResourceTest {
+public class CalculatorResourceTest {
 
     @Test
     void testCalculateLoan_withValidInput_shouldReturnValidResponse() throws Exception {
-        // Usando Lombok Builder para construir o request
-        LoanCalculatorRequestDTO request = LoanCalculatorRequestDTO.builder()
+        SimulationRequestDTO request = SimulationRequestDTO.builder()
                 .calculationType(CalculationType.PRICE)
                 .installmentQuantity(5)
-                .requestedAmount(AmountDTO.builder()
+                .requestedAmount(AmountRequestDTO.builder()
                         .amount(BigDecimal.valueOf(4000.0))
                         .currency("BRL")
                         .build())
@@ -30,61 +29,56 @@ class CalculatorResourceTest {
                 .monthlyInterestRate(BigDecimal.valueOf(0.0175))
                 .fee(FeeRequestDTO.builder()
                         .paymentType(PaymentType.FINANCED)
-                        .totalAmount(AmountDTO.builder()
+                        .totalAmount(AmountRequestDTO.builder()
                                 .amount(BigDecimal.valueOf(200.0))
                                 .currency("BRL")
                                 .build())
                         .build())
                 .insurance((InsuranceRequestDTO.builder()
                         .paymentType(PaymentType.FINANCED)
-                        .totalAmount(AmountDTO.builder()
+                        .totalAmount(AmountRequestDTO.builder()
                                 .amount(BigDecimal.valueOf(800.0))
                                 .currency("BRL")
                                 .build())
                         .build()))
                 .tax(TaxRequestDTO.builder()
                         .paymentType(PaymentType.FINANCED)
-                        .dailyFinancialOperationalTax(AmountDTO.builder()
+                        .dailyFinancialOperationalTax(AmountRequestDTO.builder()
                                 .amount(BigDecimal.valueOf(0.0082))
                                 .currency("BRL")
                                 .build())
-                        .additionalFinancialOperationalTax(AmountDTO.builder()
+                        .additionalFinancialOperationalTax(AmountRequestDTO.builder()
                                 .amount(BigDecimal.valueOf(0.38))
                                 .currency("BRL")
                                 .build())
                         .build())
                 .build();
 
-        // Fazendo a requisição
         var response = given()
                 .contentType(ContentType.JSON)
                 .body(request)
                 .when()
-                .post("/calculator")
+                .post("/simulations")
                 .then()
-                .statusCode(200)
+                .statusCode(HttpStatus.SC_OK)
                 .extract()
                 .response();
 
-        String responseBody = response.getBody().asString();
-        LoanCalculatorResponseDTO responseDTO = ObjectMapperUtils.getObjectMapper().readValue(responseBody, LoanCalculatorResponseDTO.class);
-        assertNotNull(responseDTO);
+        assertNotNull(response.getBody().asString());
     }
 
     @Test
     void testCalculateLoan_withInvalidInput_shouldReturnBadRequest() {
-        // Request com dados obrigatórios faltando
-        LoanCalculatorRequestDTO request = LoanCalculatorRequestDTO.builder()
+        SimulationRequestDTO request = SimulationRequestDTO.builder()
                 .calculationType(CalculationType.PRICE)
-                // Faltando campos obrigatórios
                 .build();
 
         given()
                 .contentType(ContentType.JSON)
                 .body(request)
                 .when()
-                .post("/calculator")
+                .post("/simulations")
                 .then()
-                .statusCode(400);
+                .statusCode(HttpStatus.SC_BAD_REQUEST);
     }
 }

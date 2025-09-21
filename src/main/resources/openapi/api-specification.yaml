@@ -1,54 +1,72 @@
 openapi: 3.0.3
 info:
-  title: Calculadora de Empréstimos API
-  description: API REST para cálculo de empréstimos com sistema PRICE
+  title: Loan Calculator API
+  description: REST API for loan calculation
   version: 1.0.0
   contact:
     name: DevIO
     email: contato@devio.com.br
-
 servers:
-  - url: http://localhost:8080
-    description: Desenvolvimento local
-
+  - url: /loan-calculator/v1
+    description: Local development
 paths:
-  /calculator:
+  /simulations:
     post:
       tags:
-        - Calculadora
-      summary: Calcular empréstimo
-      description: Calcula o plano de pagamento para empréstimos usando sistema PRICE
-      operationId: calculateLoan
+        - Simulations
+      summary: Simulate a loan payment plan
+      description: Simulate a loan payment plan based on the provided parameters
+      operationId: simulateLoan
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoanCalculatorRequestDTO'
+              $ref: '#/components/schemas/SimulationRequestDTO'
             examples:
-              price_simples:
-                $ref: '#/components/examples/PriceSimples'
-              price_completa:
-                $ref: '#/components/examples/PriceCompleta'
+              simple_price:
+                $ref: '#/components/examples/SimplePrice'
+              complete_price:
+                $ref: '#/components/examples/CompletePrice'
       responses:
-        '200':
-          description: Cálculo realizado com sucesso
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LoanCalculatorResponseDTO'
-        '400':
-          description: Dados inválidos
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
+        200:
+          $ref: '#/components/responses/SimulationPOST200Response'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+        500:
+          $ref: '#/components/responses/InternalServerError'
 components:
+  responses:
+    SimulationPOST200Response:
+      description: Calculation completed successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SimulationResponseDTO'
+    BadRequest:
+      description: BadRequest error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseDTO'
+    UnprocessableEntity:
+      description: UnprocessableEntity error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseDTO'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseDTO'
   examples:
-    PriceSimples:
-      summary: PRICE Simples
-      description: Financiamento básico sem componentes opcionais
+    SimplePrice:
+      summary: Simple PRICE
+      description: Basic financing without optional components
       value:
         calculationType: PRICE
         installmentQuantity: 5
@@ -58,10 +76,9 @@ components:
         contractDate: "2025-04-29"
         firstInstallmentDate: "2025-05-29"
         monthlyInterestRate: 0.0175
-    
-    PriceCompleta:
-      summary: PRICE Completa
-      description: Financiamento com todos os componentes (seguro, tarifa e tributos)
+    CompletePrice:
+      summary: Complete PRICE
+      description: Financing with all components (insurance, fee and taxes)
       value:
         calculationType: PRICE
         installmentQuantity: 5
@@ -89,17 +106,9 @@ components:
           additionalFinancialOperationalTax:
             amount: 0.38
             currency: "BRL"
-
   schemas:
-    LoanCalculatorRequestDTO:
+    SimulationRequestDTO:
       type: object
-      required:
-        - calculationType
-        - installmentQuantity
-        - requestedAmount
-        - contractDate
-        - firstInstallmentDate
-        - monthlyInterestRate
       properties:
         calculationType:
           $ref: '#/components/schemas/CalculationType'
@@ -107,31 +116,31 @@ components:
           type: integer
           minimum: 1
           maximum: 360
-          description: Quantidade de parcelas
+          description: Number of installments
           example: 24
         requestedAmount:
-          $ref: '#/components/schemas/AmountDTO'
+          $ref: '#/components/schemas/AmountRequestDTO'
         contractDate:
           type: string
           format: date
-          description: Data do contrato
+          description: Contract date
           example: "2024-01-15"
         firstInstallmentDate:
           type: string
           format: date
-          description: Data da primeira parcela
+          description: First installment date
           example: "2024-02-15"
         lastInstallmentDate:
           type: string
           format: date
-          description: Data da última parcela
+          description: Last installment date
           example: "2026-01-15"
         monthlyInterestRate:
           type: number
           format: decimal
           minimum: 0.001
           maximum: 1.0
-          description: Taxa de juros mensal (decimal)
+          description: Monthly interest rate (decimal)
           example: 0.025
         insurance:
           $ref: '#/components/schemas/InsuranceRequestDTO'
@@ -139,36 +148,35 @@ components:
           $ref: '#/components/schemas/FeeRequestDTO'
         tax:
           $ref: '#/components/schemas/TaxRequestDTO'
-
-    LoanCalculatorResponseDTO:
+    SimulationResponseDTO:
       type: object
       properties:
         requestedAmount:
-          $ref: '#/components/schemas/AmountDTO'
+          $ref: '#/components/schemas/AmountResponseDTO'
         contractDate:
           type: string
           format: date
-          description: Data do contrato
+          description: Contract date
           example: "2024-01-15"
         firstInstallmentDate:
           type: string
           format: date
-          description: Data da primeira parcela
+          description: First installment date
           example: "2024-02-15"
         lastInstallmentDate:
           type: string
           format: date
-          description: Data da última parcela
+          description: Last installment date
           example: "2026-01-15"
         monthlyInterestRate:
           type: number
           format: decimal
-          description: Taxa de juros mensal
+          description: Monthly interest rate
           example: 2.5
         annualInterestRate:
           type: number
           format: decimal
-          description: Taxa de juros anual
+          description: Annual interest rate
           example: 34.49
         insurance:
           $ref: '#/components/schemas/InsuranceResponseDTO'
@@ -177,130 +185,143 @@ components:
         tax:
           $ref: '#/components/schemas/TaxResponseDTO'
         totalFinancedAmount:
-          $ref: '#/components/schemas/AmountDTO'
+          $ref: '#/components/schemas/AmountResponseDTO'
         totalGrantedAmount:
-          $ref: '#/components/schemas/AmountDTO'
+          $ref: '#/components/schemas/AmountResponseDTO'
         totalLoanAmount:
-          $ref: '#/components/schemas/AmountDTO'
+          $ref: '#/components/schemas/AmountResponseDTO'
         installments:
           type: array
           items:
             $ref: '#/components/schemas/InstallmentResponseDTO'
-
     InsuranceRequestDTO:
       type: object
       properties:
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         totalAmount:
-          $ref: '#/components/schemas/AmountDTO'
-
+          $ref: '#/components/schemas/AmountRequestDTO'
     InsuranceResponseDTO:
       type: object
       properties:
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         totalAmount:
-          $ref: '#/components/schemas/AmountDTO'
-
+          $ref: '#/components/schemas/AmountResponseDTO'
     FeeRequestDTO:
       type: object
       properties:
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         totalAmount:
-          $ref: '#/components/schemas/AmountDTO'
-
+          $ref: '#/components/schemas/AmountRequestDTO'
     FeeResponseDTO:
       type: object
       properties:
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         totalAmount:
-          $ref: '#/components/schemas/AmountDTO'
-
+          $ref: '#/components/schemas/AmountResponseDTO'
     TaxRequestDTO:
       type: object
       properties:
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         dailyFinancialOperationalTax:
-          $ref: '#/components/schemas/AmountDTO'
+          $ref: '#/components/schemas/AmountRequestDTO'
         additionalFinancialOperationalTax:
-          $ref: '#/components/schemas/AmountDTO'
+          $ref: '#/components/schemas/AmountRequestDTO'
         totalAmount:
-          $ref: '#/components/schemas/AmountDTO'
-
+          $ref: '#/components/schemas/AmountRequestDTO'
     TaxResponseDTO:
       type: object
       properties:
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         dailyFinancialOperationalTax:
-          $ref: '#/components/schemas/AmountDTO'
+          $ref: '#/components/schemas/AmountResponseDTO'
         additionalFinancialOperationalTax:
-          $ref: '#/components/schemas/AmountDTO'
+          $ref: '#/components/schemas/AmountResponseDTO'
         totalAmount:
-          $ref: '#/components/schemas/AmountDTO'
-
+          $ref: '#/components/schemas/AmountResponseDTO'
     InstallmentResponseDTO:
       type: object
       properties:
         installmentNumber:
           type: integer
-          description: Número da parcela
+          description: Installment number
           example: 1
         dueDate:
           type: string
           format: date
-          description: Data de vencimento
+          description: Due date
           example: "2024-02-15"
         totalInstalmentValue:
-          $ref: '#/components/schemas/AmountDTO'
+          $ref: '#/components/schemas/AmountResponseDTO'
         totalInterestAmount:
-          $ref: '#/components/schemas/AmountDTO'
+          $ref: '#/components/schemas/AmountResponseDTO'
         totalAmortizationAmount:
-          $ref: '#/components/schemas/AmountDTO'
+          $ref: '#/components/schemas/AmountResponseDTO'
         totalBalanceAmount:
-          $ref: '#/components/schemas/AmountDTO'
-        totalPresentValue:
-          $ref: '#/components/schemas/AmountDTO'
-
+          $ref: '#/components/schemas/AmountResponseDTO'
     CalculationType:
       type: string
       enum:
         - PRICE
-      description: Tipo de cálculo de amortização
-
+      description: Amortization calculation type
     PaymentType:
       type: string
       enum:
         - FINANCED
         - UPFRONT
-      description: Tipo de pagamento
-
-    AmountDTO:
+      description: Payment type
+    AmountRequestDTO:
       type: object
       properties:
         amount:
           type: number
           format: decimal
-          description: Valor monetário
+          description: Monetary value
           example: 50000.00
         currency:
           type: string
-          description: Código da moeda
+          description: Currency code
           default: "BRL"
           example: "BRL"
-
-    ErrorResponse:
+    AmountResponseDTO:
       type: object
       properties:
+        amount:
+          type: number
+          format: decimal
+          description: Monetary value
+          example: 50000.00
+        currency:
+          type: string
+          description: Currency code
+          default: "BRL"
+          example: "BRL"
+    ErrorResponseDTO:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: HTTP status code
+          example: 400
+        error:
+          type: string
+          description: Error type
+          example: "Bad Request"
         message:
           type: string
-          description: Mensagem de erro
+          description: Error message
+          example: "Invalid request parameters"
+        timestamp:
+          type: string
+          format: date-time
+          description: Error timestamp
         details:
           type: array
           items:
             type: string
-          description: Detalhes do erro
+          description: Additional error details

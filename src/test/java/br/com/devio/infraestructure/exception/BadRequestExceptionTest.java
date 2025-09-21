@@ -1,12 +1,13 @@
-package br.com.devio.domain.exception;
+package br.com.devio.infraestructure.exception;
 
+import br.com.devio.infraestructure.exception.BadRequestException;
 import br.com.fluentvalidator.context.ValidationResult;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class CalculatorValidationExceptionTest {
+class BadRequestExceptionTest {
 
     @Test
     void testConstructorAndGetter() {
@@ -14,7 +15,7 @@ class CalculatorValidationExceptionTest {
         ValidationResult validationResult = ValidationResult.ok();
 
         // Act
-        CalculatorValidationException exception = new CalculatorValidationException(validationResult);
+        BadRequestException exception = new BadRequestException(validationResult);
 
         // Assert
         assertNotNull(exception);
@@ -27,7 +28,7 @@ class CalculatorValidationExceptionTest {
         ValidationResult validationResult = ValidationResult.ok();
 
         // Act
-        CalculatorValidationException exception = new CalculatorValidationException(validationResult);
+        BadRequestException exception = new BadRequestException(validationResult);
 
         // Assert
         assertEquals(validationResult, exception.getValidationResult());

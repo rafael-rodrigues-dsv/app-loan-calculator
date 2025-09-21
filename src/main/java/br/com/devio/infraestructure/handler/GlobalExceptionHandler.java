@@ -1,6 +1,6 @@
-package br.com.devio.entrypoint.handler;
+package br.com.devio.infraestructure.handler;
 
-import br.com.devio.domain.exception.CalculatorValidationException;
+import br.com.devio.infraestructure.exception.BadRequestException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
@@ -9,9 +9,9 @@ import jakarta.ws.rs.ext.Provider;
 public class GlobalExceptionHandler {
 
     @Provider
-    public static class CalculatorValidationExceptionHandler implements ExceptionMapper<CalculatorValidationException> {
+    public static class CalculatorValidationExceptionHandler implements ExceptionMapper<BadRequestException> {
         @Override
-        public Response toResponse(CalculatorValidationException exception) {
+        public Response toResponse(BadRequestException exception) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(exception.getValidationResult().getErrors())
                     .build();

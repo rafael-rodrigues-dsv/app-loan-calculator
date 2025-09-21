@@ -2,7 +2,10 @@ package br.com.devio.domain.service;
 
 import br.com.devio.domain.model.LoanModel;
 import br.com.devio.domain.model.PaymentPlanModel;
+import br.com.devio.generated.dto.SimulationRequestDTO;
+import br.com.devio.generated.dto.SimulationResponseDTO;
 
 public interface CalculatorService {
-    PaymentPlanModel calculate(LoanModel loanModel);
+
+    SimulationResponseDTO executeSimulation(SimulationRequestDTO loanCalculatorRequestDto);
 }
