@@ -1,12 +1,12 @@
 package br.com.devio.component.calculator.chain.impl;
 
 import br.com.devio.component.calculator.chain.CalculatorEngine;
-import br.com.devio.domain.model.InstallmentModel;
+import br.com.devio.domain.model.InstalmentModel;
 
 /**
  * 💵 Definidor do valor da parcela - sistema PRICE
  */
-public class CalculationPriceInstallmentTotalInstallmentValue extends CalculatorEngine<InstallmentModel> {
+public class CalculationPriceInstallmentTotalInstallmentValue extends CalculatorEngine<InstalmentModel> {
 
     /**
      * ═══════════════════════════════════════════════════════════════
@@ -22,7 +22,7 @@ public class CalculationPriceInstallmentTotalInstallmentValue extends Calculator
      * ═══════════════════════════════════════════════════════════════
      */
     @Override
-    public InstallmentModel calculate(InstallmentModel beforeInstallment, InstallmentModel currentInstallment) {
+    public InstalmentModel calculate(InstalmentModel beforeInstallment, InstalmentModel currentInstallment) {
         currentInstallment.setTotalInstalmentValue(currentInstallment.getTotalPresentValue());
         return currentInstallment;
     }

@@ -190,10 +190,10 @@ components:
           $ref: '#/components/schemas/AmountResponseDTO'
         totalLoanAmount:
           $ref: '#/components/schemas/AmountResponseDTO'
-        installments:
+        instalments:
           type: array
           items:
-            $ref: '#/components/schemas/InstallmentResponseDTO'
+            $ref: '#/components/schemas/InstalmentResponseDTO'
     InsuranceRequestDTO:
       type: object
       properties:
@@ -244,7 +244,7 @@ components:
           $ref: '#/components/schemas/AmountResponseDTO'
         totalAmount:
           $ref: '#/components/schemas/AmountResponseDTO'
-    InstallmentResponseDTO:
+    InstalmentResponseDTO:
       type: object
       properties:
         installmentNumber:

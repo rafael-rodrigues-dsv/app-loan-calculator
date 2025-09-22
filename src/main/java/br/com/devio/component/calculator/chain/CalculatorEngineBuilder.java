@@ -13,6 +13,10 @@ public class CalculatorEngineBuilder<T> {
     private Node<T> tail;
 
     public CalculatorEngineBuilder<T> add(CalculatorEngine<T> handler) {
+        if (handler == null) {
+            throw new IllegalArgumentException("Handler cannot be null");
+        }
+        
         Node<T> newNode = new Node<>();
         newNode.handler = handler;
 
@@ -29,10 +33,12 @@ public class CalculatorEngineBuilder<T> {
     public final CalculatorEngineBuilder<T> addIf(Predicate<T> condition, Supplier<CalculatorEngine<T>>... handlers) {
         for (Supplier<CalculatorEngine<T>> handler : handlers) {
             add(new CalculatorEngine<T>() {
+                private final CalculatorEngine<T> cachedHandler = handler.get();
+                
                 @Override
                 public T calculate(T result) {
                     if (condition.test(result)) {
-                        return handler.get().calculate(result);
+                        return cachedHandler.calculate(result);
                     }
                     return result;
                 }
@@ -40,7 +46,7 @@ public class CalculatorEngineBuilder<T> {
                 @Override
                 public T calculate(T dataBase, T currentData) {
                     if (condition.test(currentData)) {
-                        return handler.get().calculate(dataBase, currentData);
+                        return cachedHandler.calculate(dataBase, currentData);
                     }
                     return currentData;
                 }
@@ -48,7 +54,7 @@ public class CalculatorEngineBuilder<T> {
                 @Override
                 public T calculate(T dataBase, T beforeData, T currentData) {
                     if (condition.test(currentData)) {
-                        return handler.get().calculate(dataBase, beforeData, currentData);
+                        return cachedHandler.calculate(dataBase, beforeData, currentData);
                     }
                     return currentData;
                 }

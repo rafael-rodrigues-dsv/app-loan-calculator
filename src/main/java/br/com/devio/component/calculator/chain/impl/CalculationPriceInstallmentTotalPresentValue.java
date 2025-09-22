@@ -3,7 +3,7 @@ package br.com.devio.component.calculator.chain.impl;
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.domain.constant.CalculationConstant;
 import br.com.devio.domain.model.AmountModel;
-import br.com.devio.domain.model.InstallmentModel;
+import br.com.devio.domain.model.InstalmentModel;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -11,10 +11,10 @@ import java.math.MathContext;
 /**
  * 🧮 Calculadora PMT - valor fixo das parcelas no sistema PRICE
  */
-public class CalculationPriceInstallmentTotalPresentValue extends CalculatorEngine<InstallmentModel> {
+public class CalculationPriceInstallmentTotalPresentValue extends CalculatorEngine<InstalmentModel> {
 
-    private static AmountModel totalFinancedAmount;
-    private static Integer installmentQuantity;
+    private AmountModel totalFinancedAmount;
+    private Integer installmentQuantity;
 
     public CalculationPriceInstallmentTotalPresentValue(AmountModel totalFinancedAmount, Integer installmentQuantity) {
         this.totalFinancedAmount = totalFinancedAmount;
@@ -40,7 +40,7 @@ public class CalculationPriceInstallmentTotalPresentValue extends CalculatorEngi
      * ═══════════════════════════════════════════════════════════════
      */
     @Override
-    public InstallmentModel calculate(InstallmentModel beforeInstallment, InstallmentModel currentInstallment) {
+    public InstalmentModel calculate(InstalmentModel beforeInstallment, InstalmentModel currentInstallment) {
         if (currentInstallment.getInstallmentNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)) {
             BigDecimal totalPresentValue = calculatePMT(
                     currentInstallment.getInterestRate(),
@@ -50,7 +50,7 @@ public class CalculationPriceInstallmentTotalPresentValue extends CalculatorEngi
 
             currentInstallment.setTotalPresentValue(AmountModel.builder()
                     .amount(totalPresentValue)
-                    .currency("BRL")
+                    .currency(CalculationConstant.DEFAULT_CURRENCY)
                     .build());
         } else {
             currentInstallment.setTotalPresentValue(beforeInstallment.getTotalPresentValue());

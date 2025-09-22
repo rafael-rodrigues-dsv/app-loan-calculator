@@ -50,7 +50,7 @@ class PaymentPlanGeneratorTest {
         assertEquals(LocalDate.of(2025, 1, 1), paymentPlan.getContractDate());
         assertEquals(LocalDate.of(2025, 2, 1), paymentPlan.getFirstInstallmentDate());
         assertEquals(LocalDate.of(2026, 1, 1), paymentPlan.getLastInstallmentDate());
-        assertEquals(13, paymentPlan.getInstallments().size());
+        assertEquals(13, paymentPlan.getInstalments().size());
     }
 
     @Test
@@ -64,7 +64,7 @@ class PaymentPlanGeneratorTest {
                 .build();
 
         // Act
-        List<InstallmentModel> installments = paymentPlanGenerator.addInstallments(loanModel);
+        List<InstalmentModel> installments = paymentPlanGenerator.addInstallments(loanModel);
 
         // Assert
         assertNotNull(installments);
@@ -82,10 +82,10 @@ class PaymentPlanGeneratorTest {
     @Test
     void testAddLastInstallmentDate() {
         // Arrange
-        List<InstallmentModel> installments = List.of(
-                InstallmentModel.builder().dueDate(LocalDate.of(2025, 1, 1)).build(),
-                InstallmentModel.builder().dueDate(LocalDate.of(2025, 2, 1)).build(),
-                InstallmentModel.builder().dueDate(LocalDate.of(2025, 3, 1)).build()
+        List<InstalmentModel> installments = List.of(
+                InstalmentModel.builder().dueDate(LocalDate.of(2025, 1, 1)).build(),
+                InstalmentModel.builder().dueDate(LocalDate.of(2025, 2, 1)).build(),
+                InstalmentModel.builder().dueDate(LocalDate.of(2025, 3, 1)).build()
         );
 
         // Act

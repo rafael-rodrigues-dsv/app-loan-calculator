@@ -27,5 +27,5 @@ public class PaymentPlanModel {
     private AmountModel totalFinancedAmount;
     private AmountModel totalGrantedAmount;
     private AmountModel totalLoanAmount;
-    private List<InstallmentModel> installments;
+    private List<InstalmentModel> instalments;
 }

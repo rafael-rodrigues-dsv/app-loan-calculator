@@ -9,6 +9,6 @@ public class MathCalculationMonthlyInterestRate implements MathCalculationComman
 
     @Override
     public Double execute(Double annualInterestRate) {
-        return (Math.pow(1 + annualInterestRate, DAYS_IN_MONTH / DAYS_IN_YEAR) - 1) * 100;
+        return (Math.pow(1 + annualInterestRate, (double) DAYS_IN_MONTH / DAYS_IN_YEAR) - 1) * 100;
     }
 }

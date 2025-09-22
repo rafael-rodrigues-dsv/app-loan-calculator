@@ -34,21 +34,19 @@ public class CalculationTotalTaxAmount extends CalculatorEngine<PaymentPlanModel
         TaxModel tax = paymentPlanModel.getTax();
 
         if (Objects.nonNull(tax)) {
-            double totalFinancialOperationalTax = paymentPlanModel.getInstallments() != null && !paymentPlanModel.getInstallments().isEmpty()
-                    ? paymentPlanModel.getInstallments().stream()
+            BigDecimal totalFinancialOperationalTax = paymentPlanModel.getInstalments() != null && !paymentPlanModel.getInstalments().isEmpty()
+                    ? paymentPlanModel.getInstalments().stream()
                     .filter(f -> f.getInstallmentNumber() != INSTALLMENT_NUMBER_INITIAL && Objects.nonNull(f.getTotalFinancialOperationalTax()))
                     .reduce((first, second) -> second) // Obtém a última parcela
                     .map(last -> Optional.ofNullable(last.getTotalFinancialOperationalTax())
                             .map(AmountModel::getAmount)
-                            .map(BigDecimal::doubleValue)
-                            .orElse(0.0))
-                    .orElse(0.0)
-                    : 0;
+                            .orElse(BigDecimal.ZERO))
+                    .orElse(BigDecimal.ZERO)
+                    : BigDecimal.ZERO;
 
             tax.setTotalAmount(AmountModel.builder()
-                    .amount(BigDecimal.valueOf(totalFinancialOperationalTax)
-                            .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE))
-                    .currency("BRL")
+                    .amount(totalFinancialOperationalTax.setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE))
+                    .currency(CalculationConstant.DEFAULT_CURRENCY)
                     .build());
 
             paymentPlanModel.setTax(tax);

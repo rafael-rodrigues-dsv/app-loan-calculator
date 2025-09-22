@@ -3,7 +3,7 @@ package br.com.devio.component.calculator.chain.impl;
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.domain.constant.CalculationConstant;
 import br.com.devio.domain.model.AmountModel;
-import br.com.devio.domain.model.InstallmentModel;
+import br.com.devio.domain.model.InstalmentModel;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * 📅 Calculadora de IOF diário
  */
-public class CalculationTaxInstallmentDailyIOF extends CalculatorEngine<InstallmentModel> {
+public class CalculationTaxInstallmentDailyIOF extends CalculatorEngine<InstalmentModel> {
     private AmountModel dailyFinancialOperationalTax;
     private AmountModel totalFinancedAmount;
 
@@ -39,11 +39,17 @@ public class CalculationTaxInstallmentDailyIOF extends CalculatorEngine<Installm
      * ═══════════════════════════════════════════════════════════════
      */
     @Override
-    public InstallmentModel calculate(InstallmentModel currentInstallment) {
+    public InstalmentModel calculate(InstalmentModel currentInstallment) {
+        if (currentInstallment == null) {
+            throw new IllegalArgumentException("Current installment cannot be null");
+        }
+        
         BigDecimal totalDailyFinancialOperationalTax = BigDecimal.ZERO;
 
         if (!currentInstallment.getInstallmentNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)
-                && Objects.nonNull(dailyFinancialOperationalTax)) {
+                && Objects.nonNull(dailyFinancialOperationalTax)
+                && Objects.nonNull(totalFinancedAmount)
+                && Objects.nonNull(totalFinancedAmount.getAmount())) {
             totalDailyFinancialOperationalTax = totalFinancedAmount.getAmount()
                     .multiply(dailyFinancialOperationalTax.getAmount())
                     .multiply(BigDecimal.valueOf(currentInstallment.getContractDays()))
@@ -53,7 +59,7 @@ public class CalculationTaxInstallmentDailyIOF extends CalculatorEngine<Installm
 
         currentInstallment.setTotalDailyFinancialOperationalTax(AmountModel.builder()
                 .amount(totalDailyFinancialOperationalTax)
-                .currency("BRL")
+                .currency(CalculationConstant.DEFAULT_CURRENCY)
                 .build());
 
         return currentInstallment;

@@ -3,14 +3,14 @@ package br.com.devio.component.calculator.chain.impl;
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.domain.constant.CalculationConstant;
 import br.com.devio.domain.model.AmountModel;
-import br.com.devio.domain.model.InstallmentModel;
+import br.com.devio.domain.model.InstalmentModel;
 
 import java.math.BigDecimal;
 
 /**
  * 💸 Calculadora de juros - sistema PRICE
  */
-public class CalculationPriceInstallmentTotalInterestAmount extends CalculatorEngine<InstallmentModel> {
+public class CalculationPriceInstallmentTotalInterestAmount extends CalculatorEngine<InstalmentModel> {
 
     /**
      * ═══════════════════════════════════════════════════════════════
@@ -30,7 +30,7 @@ public class CalculationPriceInstallmentTotalInterestAmount extends CalculatorEn
      * ═══════════════════════════════════════════════════════════════
      */
     @Override
-    public InstallmentModel calculate(InstallmentModel beforeInstallment, InstallmentModel currentInstallment) {
+    public InstalmentModel calculate(InstalmentModel beforeInstallment, InstalmentModel currentInstallment) {
         if (beforeInstallment == null || currentInstallment == null) {
             throw new IllegalArgumentException("Installment parameters cannot be null");
         }

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class InstallmentModel {
+public class InstalmentModel {
     private Integer installmentNumber;
     private LocalDate dueDate;
     private Integer contractDays;

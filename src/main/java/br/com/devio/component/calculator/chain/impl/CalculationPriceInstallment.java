@@ -3,7 +3,7 @@ package br.com.devio.component.calculator.chain.impl;
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.component.calculator.chain.CalculatorEngineBuilder;
 import br.com.devio.domain.model.AmountModel;
-import br.com.devio.domain.model.InstallmentModel;
+import br.com.devio.domain.model.InstalmentModel;
 import br.com.devio.domain.model.PaymentPlanModel;
 
 import java.math.BigDecimal;
@@ -30,23 +30,23 @@ public class CalculationPriceInstallment extends CalculatorEngine<PaymentPlanMod
      */
     @Override
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
-        List<InstallmentModel> installments = new ArrayList<>();
+        List<InstalmentModel> installments = new ArrayList<>();
         final AmountModel totalFinancedAmount = Optional.ofNullable(paymentPlanModel.getTotalFinancedAmount())
                 .orElse(AmountModel.builder().amount(BigDecimal.ZERO).currency("BRL").build());
         final Integer installmentQuantity = paymentPlanModel.getInstallmentQuantity();
 
-        paymentPlanModel.getInstallments().forEach(currentInstallment -> {
+        paymentPlanModel.getInstalments().forEach(currentInstallment -> {
             if (currentInstallment.getInstallmentNumber().equals(INSTALLMENT_NUMBER_INITIAL)) {
-                CalculatorEngine<InstallmentModel> chain = new CalculatorEngineBuilder<InstallmentModel>()
+                CalculatorEngine<InstalmentModel> chain = new CalculatorEngineBuilder<InstalmentModel>()
                         .add(new CalculationPriceInstallmentTotalPresentValue(totalFinancedAmount, installmentQuantity))
                         .add(new CalculationPriceInstallmentTotalBalanceAmount(totalFinancedAmount))
                         .build();
 
                 currentInstallment = chain.calculate(currentInstallment, currentInstallment);
             } else {
-                InstallmentModel beforeInstallment = installments.get(currentInstallment.getInstallmentNumber() - 1);
+                InstalmentModel beforeInstallment = installments.get(currentInstallment.getInstallmentNumber() - 1);
 
-                CalculatorEngine<InstallmentModel> chain = new CalculatorEngineBuilder<InstallmentModel>()
+                CalculatorEngine<InstalmentModel> chain = new CalculatorEngineBuilder<InstalmentModel>()
                         .add(new CalculationPriceInstallmentTotalPresentValue(totalFinancedAmount, installmentQuantity))
                         .add(new CalculationPriceInstallmentTotalInterestAmount())
                         .add(new CalculationPriceInstallmentTotalInstallmentValue())
@@ -60,7 +60,7 @@ public class CalculationPriceInstallment extends CalculatorEngine<PaymentPlanMod
             installments.add(currentInstallment);
         });
 
-        paymentPlanModel.setInstallments(installments);
+        paymentPlanModel.setInstalments(installments);
 
         return paymentPlanModel;
     }

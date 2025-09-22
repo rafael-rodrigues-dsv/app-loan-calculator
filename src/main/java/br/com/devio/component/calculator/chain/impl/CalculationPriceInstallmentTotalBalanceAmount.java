@@ -3,16 +3,16 @@ package br.com.devio.component.calculator.chain.impl;
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.domain.constant.CalculationConstant;
 import br.com.devio.domain.model.AmountModel;
-import br.com.devio.domain.model.InstallmentModel;
+import br.com.devio.domain.model.InstalmentModel;
 
 import java.math.BigDecimal;
 
 /**
  * 📊 Calculadora de saldo devedor - sistema PRICE
  */
-public class CalculationPriceInstallmentTotalBalanceAmount extends CalculatorEngine<InstallmentModel> {
+public class CalculationPriceInstallmentTotalBalanceAmount extends CalculatorEngine<InstalmentModel> {
 
-    private static AmountModel totalFinancedAmount;
+    private AmountModel totalFinancedAmount;
 
     public CalculationPriceInstallmentTotalBalanceAmount(AmountModel totalFinancedAmount) {
         this.totalFinancedAmount = totalFinancedAmount;
@@ -33,7 +33,11 @@ public class CalculationPriceInstallmentTotalBalanceAmount extends CalculatorEng
      * ═══════════════════════════════════════════════════════════════
      */
     @Override
-    public InstallmentModel calculate(InstallmentModel beforeInstallment, InstallmentModel currentInstallment) {
+    public InstalmentModel calculate(InstalmentModel beforeInstallment, InstalmentModel currentInstallment) {
+        if (beforeInstallment == null || currentInstallment == null) {
+            throw new IllegalArgumentException("Installment parameters cannot be null");
+        }
+        
         BigDecimal totalBalanceAmount;
 
         if (currentInstallment.getInstallmentNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)) {

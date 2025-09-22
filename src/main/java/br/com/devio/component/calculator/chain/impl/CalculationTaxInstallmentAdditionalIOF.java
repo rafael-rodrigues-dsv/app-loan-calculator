@@ -3,7 +3,7 @@ package br.com.devio.component.calculator.chain.impl;
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.domain.constant.CalculationConstant;
 import br.com.devio.domain.model.AmountModel;
-import br.com.devio.domain.model.InstallmentModel;
+import br.com.devio.domain.model.InstalmentModel;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * 💰 Calculadora de IOF adicional
  */
-public class CalculationTaxInstallmentAdditionalIOF extends CalculatorEngine<InstallmentModel> {
+public class CalculationTaxInstallmentAdditionalIOF extends CalculatorEngine<InstalmentModel> {
     private AmountModel additionalFinancialOperationalTax;
     private AmountModel totalFinancedAmount;
 
@@ -38,7 +38,7 @@ public class CalculationTaxInstallmentAdditionalIOF extends CalculatorEngine<Ins
      * ═══════════════════════════════════════════════════════════════
      */
     @Override
-    public InstallmentModel calculate(InstallmentModel currentInstallment) {
+    public InstalmentModel calculate(InstalmentModel currentInstallment) {
         if (currentInstallment == null) {
             throw new IllegalArgumentException("Current installment cannot be null");
         }

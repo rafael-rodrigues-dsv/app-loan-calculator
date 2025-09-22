@@ -3,7 +3,7 @@ package br.com.devio.component.calculator.chain.impl;
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.component.calculator.chain.CalculatorEngineBuilder;
 import br.com.devio.domain.model.AmountModel;
-import br.com.devio.domain.model.InstallmentModel;
+import br.com.devio.domain.model.InstalmentModel;
 import br.com.devio.domain.model.PaymentPlanModel;
 import br.com.devio.domain.model.TaxModel;
 
@@ -32,7 +32,7 @@ public class CalculationTaxInstallment extends CalculatorEngine<PaymentPlanModel
      */
     @Override
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
-        List<InstallmentModel> installments = new ArrayList<>();
+        List<InstalmentModel> installments = new ArrayList<>();
         final AmountModel totalFinancedAmount = Optional.ofNullable(paymentPlanModel.getTotalFinancedAmount())
                 .orElse(AmountModel.builder().amount(BigDecimal.ZERO).currency("BRL").build());
         final TaxModel financialOperationalTax = paymentPlanModel.getTax();
@@ -43,9 +43,9 @@ public class CalculationTaxInstallment extends CalculatorEngine<PaymentPlanModel
                 .map(TaxModel::getAdditionalFinancialOperationalTax)
                 .orElse(AmountModel.builder().amount(BigDecimal.ZERO).currency("BRL").build());
 
-        paymentPlanModel.getInstallments().forEach(currentInstallment -> {
+        paymentPlanModel.getInstalments().forEach(currentInstallment -> {
             if (!currentInstallment.getInstallmentNumber().equals(INSTALLMENT_NUMBER_INITIAL)) {
-                CalculatorEngine<InstallmentModel> chain = new CalculatorEngineBuilder<InstallmentModel>()
+                CalculatorEngine<InstalmentModel> chain = new CalculatorEngineBuilder<InstalmentModel>()
                         .add(new CalculationTaxInstallmentDailyIOF(dailyFinancialOperationalTax, totalFinancedAmount))
                         .add(new CalculationTaxInstallmentAdditionalIOF(additionalFinancialOperationalTax, totalFinancedAmount))
                         .add(new CalculationTaxInstallmentTotalIOF())
@@ -57,7 +57,7 @@ public class CalculationTaxInstallment extends CalculatorEngine<PaymentPlanModel
             installments.add(currentInstallment);
         });
 
-        paymentPlanModel.setInstallments(installments);
+        paymentPlanModel.setInstalments(installments);
 
         return paymentPlanModel;
     }

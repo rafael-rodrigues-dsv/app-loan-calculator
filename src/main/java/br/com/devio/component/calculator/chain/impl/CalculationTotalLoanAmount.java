@@ -36,20 +36,18 @@ public class CalculationTotalLoanAmount extends CalculatorEngine<PaymentPlanMode
     @Override
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
 
-        double totalLoanAmount = paymentPlanModel.getInstallments() != null && !paymentPlanModel.getInstallments().isEmpty()
-                ? paymentPlanModel.getInstallments().stream()
+        BigDecimal totalLoanAmount = paymentPlanModel.getInstalments() != null && !paymentPlanModel.getInstalments().isEmpty()
+                ? paymentPlanModel.getInstalments().stream()
                 .filter(f -> f.getInstallmentNumber() != INSTALLMENT_NUMBER_INITIAL)
-                .mapToDouble(installment -> Optional.ofNullable(installment.getTotalInstalmentValue())
+                .map(installment -> Optional.ofNullable(installment.getTotalInstalmentValue())
                         .map(AmountModel::getAmount)
-                        .map(BigDecimal::doubleValue)
-                        .orElse(0.0))
-                .sum()
-                : 0;
+                        .orElse(BigDecimal.ZERO))
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                : BigDecimal.ZERO;
 
         paymentPlanModel.setTotalLoanAmount(AmountModel.builder()
-                .amount(BigDecimal.valueOf(totalLoanAmount)
-                        .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE))
-                .currency("BRL")
+                .amount(totalLoanAmount.setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE))
+                .currency(CalculationConstant.DEFAULT_CURRENCY)
                 .build());
 
         return paymentPlanModel;

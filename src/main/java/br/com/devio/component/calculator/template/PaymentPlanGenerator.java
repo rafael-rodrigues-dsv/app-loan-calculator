@@ -1,7 +1,7 @@
 package br.com.devio.component.calculator.template;
 
 import br.com.devio.domain.enumeration.PeriodTypeEnum;
-import br.com.devio.domain.model.InstallmentModel;
+import br.com.devio.domain.model.InstalmentModel;
 import br.com.devio.domain.model.LoanModel;
 import br.com.devio.domain.model.PaymentPlanModel;
 
@@ -19,7 +19,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class PaymentPlanGenerator extends PaymentPlanGeneratorTemplate {
     @Override
     public PaymentPlanModel generatePaymentPlan(LoanModel loanModel) {
-        List<InstallmentModel> installments = addInstallments(loanModel);
+        List<InstalmentModel> installments = addInstallments(loanModel);
 
         return PaymentPlanModel.builder()
                 .calculationType(loanModel.getCalculationType())
@@ -32,22 +32,22 @@ public class PaymentPlanGenerator extends PaymentPlanGeneratorTemplate {
                 .fee(loanModel.getFee())
                 .insurance(loanModel.getInsurance())
                 .tax(loanModel.getTax())
-                .installments(installments)
+                .instalments(installments)
                 .build();
     }
 
-    protected List<InstallmentModel> addInstallments(LoanModel loanModel) {
+    protected List<InstalmentModel> addInstallments(LoanModel loanModel) {
         BigDecimal interestRate = loanModel.getMonthlyInterestRate();
         PeriodTypeEnum interestRateType = PeriodTypeEnum.MONTHLY;
         LocalDate contractDate = loanModel.getContractDate();
-        List<InstallmentModel> installments = new ArrayList<>();
+        List<InstalmentModel> installments = new ArrayList<>();
 
         LongStream.range(0L, loanModel.getInstallmentQuantity() + 1L)
                 .forEach(pi -> {
                     Integer installmentNumber = (int) pi;
 
                     if (installmentNumber.equals(0)) {
-                        installments.add(InstallmentModel.builder()
+                        installments.add(InstalmentModel.builder()
                                 .installmentNumber(installmentNumber)
                                 .interestRate(interestRate)
                                 .interestRateType(interestRateType)
@@ -56,13 +56,13 @@ public class PaymentPlanGenerator extends PaymentPlanGeneratorTemplate {
                                 .periodDays(0)
                                 .build());
                     } else {
-                        InstallmentModel beforeInstallment = installments.get(installmentNumber - 1);
+                        InstalmentModel beforeInstallment = installments.get(installmentNumber - 1);
 
                         LocalDate dueDate = installmentNumber.equals(1)
                                 ? loanModel.getFirstInstallmentDate()
                                 : beforeInstallment.getDueDate().plusMonths(1);
 
-                        installments.add(InstallmentModel.builder()
+                        installments.add(InstalmentModel.builder()
                                 .installmentNumber(installmentNumber)
                                 .interestRate(interestRate)
                                 .interestRateType(interestRateType)
@@ -82,7 +82,7 @@ public class PaymentPlanGenerator extends PaymentPlanGeneratorTemplate {
         return installments;
     }
 
-    protected LocalDate addLastInstallmentDate(List<InstallmentModel> installments) {
+    protected LocalDate addLastInstallmentDate(List<InstalmentModel> installments) {
         return Optional.ofNullable(installments)
                 .filter(list -> Objects.nonNull(list) && !list.isEmpty())
                 .map(list -> list.get(list.size() - 1).getDueDate())

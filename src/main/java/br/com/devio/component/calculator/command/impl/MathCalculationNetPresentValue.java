@@ -1,13 +1,13 @@
 package br.com.devio.component.calculator.command.impl;
 
 import br.com.devio.component.calculator.command.MathCalculationCommand;
-import br.com.devio.domain.model.InstallmentModel;
+import br.com.devio.domain.model.InstalmentModel;
 
 import java.util.List;
 
 import static br.com.devio.domain.constant.CalculationConstant.DAYS_IN_YEAR;
 
-public class MathCalculationNetPresentValue implements MathCalculationCommand<List<InstallmentModel>, Double> {
+public class MathCalculationNetPresentValue implements MathCalculationCommand<List<InstalmentModel>, Double> {
 
     private final Double interestRate;
 
@@ -16,10 +16,14 @@ public class MathCalculationNetPresentValue implements MathCalculationCommand<Li
     }
 
     @Override
-    public Double execute(List<InstallmentModel> installments) {
+    public Double execute(List<InstalmentModel> installments) {
+        if (installments == null) {
+            throw new IllegalArgumentException("Installments list cannot be null");
+        }
+        
         Double totalNetPresentValue = 0.0;
 
-        for (InstallmentModel currentInstallment : installments) {
+        for (InstalmentModel currentInstallment : installments) {
             Double currentInstallmentValue = currentInstallment.getTotalInstalmentValue() != null
                     ? currentInstallment.getTotalInstalmentValue().getAmount().doubleValue()
                     : 0.0;
@@ -32,7 +36,7 @@ public class MathCalculationNetPresentValue implements MathCalculationCommand<Li
 
             Double discountFactor = Math.pow(
                     1 + interestRate,
-                    currentInstallment.getContractDays() / DAYS_IN_YEAR);
+                    (double) currentInstallment.getContractDays() / DAYS_IN_YEAR);
 
             totalNetPresentValue += currentInstallmentValue / discountFactor;
         }

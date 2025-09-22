@@ -1,11 +1,11 @@
 package br.com.devio.component.calculator.command.impl;
 
 import br.com.devio.component.calculator.command.MathCalculationCommand;
-import br.com.devio.domain.model.InstallmentModel;
+import br.com.devio.domain.model.InstalmentModel;
 
 import java.util.List;
 
-public class MathCalculationXirr implements MathCalculationCommand<List<InstallmentModel>, Double> {
+public class MathCalculationXirr implements MathCalculationCommand<List<InstalmentModel>, Double> {
 
     private static final Double LOWER_BOUND = -1.0;
     private static final Double UPPER_BOUND = 1.0;
@@ -13,7 +13,7 @@ public class MathCalculationXirr implements MathCalculationCommand<List<Installm
     private static final int MAX_ITERATIONS = 1000;
 
     @Override
-    public Double execute(List<InstallmentModel> installments) {
+    public Double execute(List<InstalmentModel> installments) {
         Double lowerBound = LOWER_BOUND;
         Double upperBound = UPPER_BOUND;
         int count = 0;

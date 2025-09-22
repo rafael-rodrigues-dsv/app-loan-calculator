@@ -3,7 +3,7 @@ package br.com.devio.component.calculator.chain.impl;
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.domain.constant.CalculationConstant;
 import br.com.devio.domain.model.AmountModel;
-import br.com.devio.domain.model.InstallmentModel;
+import br.com.devio.domain.model.InstalmentModel;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * ➕ Totalizador de IOF
  */
-public class CalculationTaxInstallmentTotalIOF extends CalculatorEngine<InstallmentModel> {
+public class CalculationTaxInstallmentTotalIOF extends CalculatorEngine<InstalmentModel> {
 
     /**
      * ═══════════════════════════════════════════════════════════════
@@ -27,7 +27,7 @@ public class CalculationTaxInstallmentTotalIOF extends CalculatorEngine<Installm
      * ═══════════════════════════════════════════════════════════════
      */
     @Override
-    public InstallmentModel calculate(InstallmentModel currentInstallment) {
+    public InstalmentModel calculate(InstalmentModel currentInstallment) {
         BigDecimal totalFinancialOperationalTax = BigDecimal.ZERO;
 
         if (!currentInstallment.getInstallmentNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)) {
@@ -45,7 +45,7 @@ public class CalculationTaxInstallmentTotalIOF extends CalculatorEngine<Installm
 
         currentInstallment.setTotalFinancialOperationalTax(AmountModel.builder()
                 .amount(totalFinancialOperationalTax)
-                .currency("BRL")
+                .currency(CalculationConstant.DEFAULT_CURRENCY)
                 .build());
 
         return currentInstallment;

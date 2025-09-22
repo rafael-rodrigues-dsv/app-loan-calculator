@@ -9,7 +9,6 @@ import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS
 public class ObjectMapperUtils {
     private static final ObjectMapper objectMapper = new ObjectMapper()
             .findAndRegisterModules()
-            .configure(WRITE_DATES_AS_TIMESTAMPS, true)
             .registerModule(new JavaTimeModule())
             .configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
             .configure(WRITE_DATES_AS_TIMESTAMPS, false);

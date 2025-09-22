@@ -2,7 +2,7 @@ package br.com.devio.component.calculator.chain.impl;
 
 import br.com.devio.component.calculator.chain.CalculatorEngine;
 import br.com.devio.component.calculator.chain.CalculatorEngineBuilder;
-import br.com.devio.domain.model.InstallmentModel;
+import br.com.devio.domain.model.InstalmentModel;
 import br.com.devio.domain.model.PaymentPlanModel;
 
 import java.util.List;
@@ -43,7 +43,7 @@ public class CalculationPrice {
                 .build();
 
         paymentPlanModel = chain.calculate(paymentPlanModel);
-        paymentPlanModel.setInstallments(filterValidInstallments(paymentPlanModel.getInstallments()));
+        paymentPlanModel.setInstalments(filterValidInstallments(paymentPlanModel.getInstalments()));
 
         return paymentPlanModel;
     }
@@ -54,7 +54,7 @@ public class CalculationPrice {
                 .isPresent();
     }
 
-    private List<InstallmentModel> filterValidInstallments(List<InstallmentModel> installments) {
+    private List<InstalmentModel> filterValidInstallments(List<InstalmentModel> installments) {
         if (Objects.nonNull(installments) && !installments.isEmpty()) {
             return installments.stream()
                     .filter(f -> f.getInstallmentNumber() != INSTALLMENT_NUMBER_INITIAL)
