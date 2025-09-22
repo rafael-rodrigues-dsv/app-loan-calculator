@@ -10,4 +10,5 @@ public class CalculationConstant {
     public static final int SCALE_4 = 4;
     public static final int ROUNDING_MODE = BigDecimal.ROUND_HALF_EVEN;
     public static final int INSTALLMENT_NUMBER_INITIAL = 0;
+    public static final String DEFAULT_CURRENCY = "BRL";
 }

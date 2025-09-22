@@ -31,6 +31,10 @@ public class CalculationPriceInstallmentTotalInterestAmount extends CalculatorEn
      */
     @Override
     public InstallmentModel calculate(InstallmentModel beforeInstallment, InstallmentModel currentInstallment) {
+        if (beforeInstallment == null || currentInstallment == null) {
+            throw new IllegalArgumentException("Installment parameters cannot be null");
+        }
+        
         BigDecimal interestRate = currentInstallment.getInterestRate();
 
         BigDecimal totalInterestAmount = interestRate.multiply(beforeInstallment.getTotalBalanceAmount().getAmount())
@@ -39,7 +43,7 @@ public class CalculationPriceInstallmentTotalInterestAmount extends CalculatorEn
 
         currentInstallment.setTotalInterestAmount(AmountModel.builder()
                 .amount(totalInterestAmount)
-                .currency("BRL")
+                .currency(CalculationConstant.DEFAULT_CURRENCY)
                 .build());
 
         return currentInstallment;

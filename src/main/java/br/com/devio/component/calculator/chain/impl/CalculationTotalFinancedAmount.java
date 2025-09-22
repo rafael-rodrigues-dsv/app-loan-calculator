@@ -31,39 +31,37 @@ public class CalculationTotalFinancedAmount extends CalculatorEngine<PaymentPlan
      */
     @Override
     public PaymentPlanModel calculate(PaymentPlanModel paymentPlanModel) {
-        double totalInsuranceAmount = Optional.ofNullable(paymentPlanModel.getInsurance())
+        BigDecimal totalInsuranceAmount = Optional.ofNullable(paymentPlanModel.getInsurance())
                 .filter(i -> PaymentTypeEnum.FINANCED.equals(i.getPaymentType()))
                 .map(InsuranceModel::getTotalAmount)
                 .map(AmountModel::getAmount)
-                .map(BigDecimal::doubleValue)
-                .orElse(0.0);
+                .orElse(BigDecimal.ZERO);
 
-        double totalFeeAmount = Optional.ofNullable(paymentPlanModel.getFee())
+        BigDecimal totalFeeAmount = Optional.ofNullable(paymentPlanModel.getFee())
                 .filter(f -> PaymentTypeEnum.FINANCED.equals(f.getPaymentType()))
                 .map(FeeModel::getTotalAmount)
                 .map(AmountModel::getAmount)
-                .map(BigDecimal::doubleValue)
-                .orElse(0.0);
+                .orElse(BigDecimal.ZERO);
 
-        double totalTaxAmount = Optional.ofNullable(paymentPlanModel.getTax())
+        BigDecimal totalTaxAmount = Optional.ofNullable(paymentPlanModel.getTax())
                 .filter(t -> PaymentTypeEnum.FINANCED.equals(t.getPaymentType()))
                 .map(TaxModel::getTotalAmount)
                 .map(AmountModel::getAmount)
-                .map(BigDecimal::doubleValue)
-                .orElse(0.0);
+                .orElse(BigDecimal.ZERO);
 
-        double requestedAmountValue = Optional.ofNullable(paymentPlanModel.getRequestedAmount())
+        BigDecimal requestedAmount = Optional.ofNullable(paymentPlanModel.getRequestedAmount())
                 .map(AmountModel::getAmount)
-                .map(BigDecimal::doubleValue)
-                .orElse(0.0);
+                .orElse(BigDecimal.ZERO);
+
+        BigDecimal totalFinanced = requestedAmount
+                .add(totalFeeAmount)
+                .add(totalInsuranceAmount)
+                .add(totalTaxAmount)
+                .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE);
 
         paymentPlanModel.setTotalFinancedAmount(AmountModel.builder()
-                .amount(BigDecimal.valueOf(requestedAmountValue
-                        + totalFeeAmount
-                        + totalInsuranceAmount
-                        + totalTaxAmount)
-                        .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE))
-                .currency("BRL")
+                .amount(totalFinanced)
+                .currency(CalculationConstant.DEFAULT_CURRENCY)
                 .build());
 
         return paymentPlanModel;

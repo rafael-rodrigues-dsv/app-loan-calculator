@@ -1,7 +1,6 @@
 package br.com.devio.component.calculator.template;
 
 import br.com.devio.domain.enumeration.PeriodTypeEnum;
-import br.com.devio.domain.model.AmountModel;
 import br.com.devio.domain.model.InstallmentModel;
 import br.com.devio.domain.model.LoanModel;
 import br.com.devio.domain.model.PaymentPlanModel;

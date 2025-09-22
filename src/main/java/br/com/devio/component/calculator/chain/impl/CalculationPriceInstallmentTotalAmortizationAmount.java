@@ -28,13 +28,20 @@ public class CalculationPriceInstallmentTotalAmortizationAmount extends Calculat
      */
     @Override
     public InstallmentModel calculate(InstallmentModel beforeInstallment, InstallmentModel currentInstallment) {
+        if (beforeInstallment == null || currentInstallment == null) {
+            throw new IllegalArgumentException("Installment parameters cannot be null");
+        }
+        if (currentInstallment.getTotalInstalmentValue() == null || currentInstallment.getTotalInterestAmount() == null) {
+            throw new IllegalArgumentException("Required installment values cannot be null");
+        }
+        
         BigDecimal totalAmortizationAmount = currentInstallment.getTotalInstalmentValue().getAmount()
                 .subtract(currentInstallment.getTotalInterestAmount().getAmount())
                 .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE);
 
         currentInstallment.setTotalAmortizationAmount(AmountModel.builder()
                 .amount(totalAmortizationAmount)
-                .currency("BRL")
+                .currency(CalculationConstant.DEFAULT_CURRENCY)
                 .build());
         return currentInstallment;
     }

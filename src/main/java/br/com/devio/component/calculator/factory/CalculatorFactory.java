@@ -13,13 +13,15 @@ import java.util.Optional;
 public class CalculatorFactory {
 
     private static final List<CalculationTypeEnum> VALID_CALCULATION_TYPES = List.of(CalculationTypeEnum.PRICE);
+    private static final PaymentPlanGenerator PAYMENT_PLAN_GENERATOR = new PaymentPlanGenerator();
+    private static final CalculationPrice CALCULATION_PRICE = new CalculationPrice();
 
     public static PaymentPlanModel calculate(LoanModel loanModel) {
         return Optional.of(loanModel.getCalculationType())
             .filter(VALID_CALCULATION_TYPES::contains)
-            .map(type -> new PaymentPlanGenerator().generate(loanModel))
+            .map(type -> PAYMENT_PLAN_GENERATOR.generate(loanModel))
             .filter(Objects::nonNull)
-            .map(paymentPlan -> new CalculationPrice().calculate(paymentPlan))
+            .map(paymentPlan -> CALCULATION_PRICE.calculate(paymentPlan))
             .orElseThrow(() -> new UnsupportedOperationException("Invalid calculation type"));
     }
 }

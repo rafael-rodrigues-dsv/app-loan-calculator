@@ -35,39 +35,37 @@ public class CalculationTotalGrantedAmount extends CalculatorEngine<PaymentPlanM
         final FeeModel fee = paymentPlanModel.getFee();
         final TaxModel tax = paymentPlanModel.getTax();
 
-        double totalInsuranceAmount = Optional.ofNullable(insurance)
+        BigDecimal totalInsuranceAmount = Optional.ofNullable(insurance)
                 .filter(i -> PaymentTypeEnum.UPFRONT.equals(i.getPaymentType()))
                 .map(InsuranceModel::getTotalAmount)
                 .map(AmountModel::getAmount)
-                .map(BigDecimal::doubleValue)
-                .orElse(0.0);
+                .orElse(BigDecimal.ZERO);
 
-        double totalFeeAmount = Optional.ofNullable(fee)
+        BigDecimal totalFeeAmount = Optional.ofNullable(fee)
                 .filter(f -> PaymentTypeEnum.UPFRONT.equals(f.getPaymentType()))
                 .map(FeeModel::getTotalAmount)
                 .map(AmountModel::getAmount)
-                .map(BigDecimal::doubleValue)
-                .orElse(0.0);
+                .orElse(BigDecimal.ZERO);
 
-        double totalTaxAmount = Optional.ofNullable(tax)
+        BigDecimal totalTaxAmount = Optional.ofNullable(tax)
                 .filter(t -> PaymentTypeEnum.UPFRONT.equals(t.getPaymentType()))
                 .map(TaxModel::getTotalAmount)
                 .map(AmountModel::getAmount)
-                .map(BigDecimal::doubleValue)
-                .orElse(0.0);
+                .orElse(BigDecimal.ZERO);
 
-        double requestedAmountValue = Optional.ofNullable(paymentPlanModel.getRequestedAmount())
+        BigDecimal requestedAmount = Optional.ofNullable(paymentPlanModel.getRequestedAmount())
                 .map(AmountModel::getAmount)
-                .map(BigDecimal::doubleValue)
-                .orElse(0.0);
+                .orElse(BigDecimal.ZERO);
+
+        BigDecimal totalGranted = requestedAmount
+                .subtract(totalFeeAmount)
+                .subtract(totalInsuranceAmount)
+                .subtract(totalTaxAmount)
+                .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE);
 
         paymentPlanModel.setTotalGrantedAmount(AmountModel.builder()
-                .amount(BigDecimal.valueOf(requestedAmountValue
-                        - totalFeeAmount
-                        - totalInsuranceAmount
-                        - totalTaxAmount)
-                        .setScale(CalculationConstant.SCALE_2, CalculationConstant.ROUNDING_MODE))
-                .currency("BRL")
+                .amount(totalGranted)
+                .currency(CalculationConstant.DEFAULT_CURRENCY)
                 .build());
 
         return paymentPlanModel;

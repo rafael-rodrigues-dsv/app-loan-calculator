@@ -1,6 +1,5 @@
 package br.com.devio.infraestructure.exception;
 
-import br.com.devio.infraestructure.exception.BadRequestException;
 import br.com.fluentvalidator.context.ValidationResult;
 import org.junit.jupiter.api.Test;
 

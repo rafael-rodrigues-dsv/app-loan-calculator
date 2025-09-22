@@ -6,51 +6,45 @@ import br.com.devio.domain.model.AmountModel;
 import br.com.devio.domain.model.InstallmentModel;
 
 import java.math.BigDecimal;
-import java.util.Objects;
+import java.util.Optional;
 
 /**
- * 💰 Calculadora de IOF adicional
+ * ➕ Totalizador de IOF
  */
-public class CalculationTaxInstallmentTotalAdditionalFinancialOperationalTax extends CalculatorEngine<InstallmentModel> {
-    private AmountModel additionalFinancialOperationalTax;
-    private AmountModel totalFinancedAmount;
-
-    public CalculationTaxInstallmentTotalAdditionalFinancialOperationalTax(AmountModel additionalFinancialOperationalTax, AmountModel totalFinancedAmount) {
-        this.additionalFinancialOperationalTax = additionalFinancialOperationalTax;
-        this.totalFinancedAmount = totalFinancedAmount;
-    }
+public class CalculationTaxInstallmentTotalIOF extends CalculatorEngine<InstallmentModel> {
 
     /**
      * ═══════════════════════════════════════════════════════════════
      * 📊 FÓRMULA MATEMÁTICA
      * ═══════════════════════════════════════════════════════════════
-     *                      P × t
-     * IOF Adicional = ─────────────    (ascii)
-     *                      100
-     * 
-     * IOF Adicional = (P × t) ÷ 100    (algébrica)
+     * IOF Total = IOFᴅ + IOFᴀ    (ascii e algébrica)
      * ───────────────────────────────────────────────────────────────
      * ONDE:
-     * P = Principal (valor financiado)
-     * t = Taxa IOF adicional (0,38%)
+     * IOFᴅ = IOF diário
+     * IOFᴀ = IOF adicional
      * ───────────────────────────────────────────────────────────────
-     * EXEMPLO: (100.000 × 0,38) ÷ 100 = R$ 380,00
+     * EXEMPLO: 12,30 + 380,00 = R$ 392,30
      * ═══════════════════════════════════════════════════════════════
      */
     @Override
     public InstallmentModel calculate(InstallmentModel currentInstallment) {
-        BigDecimal totalAdditionalFinancialOperationalTax = BigDecimal.ZERO;
+        BigDecimal totalFinancialOperationalTax = BigDecimal.ZERO;
 
-        if (!currentInstallment.getInstallmentNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)
-                && Objects.nonNull(additionalFinancialOperationalTax)) {
-            totalAdditionalFinancialOperationalTax = totalFinancedAmount.getAmount()
-                    .multiply(additionalFinancialOperationalTax.getAmount())
-                    .divide(CalculationConstant.PERCENTAGE_DIVISOR_100)
+        if (!currentInstallment.getInstallmentNumber().equals(CalculationConstant.INSTALLMENT_NUMBER_INITIAL)) {
+            BigDecimal dailyTax = Optional.ofNullable(currentInstallment.getTotalDailyFinancialOperationalTax())
+                    .map(AmountModel::getAmount)
+                    .orElse(BigDecimal.ZERO);
+            
+            BigDecimal additionalTax = Optional.ofNullable(currentInstallment.getTotalAdditionalFinancialOperationalTax())
+                    .map(AmountModel::getAmount)
+                    .orElse(BigDecimal.ZERO);
+            
+            totalFinancialOperationalTax = dailyTax.add(additionalTax)
                     .setScale(CalculationConstant.SCALE_4, CalculationConstant.ROUNDING_MODE);
         }
 
-        currentInstallment.setTotalAdditionalFinancialOperationalTax(AmountModel.builder()
-                .amount(totalAdditionalFinancialOperationalTax)
+        currentInstallment.setTotalFinancialOperationalTax(AmountModel.builder()
+                .amount(totalFinancialOperationalTax)
                 .currency("BRL")
                 .build());
 

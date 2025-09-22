@@ -58,36 +58,37 @@ public class CalculatorEngineBuilder<T> {
     }
 
     public CalculatorEngine<T> build() {
-        return new CalculatorEngine<T>() {
-            @Override
-            public T calculate(T result) {
-                Node<T> current = head;
-                while (current != null) {
-                    result = current.handler.calculate(result);
-                    current = current.next;
-                }
-                return result;
-            }
+        return new ChainCalculatorEngine();
+    }
 
-            @Override
-            public T calculate(T dataBase, T currentData) {
-                Node<T> current = head;
-                while (current != null) {
-                    currentData = current.handler.calculate(dataBase, currentData);
-                    current = current.next;
-                }
-                return currentData;
-            }
+    private class ChainCalculatorEngine extends CalculatorEngine<T> {
+        @Override
+        public T calculate(T result) {
+            return traverseChain((current, data) -> current.handler.calculate(data), result);
+        }
 
-            @Override
-            public T calculate(T dataBase, T beforeData, T currentData) {
-                Node<T> current = head;
-                while (current != null) {
-                    currentData = current.handler.calculate(dataBase, beforeData, currentData);
-                    current = current.next;
-                }
-                return currentData;
+        @Override
+        public T calculate(T dataBase, T currentData) {
+            return traverseChain((current, data) -> current.handler.calculate(dataBase, data), currentData);
+        }
+
+        @Override
+        public T calculate(T dataBase, T beforeData, T currentData) {
+            return traverseChain((current, data) -> current.handler.calculate(dataBase, beforeData, data), currentData);
+        }
+
+        private T traverseChain(ChainFunction<T> function, T data) {
+            Node<T> current = head;
+            while (current != null) {
+                data = function.apply(current, data);
+                current = current.next;
             }
-        };
+            return data;
+        }
+    }
+
+    @FunctionalInterface
+    private interface ChainFunction<T> {
+        T apply(Node<T> node, T data);
     }
 }

@@ -50,7 +50,7 @@ public class CalculationPriceInstallmentTotalBalanceAmount extends CalculatorEng
 
         currentInstallment.setTotalBalanceAmount(AmountModel.builder()
                 .amount(totalBalanceAmount)
-                .currency("BRL")
+                .currency(CalculationConstant.DEFAULT_CURRENCY)
                 .build());
 
         return currentInstallment;

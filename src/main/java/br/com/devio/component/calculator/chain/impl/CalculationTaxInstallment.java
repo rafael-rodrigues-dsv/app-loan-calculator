@@ -46,9 +46,9 @@ public class CalculationTaxInstallment extends CalculatorEngine<PaymentPlanModel
         paymentPlanModel.getInstallments().forEach(currentInstallment -> {
             if (!currentInstallment.getInstallmentNumber().equals(INSTALLMENT_NUMBER_INITIAL)) {
                 CalculatorEngine<InstallmentModel> chain = new CalculatorEngineBuilder<InstallmentModel>()
-                        .add(new CalculationTaxInstallmentTotalDailyFinancialOperationalTax(dailyFinancialOperationalTax, totalFinancedAmount))
-                        .add(new CalculationTaxInstallmentTotalAdditionalFinancialOperationalTax(additionalFinancialOperationalTax, totalFinancedAmount))
-                        .add(new CalculationTaxInstallmentTotalFinancialOperationalTax())
+                        .add(new CalculationTaxInstallmentDailyIOF(dailyFinancialOperationalTax, totalFinancedAmount))
+                        .add(new CalculationTaxInstallmentAdditionalIOF(additionalFinancialOperationalTax, totalFinancedAmount))
+                        .add(new CalculationTaxInstallmentTotalIOF())
                         .build();
 
                 currentInstallment = chain.calculate(currentInstallment);
