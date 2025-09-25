@@ -8,7 +8,9 @@ public class CalculationConstant {
     public static final BigDecimal PERCENTAGE_DIVISOR_100 = BigDecimal.valueOf(100);
     public static final int SCALE_2 = 2;
     public static final int SCALE_4 = 4;
+    public static final int SCALE_10 = 10;
     public static final int ROUNDING_MODE = BigDecimal.ROUND_HALF_EVEN;
+    public static final int ROUNDING_MODE_HALF_UP = BigDecimal.ROUND_HALF_UP;
     public static final int INSTALLMENT_NUMBER_INITIAL = 0;
     public static final String DEFAULT_CURRENCY = "BRL";
 }
